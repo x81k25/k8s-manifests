@@ -27,6 +27,8 @@ spec:
       labels:
         app: postgres
     spec:
+      securityContext:    # Added this section
+        fsGroup: 999
       containers:
         - name: postgres
           image: postgres:16.2
@@ -38,6 +40,22 @@ spec:
           ports:
             - containerPort: 5432
               name: postgres
+          livenessProbe:    # Added this section
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - postgres
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:    # Added this section
+            exec:
+              command:
+                - pg_isready
+                - -U
+                - postgres
+            initialDelaySeconds: 5
+            periodSeconds: 5
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -46,6 +64,7 @@ spec:
         name: postgres-data
       spec:
         accessModes: ["ReadWriteOnce"]
+        storageClassName: "local-path"
         resources:
           requests:
             storage: 1Gi

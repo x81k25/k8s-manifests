@@ -9,6 +9,8 @@ spec:
     repoURL: https://github.com/x81k25/k8s-manifests
     targetRevision: HEAD
     path: postgres
+    directory:
+      recurse: false
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-test

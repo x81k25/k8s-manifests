@@ -8,15 +8,15 @@ commonLabels:
   environment: production
 configurations:
   - nameReference:
-      fieldSpecs:
-        - kind: Deployment
-          path: spec/template/spec/volumes/configMap/name
+    - fieldSpecs:
+      - kind: Deployment
+        path: spec/template/spec/volumes/configMap/name
       kind: ConfigMap
-  - fieldSpecs:
+    - fieldSpecs:
       - kind: Deployment
         path: spec/template/spec/volumes/secret/secretName
       kind: Secret
-  - fieldSpecs:
+    - fieldSpecs:
       - kind: Deployment
         path: spec/template/spec/volumes/persistentVolumeClaim/claimName
       kind: PersistentVolumeClaim

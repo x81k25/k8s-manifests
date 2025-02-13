@@ -6,4 +6,4 @@ metadata:
 data:
   POSTGRES_DB: postgresdb
   POSTGRES_USER: postgres
-  PGDATA: /var/lib/postgresql/data/pgdata
+  PGDATA: /d/postgres/pgdata

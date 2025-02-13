@@ -1,17 +1,4 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres
-  labels:
-    app: postgres
-spec:
-  ports:
-    - port: 5432
-      name: postgres
-  clusterIP: None
-  selector:
-    app: postgres
----
+# statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -27,20 +14,20 @@ spec:
       labels:
         app: postgres
     spec:
-      securityContext:    # Added this section
+      securityContext:
         fsGroup: 999
       containers:
         - name: postgres
           image: postgres:16.2
-          env:
-            - name: POSTGRES_PASSWORD
-              value: "mysecretpassword"  # You should use a proper secret in production
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+            - secretRef:
+                name: postgres-secrets
           ports:
             - containerPort: 5432
               name: postgres
-          livenessProbe:    # Added this section
+          livenessProbe:
             exec:
               command:
                 - pg_isready
@@ -48,7 +35,7 @@ spec:
                 - postgres
             initialDelaySeconds: 30
             periodSeconds: 10
-          readinessProbe:    # Added this section
+          readinessProbe:
             exec:
               command:
                 - pg_isready

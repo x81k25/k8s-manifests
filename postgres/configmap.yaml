@@ -1,0 +1,9 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  POSTGRES_DB: postgresdb
+  POSTGRES_USER: postgres
+  PGDATA: /var/lib/postgresql/data/pgdata

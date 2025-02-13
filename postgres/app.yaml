@@ -6,20 +6,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: # Your git repository URL needs to be added here
+    repoURL: https://github.com/x81k25/k8s-manifests
     targetRevision: HEAD
-    path: postgres  # Assuming these files are in a 'postgres' directory
+    path: postgres
   destination:
     server: https://kubernetes.default.svc
-    namespace: default  # The namespace where you want postgres deployed
+    namespace: argocd-test
   syncPolicy:
     automated:
-      prune: true  # Automatically delete resources that are no longer defined in Git
-      selfHeal: true  # Automatically sync if drift is detected
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      jsonPointers:
-        - /spec/volumeClaimTemplates/status  # Ignore PVC status changes

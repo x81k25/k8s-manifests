@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: postgres
+
+resources:
+ - configmap.yaml
+ - deployment.yaml
+ - networkpolicy.yaml
+ - pv.yaml
+ - pvc.yaml
+ - secret.yaml
+ - service.yaml
+
+commonLabels:
+ app: postgres-x81
+ environment: production
+
+commonAnnotations:
+ maintainer: "devops-team"
+ app.kubernetes.io/part-of: "postgres-x81"
+ app.kubernetes.io/managed-by: "kustomize"
+
+# Optional but recommended - specify the PostgreSQL image
+images:
+ - name: postgres
+   newName: postgres
+   newTag: "16.2"
+
+# Specify label transformers to ensure consistent label selection
+configurations:
+ - nameReference:
+     - kind: ConfigMap
+       fieldSpecs:
+         - path: spec/template/spec/volumes/configMap/name
+           kind: Deployment
+     - kind: Secret
+       fieldSpecs:
+         - path: spec/template/spec/volumes/secret/secretName
+           kind: Deployment
+     - kind: PersistentVolumeClaim
+       fieldSpecs:
+         - path: spec/template/spec/volumes/persistentVolumeClaim/claimName
+           kind: Deployment

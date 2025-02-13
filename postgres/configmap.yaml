@@ -1,0 +1,41 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-x81-config
+  labels:
+    app: postgres-x81
+data:
+  postgresql.conf: |
+    # Memory Configuration
+    shared_buffers = '4GB'                  # 25% of available RAM
+    work_mem = '128MB'                      # for complex queries
+    maintenance_work_mem = '1GB'            # for index creation
+    effective_cache_size = '12GB'           # ~75% of available RAM
+
+    # Connection Settings
+    max_connections = 100
+    listen_addresses = '*'
+
+    # Query Planning
+    random_page_cost = 1.1                  # optimized for SSD
+    effective_io_concurrency = 200          # high for NVMe SSD
+    
+    # Write Ahead Log
+    wal_buffers = '16MB'                    # ~0.4% of shared_buffers
+    synchronous_commit = 'on'               # ensures data durability
+    
+    # Background Writer
+    bgwriter_delay = '200ms'
+    bgwriter_lru_maxpages = 100
+    
+    # Autovacuum Settings
+    autovacuum = on
+    autovacuum_max_workers = 4
+    autovacuum_naptime = '1min'
+    
+    # Parallel Query
+    max_worker_processes = 10               # allowing up to 10 background workers
+    max_parallel_workers_per_gather = 4     # max parallel workers per query
+    max_parallel_workers = 10               # total parallel workers
+    parallel_leader_participation = on

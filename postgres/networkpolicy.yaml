@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgres-x81-network-policy
+  labels:
+    app: postgres-x81
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres-x81
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 192.168.50.0/24
+    ports:
+    - protocol: TCP
+      port: 5432

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-x81-pvc
+  labels:
+    app: postgres-x81
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: postgres-x81-storage
+  resources:
+    requests:
+      storage: 938Gi
+  volumeMode: Filesystem

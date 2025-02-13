@@ -1,4 +1,4 @@
-# configmap.yaml
+# configmap.yml
 apiVersion: v1
 kind: ConfigMap
 metadata:

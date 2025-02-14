@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: automatic-transmission
+  name: automatic-transmission-daemon
   annotations:
     traefik.ingress.kubernetes.io/service.serversscheme: "http"
 spec:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: web-ui
   selector:
-    app: automatic-transmission
+    app: automatic-transmission-daemon

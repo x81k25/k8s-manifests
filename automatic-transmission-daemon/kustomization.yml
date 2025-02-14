@@ -13,5 +13,5 @@ resources:
 - pvc.yaml
 
 commonLabels:
-  app: automatic-transmission
+  app: automatic-transmission-daemon
   part-of: media-services

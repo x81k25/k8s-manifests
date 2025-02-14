@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: automatic-transmission
+  name: automatic-transmission-daemon
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: automatic-transmission
+      app: automatic-transmission-daemon
   template:
     metadata:
       labels:
-        app: automatic-transmission
+        app: automatic-transmission-daemon
     spec:
       imagePullSecrets:
         - name: ghcr-pull-image-token

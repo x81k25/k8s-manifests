@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: automatic-transmission
+  name: automatic-transmission-daemon
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: automatic-transmission
+            name: automatic-transmission-daemon
             port:
               number: 9091

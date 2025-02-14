@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: automatic-transmission
+  name: automatic-transmission-daemon
   namespace: argocd
 spec:
   project: default

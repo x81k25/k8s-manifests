@@ -1,4 +1,4 @@
-# app.yaml - ArgoCD Application manifest
+# app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,42 +10,22 @@ spec:
     repoURL: https://github.com/x81k25/test-app-image-pull
     targetRevision: HEAD
     path: k8s
+    helm:
+      parameters:
+      - name: imageCredentials.username
+        value: x81k25
+      - name: imageCredentials.password
+        value: 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
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-test
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      retry:           
-        limit: 2       
-        backoff:
-          duration: "5s"
-          factor: 2
-          maxDuration: "1m"
-
----
-# k8s/deployment.yaml - Basic deployment manifest
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: test-app-image-pull
-  namespace: argocd-test
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: test-app-image-pull
-  template:
-    metadata:
-      labels:
-        app: test-app-image-pull
-    spec:
-      imagePullSecrets:
-      - name: ghcr-pull-image-token
-      containers:
-      - name: test-app-image-pull
-        image: ghcr.io/x81k25/test-app-image-pull:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 2
+      backoff:
+        duration: "5s"
+        factor: 2
+        maxDuration: "1m"

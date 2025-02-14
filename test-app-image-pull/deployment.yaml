@@ -1,4 +1,5 @@
 # deployment.yaml
+# deployment.yaml (this stays almost the same)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +16,7 @@ spec:
         app: test-app-image-pull
     spec:
       imagePullSecrets:
-      - name: ghcr-pull-image-token
+      - name: ghcr-pull-image-token  # This matches the secret name we created
       containers:
       - name: test-app-image-pull
         image: ghcr.io/x81k25/test-app-image-pull:latest

@@ -1,5 +1,4 @@
 # deployment.yaml
-# deployment.yaml (this stays almost the same)
 apiVersion: apps/v1
 kind: Deployment
 metadata:

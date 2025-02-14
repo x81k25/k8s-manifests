@@ -2,19 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app-app
-  namespace: argocd-test
+  name: test-app-kustomize
   labels:
-    app: nginx-test
+    app: test-app-kustomize
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-test
+      app: test-app-kustomize
   template:
     metadata:
       labels:
-        app: nginx-test
+        app: test-app-kustomize
     spec:
       containers:
       - name: nginx

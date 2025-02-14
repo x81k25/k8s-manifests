@@ -1,0 +1,17 @@
+# kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- deployment.yaml
+- service.yaml
+- app.yaml
+
+namePrefix: ""
+nameSuffix: ""
+
+commonLabels:
+  app: test-app-kustomize
+
+namespace: argocd-test

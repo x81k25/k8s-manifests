@@ -6,7 +6,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
-  - host: "192.168.50.2"
+  - host: "transmission.prod"
     http:
       paths:
       - path: /

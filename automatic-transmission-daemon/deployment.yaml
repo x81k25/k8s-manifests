@@ -1,3 +1,4 @@
+# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,6 +13,8 @@ spec:
       labels:
         app: automatic-transmission
     spec:
+      imagePullSecrets:
+        - name: ghcr-pull-image-token
       securityContext:
         runAsUser: 1005
         runAsGroup: 1005

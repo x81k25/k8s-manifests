@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-test
+  name: test-app-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/x81k25/k8s-manifests
     targetRevision: HEAD
-    path: manifests
+    path: test-app-app
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-test

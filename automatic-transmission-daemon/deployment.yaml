@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: automatic-transmission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: automatic-transmission
+  template:
+    metadata:
+      labels:
+        app: automatic-transmission
+    spec:
+      securityContext:
+        runAsUser: 1005
+        runAsGroup: 1005
+        fsGroup: 1005
+        runAsNonRoot: true
+      containers:
+      - name: transmission
+        image: ghcr.io/x81k25/automatic-transmission-daemon:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9091
+          name: web-ui
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        volumeMounts:
+        - name: media-cache
+          mountPath: /media-cache
+        livenessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+      volumes:
+      - name: media-cache
+        persistentVolumeClaim:
+          claimName: transmission-media-cache

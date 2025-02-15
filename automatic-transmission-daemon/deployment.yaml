@@ -21,7 +21,7 @@ spec:
         fsGroup: 1005
         runAsNonRoot: true
       containers:
-      - name: transmission
+      - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon:latest
         imagePullPolicy: Always
         ports:

@@ -15,3 +15,7 @@ resources:
 commonLabels:
   app: automatic-transmission-daemon
   part-of: media-services
+
+images:
+- name: ghcr.io/x81k25/automatic-transmission-daemon
+  newTag: latest

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: automatic-transmission-daemon
-        image: ghcr.io/x81k25/automatic-transmission-daemon:latest
+        image: ghcr.io/x81k25/automatic-transmission-daemon:dev
         imagePullPolicy: Always
         ports:
         - containerPort: 9091

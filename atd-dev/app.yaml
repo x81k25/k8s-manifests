@@ -2,16 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: automatic-transmission-daemon
+  name: atd-dev
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/x81k25/automatic-transmission-daemon.git
+    repoURL: https://github.com/x81k25/k8s-manifests.git
     targetRevision: HEAD
-    path: .
-    directory:
-      recurse: true
+    path: atd-dev
   destination:
     server: https://kubernetes.default.svc
     namespace: automatic-transmission

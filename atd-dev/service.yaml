@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: automatic-transmission-daemon
+  name: atd-dev
   namespace: automatic-transmission
 spec:
   type: NodePort
@@ -11,4 +11,4 @@ spec:
     targetPort: 9091
     nodePort: 30093
   selector:
-    app: automatic-transmission-daemon
+    app: atd-dev

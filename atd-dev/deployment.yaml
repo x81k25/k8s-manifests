@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: automatic-transmission-daemon
+  name: atd-dev
   namespace: automatic-transmission
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: automatic-transmission-daemon
+      app: atd-dev
   template:
     metadata:
       labels:
-        app: automatic-transmission-daemon
+        app: atd-dev
     spec:
       containers:
       - name: automatic-transmission-daemon

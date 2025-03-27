@@ -1,0 +1,21 @@
+# app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: automatic-transmission-daemon
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/x81k25/automatic-transmission-daemon.git
+    targetRevision: HEAD
+    path: .
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: automatic-transmission
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

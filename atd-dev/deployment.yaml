@@ -1,0 +1,36 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: automatic-transmission-daemon
+  namespace: automatic-transmission
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: automatic-transmission-daemon
+  template:
+    metadata:
+      labels:
+        app: automatic-transmission-daemon
+    spec:
+      containers:
+      - name: automatic-transmission-daemon
+        image: ghcr.io/x81k25/automatic-transmission-daemon:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9091
+        volumeMounts:
+        - name: complete-volume
+          mountPath: /media-cache/complete
+        - name: incomplete-volume
+          mountPath: /media-cache/incomplete
+      volumes:
+      - name: complete-volume
+        hostPath:
+          path: /d/media-cache/dev/complete
+          type: DirectoryOrCreate
+      - name: incomplete-volume
+        hostPath:
+          path: /d/media-cache/dev/incomplete
+          type: DirectoryOrCreate

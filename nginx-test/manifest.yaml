@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-app-service
+  name: nginx-test-service
   namespace: argocd-test
 spec:
   selector:

@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/x81k25/k8s-manifests.git
     targetRevision: HEAD
-    path: atd-dev
+    path: atd-stg
   destination:
     server: https://kubernetes.default.svc
     namespace: automatic-transmission

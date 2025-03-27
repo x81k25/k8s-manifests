@@ -15,7 +15,7 @@ spec:
         app: test-app-image-pull
     spec:
       imagePullSecrets:
-      - name: ghcr-pull-image-token  # This matches the secret name we created
+      - name: ghcr-pull-image-token 
       containers:
       - name: test-app-image-pull
         image: ghcr.io/x81k25/test-app-image-pull:latest

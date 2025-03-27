@@ -11,6 +11,6 @@ namePrefix: ""
 nameSuffix: ""
 
 commonLabels:
-  app: test-app-kustomize
+  app: nginx-test-kustomize-app
 
 namespace: argocd-test

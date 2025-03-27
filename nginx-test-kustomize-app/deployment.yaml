@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app-kustomize
+  name: nginx-test-kustomize-app
   labels:
-    app: test-app-kustomize
+    app: nginx-test-kustomize-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-app-kustomize
+      app: nginx-test-kustomize-app
   template:
     metadata:
       labels:
-        app: test-app-kustomize
+        app: nginx-test-kustomize-app
     spec:
       containers:
       - name: nginx

@@ -2,14 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test-app-kustomize
+  name: nginx-test-kustomize-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/x81k25/k8s-manifests
     targetRevision: HEAD
-    path: test-app-kustomize
+    path: nginx-test-kustomize-app
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd-test

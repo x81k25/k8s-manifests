@@ -1,0 +1,28 @@
+# orchestration app
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps-from-git
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/x81k25/k8s-manifests
+      revision: HEAD
+      directories:
+      - path: "*-app"
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

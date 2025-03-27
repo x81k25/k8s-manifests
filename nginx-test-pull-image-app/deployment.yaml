@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: test-app-image-pull
+  name: nginx-test-pull-image-app
   namespace: argocd-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-app-image-pull
+      app: nginx-test-pull-image-app
   template:
     metadata:
       labels:
-        app: test-app-image-pull
+        app: nginx-test-pull-image-app
     spec:
       imagePullSecrets:
       - name: ghcr-pull-image-token 
       containers:
-      - name: test-app-image-pull
+      - name: nginx-test-pull-image-app
         image: ghcr.io/x81k25/test-app-image-pull:latest
         imagePullPolicy: Always
         ports:

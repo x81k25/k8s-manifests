@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test-app-image-pull
+  name: nginx-test-pull-image-app
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/x81k25/test-app-image-pull
+    repoURL: https://github.com/x81k25/nginx-test-pull-image-app
     targetRevision: HEAD
     path: k8s
     credentials:

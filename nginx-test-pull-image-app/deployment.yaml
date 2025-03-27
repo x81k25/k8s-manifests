@@ -18,7 +18,7 @@ spec:
       - name: ghcr-pull-image-token 
       containers:
       - name: nginx-test-pull-image-app
-        image: ghcr.io/x81k25/test-app-image-pull:latest
+        image: ghcr.io/x81k25/nginx-test-pull-image-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

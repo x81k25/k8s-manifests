@@ -18,7 +18,7 @@ spec:
         path: atd/overlays/dev
       - name: stg
         namespace: automatic-transmission
-        path: atd
+        path: atd/overlays/stg
   template:
     metadata:
       name: atd-{{name}}

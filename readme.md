@@ -57,3 +57,9 @@ kubectl delete applications.argoproj.io <appset> -n argocd --force --grace-perio
 kubectl get svc --all-namespaces | grep <port-number>
 ```
 
+- get logs
+  - applicationset-controller
+
+```bash
+kubectl logs -n argocd -l app.kubernetes.io/name=argocd-applicationset-controller
+```

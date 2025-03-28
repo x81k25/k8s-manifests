@@ -3,6 +3,8 @@
 ## kubectl apply -f atd-overlays.yaml
 # verify patch command:
 ## kubectl get applicationset atd-overlays -n argocd -o yaml
+# delete appset
+## kubectl delete applicationset atd-overlays -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -35,8 +37,4 @@ spec:
         automated:
           prune: true
           selfHeal: true
-      ignoreDifferences:
-        - group: argoproj.io
-          kind: Application
-          name: atd-{{name}}
-          namespace: argocd
+ 

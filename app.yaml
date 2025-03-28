@@ -13,11 +13,13 @@ spec:
       - path: "*-app"
   - list:
       elements:
-      - path: atd/overlays/stg
       - path: atd/overlays/dev
+        name: atd-dev
+      - path: atd/overlays/stg
+        name: atd-stg
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: '{{name}}'
     spec:
       project: default
       source:

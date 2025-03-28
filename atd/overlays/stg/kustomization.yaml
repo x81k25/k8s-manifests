@@ -45,3 +45,13 @@ patches:
       - op: replace
         path: /spec/template/spec/volumes/1/hostPath/path
         value: /d/media-cache/stg/incomplete
+  - target:
+      version: apps/v1
+      kind: Deployment
+      name: atd
+    patch: |-
+      - op: add
+        path: /spec/template/spec/securityContext
+        value:
+          runAsUser: 1005
+          runAsGroup: 1001

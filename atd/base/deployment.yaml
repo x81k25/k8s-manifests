@@ -14,6 +14,9 @@ spec:
       labels:
         app: atd
     spec:
+      securityContext:
+        runAsUser: 1005
+        runAsGroup: 1001
       containers:
       - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon

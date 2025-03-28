@@ -1,0 +1,47 @@
+#./overlays/dev/kustomizaton.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+patches:
+  - target:
+      version: v1
+      kind: Service
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/port
+        value: 9093
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 30093
+  - target:
+      version: apps/v1
+      kind: Deployment
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: ghcr.io/x81k25/automatic-transmission-daemon:dev
+  - target:
+      version: argoproj.io/v1alpha1
+      kind: Application
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/source/path
+        value: overlays/dev
+  - target:
+      version: apps/v1
+      kind: Deployment
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/0/hostPath/path
+        value: /d/media-cache/dev/complete
+      - op: replace
+        path: /spec/template/spec/volumes/1/hostPath/path
+        value: /d/media-cache/dev/incomplete

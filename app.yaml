@@ -16,6 +16,11 @@ spec:
       revision: HEAD
       directories:
       - path: "*-app"
+  - git:
+      repoURL: https://github.com/x81k25/k8s-manifests
+      revision: HEAD
+      directories:
+      - path: "atd/overlays/*"
   template:
     metadata:
       name: '{{path.basename}}'

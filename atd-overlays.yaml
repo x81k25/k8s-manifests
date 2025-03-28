@@ -15,7 +15,7 @@ spec:
       elements:
       - name: dev
         namespace: automatic-transmission
-        path: atd
+        path: atd/overlays/dev
       - name: stg
         namespace: automatic-transmission
         path: atd

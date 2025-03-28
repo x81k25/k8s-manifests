@@ -7,51 +7,38 @@ nameSuffix: -dev
 commonLabels:
   variant: dev
 patches:
-  - target:
-      version: v1
-      kind: Service
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
       name: atd
-    patch: |-
-      - op: replace
-        path: /spec/ports/0/port
-        value: 9093
-      - op: replace
-        path: /spec/ports/0/nodePort
-        value: 30093
-  - target:
-      version: apps/v1
-      kind: Deployment
-      name: atd
-    patch: |-
-      - op: replace
-        path: /spec/template/spec/containers/0/image
-        value: ghcr.io/x81k25/automatic-transmission-daemon:dev
-  - target:
-      version: argoproj.io/v1alpha1
-      kind: Application
-      name: atd
-    patch: |-
-      - op: replace
-        path: /spec/source/path
-        value: overlays/dev
-  - target:
-      version: apps/v1
-      kind: Deployment
-      name: atd
-    patch: |-
-      - op: replace
-        path: /spec/template/spec/volumes/0/hostPath/path
-        value: /d/media-cache/dev/complete
-      - op: replace
-        path: /spec/template/spec/volumes/1/hostPath/path
-        value: /d/media-cache/dev/incomplete
-  - target:
-      version: apps/v1
-      kind: Deployment
-      name: atd
-    patch: |-
-      - op: add
-        path: /spec/template/spec/securityContext
-        value:
-          runAsUser: 1005
-          runAsGroup: 1001
+      namespace: automatic-transmission
+    spec:
+      template:
+        spec:
+          containers:
+          - name: automatic-transmission-daemon
+            image: ghcr.io/x81k25/automatic-transmission-daemon:stg
+            volumeMounts:
+            - name: complete-volume
+              mountPath: /media-cache/dev/complete
+            - name: incomplete-volume
+              mountPath: /media-cache/dev/incomplete
+          volumes:
+          - name: complete-volume
+            hostPath:
+              path: /d/media-cache/dev/complete
+          - name: incomplete-volume
+            hostPath:
+              path: /d/media-cache/dev/incomplete
+- target:
+    version: v1
+    kind: Service
+    name: atd
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/port
+      value: 9093
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30093

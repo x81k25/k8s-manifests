@@ -6,14 +6,26 @@ metadata:
   namespace: argocd
 spec:
   generators:
+  # Generator for apps with overlays
+  - git:
+      repoURL: https://github.com/x81k25/k8s-manifests
+      revision: HEAD
+      directories:
+      - path: "*-app/overlays/*"
+  # Generator for regular apps without overlays
   - git:
       repoURL: https://github.com/x81k25/k8s-manifests
       revision: HEAD
       directories:
       - path: "*-app"
+      - exclude: true
+        path: "*-app/overlays"
+      - exclude: true
+        path: "*-app/base"
   template:
     metadata:
-      name: '{{path.basename}}'
+      # Use a conditional expression to name applications differently based on path structure
+      name: '{{if index .path.segments 2}}{{index .path.segments 0}}-{{index .path.segments 2}}{{else}}{{path.basename}}{{end}}'
     spec:
       project: default
       source:

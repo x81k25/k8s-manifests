@@ -7,27 +7,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: apps-from-git
+  name: atd-overlays
   namespace: argocd
 spec:
   generators:
-  - git:
-      repoURL: https://github.com/x81k25/k8s-manifests
-      revision: HEAD
-      directories:
-      - path: "*-app"
+  - list:
+      elements:
+      - name: dev
+        namespace: automatic-transmission
+        path: atd/overlays/dev
+      - name: stg
+        namespace: automatic-transmission
+        path: atd/overlays/stg
   template:
     metadata:
-      name: '{{path.basename}}'
+      name: atd-{{name}}
     spec:
       project: default
       source:
-        repoURL: https://github.com/x81k25/k8s-manifests
+        repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: '{{path}}'
+        path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd-test
+        namespace: "{{namespace}}"
       syncPolicy:
         automated:
           prune: true

@@ -1,4 +1,4 @@
-# orchestration app
+# ./app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -6,25 +6,18 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  # Generator for detecting and using overlay environments
-  - git:
-      repoURL: https://github.com/x81k25/k8s-manifests
-      revision: HEAD
-      directories:
-      - path: "*-app/overlays/*"  # This matches patterns like atd-app/overlays/dev
-  # Generator for apps without overlays (keep your existing pattern)
   - git:
       repoURL: https://github.com/x81k25/k8s-manifests
       revision: HEAD
       directories:
       - path: "*-app"
-      - exclude: true
-        path: "*-app/overlays"
-      - exclude: true 
-        path: "*-app/base"
+  - list:
+      elements:
+      - path: atd/overlays/stg
+      - path: atd/overlays/dev
   template:
     metadata:
-      name: '{{path.basename}}-{{path.segments.2}}'
+      name: '{{path.basename}}'
     spec:
       project: default
       source:
@@ -33,7 +26,6 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           prune: true

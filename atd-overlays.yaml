@@ -15,8 +15,10 @@ spec:
       elements:
       - name: dev
         namespace: automatic-transmission
+        path: atd/overalys/dev
       - name: stg
         namespace: automatic-transmission
+        path: atd/overalys/stg
   template:
     metadata:
       name: atd-{{name}}
@@ -25,7 +27,7 @@ spec:
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "atd/overlays/{{name}}"
+        path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{namespace}}"

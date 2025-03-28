@@ -1,38 +1,36 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
+resources:
 - ../../base
 namePrefix: atd-
 nameSuffix: -stg
 commonLabels:
   variant: stg
-patchesStrategicMerge:
-- |-
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: atd
-  spec:
-    ports:
-    - port: 9092
-      targetPort: 9091
-      nodePort: 30092
-- |-
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: atd
-  spec:
-    template:
-      spec:
-        containers:
-        - name: automatic-transmission-daemon
-          image: ghcr.io/x81k25/automatic-transmission-daemon:stg
-- |-
-  apiVersion: argoproj.io/v1alpha1
-  kind: Application
-  metadata:
-    name: atd
-  spec:
-    source:
-      path: overlays/stg
+patches:
+  - target:
+      version: v1
+      kind: Service
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/port
+        value: 9092
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 30092
+  - target:
+      version: apps/v1
+      kind: Deployment
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: ghcr.io/x81k25/automatic-transmission-daemon:stg
+  - target:
+      version: argoproj.io/v1alpha1
+      kind: Application
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/source/path
+        value: overlays/stg

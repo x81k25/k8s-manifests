@@ -7,28 +7,38 @@ nameSuffix: -stg
 commonLabels:
   variant: stg
 patches:
-- target:
-    version: apps/v1
+- patch: |-
+    apiVersion: apps/v1
     kind: Deployment
+    metadata:
+      name: atd
+      namespace: automatic-transmission
+    spec:
+      template:
+        spec:
+          containers:
+          - name: automatic-transmission-daemon
+            image: ghcr.io/x81k25/automatic-transmission-daemon:stg
+            volumeMounts:
+            - name: complete-volume
+              mountPath: /media-cache/stg/complete
+            - name: incomplete-volume
+              mountPath: /media-cache/stg/incomplete
+          volumes:
+          - name: complete-volume
+            hostPath:
+              path: /d/media-cache/stg/complete
+          - name: incomplete-volume
+            hostPath:
+              path: /d/media-cache/stg/incomplete
+- target:
+    version: v1
+    kind: Service
     name: atd
   patch: |-
     - op: replace
-      path: /spec/template/spec/containers/0/image
-      value: ghcr.io/x81k25/automatic-transmission-daemon:stg
+      path: /spec/ports/0/port
+      value: 9092
     - op: replace
-      path: /spec/template/spec/volumes/0/hostPath/path
-      value: /d/media-cache/stg/complete
-    - op: replace
-      path: /spec/template/spec/volumes/1/hostPath/path
-      value: /d/media-cache/stg/incomplete
-    - op: replace
-      path: /spec/template/spec/containers/0/volumeMounts/0/mountPath
-      value: /media-cache/stg/complete
-    - op: replace
-      path: /spec/template/spec/containers/0/volumeMounts/1/mountPath
-      value: /media-cache/stg/incomplete
-    - op: add
-      path: /spec/template/spec/securityContext
-      value:
-        runAsUser: 1005
-        runAsGroup: 1001
+      path: /spec/ports/0/nodePort
+      value: 30092

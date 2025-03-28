@@ -45,6 +45,24 @@ applications using Kustomize for configuration management:
 
 ## useful code
 
+- exec into pod
+
+```bash
+kubectl exec -it <pod-name> -n <namespace> -- /bin/sh
+```
+
+- deploy 
+
+```bash
+kubectl apply -k <app.yaml>
+```
+
+  - deploy overlay
+
+```bash
+kubectl apply -k <overlay-dir>
+```
+
 - delete stubborn apps
 
 ```bash 
@@ -62,4 +80,10 @@ kubectl get svc --all-namespaces | grep <port-number>
 
 ```bash
 kubectl logs -n argocd -l app.kubernetes.io/name=argocd-applicationset-controller
+```
+
+- get deployed pod config
+
+```bash
+kubectl get pod <pod-name> -n <namespace> -o yaml
 ```

@@ -15,8 +15,6 @@ spec:
       elements:
       - path: atd/overlays/dev
         name: atd-dev
-      - path: atd/overlays/stg
-        name: atd-stg
   template:
     metadata:
       name: '{{name}}'

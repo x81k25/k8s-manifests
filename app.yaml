@@ -6,13 +6,13 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  # Generator for apps with overlays
+  # Generator for detecting and using overlay environments
   - git:
       repoURL: https://github.com/x81k25/k8s-manifests
       revision: HEAD
       directories:
-      - path: "*-app/overlays/*"
-  # Generator for regular apps without overlays
+      - path: "*-app/overlays/*"  # This matches patterns like atd-app/overlays/dev
+  # Generator for apps without overlays (keep your existing pattern)
   - git:
       repoURL: https://github.com/x81k25/k8s-manifests
       revision: HEAD
@@ -20,12 +20,11 @@ spec:
       - path: "*-app"
       - exclude: true
         path: "*-app/overlays"
-      - exclude: true
+      - exclude: true 
         path: "*-app/base"
   template:
     metadata:
-      # Use a conditional expression to name applications differently based on path structure
-      name: '{{if index .path.segments 2}}{{index .path.segments 0}}-{{index .path.segments 2}}{{else}}{{path.basename}}{{end}}'
+      name: '{{path.basename}}-{{path.segments.2}}'
     spec:
       project: default
       source:
@@ -34,6 +33,7 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           prune: true

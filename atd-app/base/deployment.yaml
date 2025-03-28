@@ -28,9 +28,9 @@ spec:
       volumes:
       - name: complete-volume
         hostPath:
-          path: /d/media-cache/dev/complete
+          path: /d/media-cache/ENV/complete
           type: DirectoryOrCreate
       - name: incomplete-volume
         hostPath:
-          path: /d/media-cache/dev/incomplete
+          path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate

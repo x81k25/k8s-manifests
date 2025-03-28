@@ -15,10 +15,10 @@ spec:
       elements:
       - name: dev
         namespace: automatic-transmission
-        path: atd/overlays/dev
+        path: atd
       - name: stg
         namespace: automatic-transmission
-        path: atd/overlays/stg
+        path: atd
   template:
     metadata:
       name: atd-{{name}}

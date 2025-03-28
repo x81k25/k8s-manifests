@@ -21,6 +21,12 @@ patches:
     - op: replace
       path: /spec/template/spec/volumes/1/hostPath/path
       value: /d/media-cache/stg/incomplete
+    - op: replace
+      path: /spec/template/spec/containers/0/volumeMounts/0/mountPath
+      value: /media-cache/stg/complete
+    - op: replace
+      path: /spec/template/spec/containers/0/volumeMounts/1/mountPath
+      value: /media-cache/stg/incomplete
     - op: add
       path: /spec/template/spec/securityContext
       value:

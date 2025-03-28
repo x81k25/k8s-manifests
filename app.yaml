@@ -3,6 +3,8 @@
 ## kubectl apply -f app.yaml
 # verify patch command:
 ## kubectl get applicationset apps-from-git -n argocd -o yaml
+# delete appset
+## kubectl delete applicationset apps-from-git-n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet

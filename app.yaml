@@ -16,6 +16,7 @@ spec:
       revision: HEAD
       directories:
       - path: "*-app"
+      - path: "atd"
   template:
     metadata:
       name: '{{path.basename}}'
@@ -27,7 +28,6 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: argocd-test
       syncPolicy:
         automated:
           prune: true

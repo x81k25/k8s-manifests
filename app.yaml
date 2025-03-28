@@ -12,6 +12,7 @@ spec:
       directories:
       - path: "!argocd-config"  
       - path: "*-app"
+      - path: "atd-dev"
   template:
     metadata:
       name: '{{path.basename}}'

@@ -1,6 +1,6 @@
 # ./app.yaml
 # patch command:
-## kubectl patch applicationset apps-from-git -n argocd --type='json' -p='[{"op": "replace", "path": "/spec", "value": {"generators":[{"git":{"repoURL":"https://github.com/x81k25/k8s-manifests","revision":"HEAD","directories":[{"path":"*-app"}]}}],"template":{"metadata":{"name":"{{path.basename}}"},"spec":{"project":"default","source":{"repoURL":"https://github.com/x81k25/k8s-manifests","targetRevision":"HEAD","path":"{{path}}"},"destination":{"server":"https://kubernetes.default.svc"},"syncPolicy":{"automated":{"prune":true,"selfHeal":true}}}}}}]'
+## kubectl apply -f app.yaml
 # verify patch command:
 ## kubectl get applicationset apps-from-git -n argocd -o yaml
 
@@ -16,7 +16,6 @@ spec:
       revision: HEAD
       directories:
       - path: "*-app"
-      - path: "atd"
   template:
     metadata:
       name: '{{path.basename}}'

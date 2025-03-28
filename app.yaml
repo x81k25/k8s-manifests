@@ -1,4 +1,4 @@
-# ./app.yaml
+# git-apps.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -11,13 +11,9 @@ spec:
       revision: HEAD
       directories:
       - path: "*-app"
-  - list:
-      elements:
-      - path: atd/overlays/dev
-        name: atd-dev
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{path.basename}}'
     spec:
       project: default
       source:
@@ -30,5 +26,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
-      imagePullSecrets:
-      - name: ghcr-pull-image-token

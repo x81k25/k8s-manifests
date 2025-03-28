@@ -1,8 +1,8 @@
+#./overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-namePrefix: atd-
 nameSuffix: -stg
 commonLabels:
   variant: stg
@@ -34,3 +34,14 @@ patches:
       - op: replace
         path: /spec/source/path
         value: overlays/stg
+  - target:
+      version: apps/v1
+      kind: Deployment
+      name: atd
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/0/hostPath/path
+        value: /d/media-cache/stg/complete
+      - op: replace
+        path: /spec/template/spec/volumes/1/hostPath/path
+        value: /d/media-cache/stg/incomplete

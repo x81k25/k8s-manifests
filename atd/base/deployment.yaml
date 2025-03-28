@@ -1,4 +1,4 @@
-# base/deployment.yaml
+# ./base/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,9 +28,9 @@ spec:
       volumes:
       - name: complete-volume
         hostPath:
-          path: /d/media-cache/ENV/complete
+          path: /d/media-cache/dev/complete
           type: DirectoryOrCreate
       - name: incomplete-volume
         hostPath:
-          path: /d/media-cache/ENV/incomplete
+          path: /d/media-cache/dev/incomplete
           type: DirectoryOrCreate

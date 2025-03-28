@@ -1,0 +1,35 @@
+# ./app.yaml
+# patch command:
+## kubectl apply -f atd-overlays.yaml
+# verify patch command:
+## kubectl get applicationset atd-overlays -n argocd -o yaml
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: atd-overlays
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: dev
+        namespace: automatic-transmission-dev
+      - name: stg
+        namespace: automatic-transmission-stg
+  template:
+    metadata:
+      name: atd-{{name}}
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: atd/overlays/{{name}}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

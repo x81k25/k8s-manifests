@@ -1,4 +1,4 @@
-# git-apps.yaml
+# ./app.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -11,6 +11,7 @@ spec:
       revision: HEAD
       directories:
       - path: "*-app"
+      - path: "atd-*"
   template:
     metadata:
       name: '{{path.basename}}'

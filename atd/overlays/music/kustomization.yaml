@@ -1,0 +1,44 @@
+#./overlays/stg/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -music
+commonLabels:
+  variant: music
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: atd
+      namespace: automatic-transmission
+    spec:
+      template:
+        spec:
+          containers:
+          - name: automatic-transmission-daemon
+            image: ghcr.io/x81k25/automatic-transmission-daemon:main
+            volumeMounts:
+            - name: complete-volume
+              mountPath: /media-cache/prod/complete
+            - name: incomplete-volume
+              mountPath: /media-cache/prod/incomplete
+          volumes:
+          - name: complete-volume
+            hostPath:
+              path: /d/media-cache/prod/complete
+          - name: incomplete-volume
+            hostPath:
+              path: /d/media-cache/prod/incomplete
+- target:
+    version: v1
+    kind: Service
+    name: atd
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/port
+      value: 909
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30094

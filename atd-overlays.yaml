@@ -21,6 +21,9 @@ spec:
       - name: stg
         namespace: automatic-transmission
         path: atd/overlays/stg
+      - name: prod
+        namespace: automatic-transmission
+        path: atd/overlays/prod
   template:
     metadata:
       name: atd-{{name}}

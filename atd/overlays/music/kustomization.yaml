@@ -27,7 +27,7 @@ patches:
           volumes:
           - name: complete-volume
             hostPath:
-              path: /d/media-cache/prod/complete
+              path: /k/media/music/
           - name: incomplete-volume
             hostPath:
               path: /d/media-cache/prod/incomplete
@@ -38,7 +38,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/port
-      value: 909
+      value: 9094
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30094

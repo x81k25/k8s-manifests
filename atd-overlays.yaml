@@ -24,6 +24,9 @@ spec:
       - name: prod
         namespace: automatic-transmission
         path: atd/overlays/prod
+      - name: music
+        namespace: automatic-transmission
+        path: atd/overlays/music
   template:
     metadata:
       name: atd-{{name}}

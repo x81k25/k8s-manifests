@@ -17,6 +17,8 @@ spec:
       containers:
         - name: plex
           image: plexinc/pms-docker:latest
+          securityContext:
+            supplementalGroups: [1001]
           env:
             - name: TZ
               value: "America/Chicago"

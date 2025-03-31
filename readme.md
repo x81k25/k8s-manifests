@@ -62,6 +62,10 @@ kubectl get pod <pod-name> -n <namespace> -o yaml
 ```bash
 kubectl logs <pod-name> -n <namespace>
 ```
+  - delete pod
+```bash
+kubectl delete pod <pod-name> -n <namespace>
+```
 
 - overlay actions
   - deploy overlay

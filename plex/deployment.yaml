@@ -67,6 +67,7 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
+            privileged: true
 #            supplementalGroups:
 #              - 44 
 #              - 1001  

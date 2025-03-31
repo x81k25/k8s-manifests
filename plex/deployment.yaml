@@ -26,7 +26,7 @@ spec:
                   name: plex-config
                   key: PLEX_CLAIM
             - name: ADVERTISE_IP
-              value: "http://server-ip:32400/"
+              value: "http://100.64.100.6:32400/"
           volumeMounts:
             - mountPath: /config
               name: plex-config
@@ -34,6 +34,8 @@ spec:
               name: plex-transcode
             - mountPath: /data
               name: plex-media
+            - mountPath: /dev/bus/usb
+              name: usb-devices
       volumes:
         - name: plex-config
           hostPath:
@@ -44,3 +46,6 @@ spec:
         - name: plex-media
           hostPath:
             path: /k/media
+        - name: usb-devices
+          hostPath:
+            path: /dev/bus/usb

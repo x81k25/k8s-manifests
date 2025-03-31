@@ -97,7 +97,7 @@ spec:
             type: Directory
         - name: plex-transcode
           hostPath:
-            path: /d/k8s/volumes/transcode
+            path: /d/k8s/volumes/plex/transcode
             type: Directory
         - name: plex-media
           hostPath:

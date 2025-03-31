@@ -19,9 +19,9 @@ spec:
         - name: plex
           image: plexinc/pms-docker:latest
           securityContext:
-            runAsUser: 1001  
-            runAsGroup: 1005
-            fsGroup: 1005
+            runAsUser: 999
+            runAsGroup: 999
+            supplementalGroups: [1001]
           env:
             - name: TZ
               value: "America/Chicago"
@@ -31,7 +31,7 @@ spec:
                   name: plex-config
                   key: PLEX_CLAIM
             - name: ADVERTISE_IP
-              value: "http://100.64.100.6:32400/"
+              value: "http://{{server_ip}}:32400/"
           volumeMounts:
             - mountPath: /config
               name: plex-config

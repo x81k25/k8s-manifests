@@ -17,12 +17,12 @@ spec:
       hostNetwork: true
       containers:
         - name: plex
-          image: linuxserver/plex:latest
+          image: plexinc/pms-docker:latest
           env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
+            - name: PLEX_UID
+              value: "999"
+            - name: PLEX_GID
+              value: "999"
             - name: TZ
               value: "America/Chicago"
             - name: PLEX_CLAIM
@@ -66,8 +66,9 @@ spec:
             - mountPath: /media
               name: plex-media
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            runAsUser: 999
+            runAsGroup: 999
+            supplementalGroups: [1001]
             privileged: true
           livenessProbe:
             httpGet:

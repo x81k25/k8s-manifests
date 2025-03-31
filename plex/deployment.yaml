@@ -14,19 +14,6 @@ spec:
         app: plex
     spec:
       hostNetwork: true
-      securityContext:
-        fsGroup: 999
-      initContainers:
-        - name: volume-permissions
-          image: busybox
-          command: ["sh", "-c", "mkdir -p /config/Library/Application\\ Support/Plex\\ Media\\ Server && chown -R 999:999 /config /transcode && chmod -R 755 /config /transcode"]
-          volumeMounts:
-            - mountPath: /config
-              name: plex-config
-            - mountPath: /transcode
-              name: plex-transcode
-          securityContext:
-            runAsUser: 0
       containers:
         - name: plex
           image: plexinc/pms-docker:latest
@@ -38,76 +25,22 @@ spec:
                 secretKeyRef:
                   name: plex-config
                   key: PLEX_CLAIM
-            - name: PLEX_UID
-              value: "999"
-            - name: PLEX_GID
-              value: "999"
-            - name: NVIDIA_VISIBLE_DEVICES
-              value: "all"
-            - name: NVIDIA_DRIVER_CAPABILITIES
-              value: "compute,video,utility"
-          ports:
-            - containerPort: 32400
-              name: web
-            - containerPort: 1900
-              protocol: UDP
-              name: dlna
-            - containerPort: 3005
-              name: control
-            - containerPort: 8324
-              name: control-alt
-            - containerPort: 32469
-              name: streaming
-            - containerPort: 32410
-              protocol: UDP
-              name: gdm-1
-            - containerPort: 32412
-              protocol: UDP
-              name: gdm-2
-            - containerPort: 32413
-              protocol: UDP
-              name: gdm-3
-            - containerPort: 32414
-              protocol: UDP
-              name: gdm-4
+            - name: ADVERTISE_IP
+              value: "http://server-ip:32400/"
           volumeMounts:
             - mountPath: /config
               name: plex-config
             - mountPath: /transcode
               name: plex-transcode
-            - mountPath: /media
+            - mountPath: /data
               name: plex-media
-          securityContext:
-            runAsUser: 999
-            runAsGroup: 999
-          livenessProbe:
-            httpGet:
-              path: /web/index.html
-              port: 32400
-            initialDelaySeconds: 180
-            timeoutSeconds: 5
-            periodSeconds: 15
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: /web/index.html
-              port: 32400
-            initialDelaySeconds: 120
-            timeoutSeconds: 5
-            periodSeconds: 15
-          resources:
-            limits:
-              nvidia.com/gpu: "1"
       volumes:
         - name: plex-config
           hostPath:
             path: /d/k8s/volumes/plex/config
-            type: Directory
         - name: plex-transcode
           hostPath:
             path: /d/k8s/volumes/plex/transcode
-            type: Directory
         - name: plex-media
           hostPath:
             path: /k/media
-            type: Directory

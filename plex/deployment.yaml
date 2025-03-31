@@ -66,12 +66,12 @@ spec:
             - mountPath: /media
               name: plex-media
           securityContext:
-            runAsUser: 999
-            runAsGroup: 999
+            runAsUser: 911
+            runAsGroup: 1000
             privileged: true
-#            supplementalGroups:
-#              - 44 
-#              - 1001  
+            supplementalGroups:
+              - 44 
+              - 1001
           livenessProbe:
             httpGet:
               path: /web/index.html

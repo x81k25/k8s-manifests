@@ -68,8 +68,8 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             supplementalGroups:
-              - 44  # video group
-              - 1001  # x81-group
+              - 44 
+              - 1001  
           livenessProbe:
             httpGet:
               path: /web/index.html

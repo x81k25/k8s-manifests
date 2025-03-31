@@ -67,9 +67,9 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
-            supplementalGroups:
-              - 44 
-              - 1001  
+#            supplementalGroups:
+#              - 44 
+#              - 1001  
           livenessProbe:
             httpGet:
               path: /web/index.html

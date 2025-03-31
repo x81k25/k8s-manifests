@@ -1,4 +1,3 @@
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,14 +14,23 @@ spec:
         app: plex
     spec:
       hostNetwork: true
+      securityContext:
+        fsGroup: 999
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /config/Library/Application\\ Support/Plex\\ Media\\ Server && chown -R 999:999 /config /transcode && chmod -R 755 /config /transcode"]
+          volumeMounts:
+            - mountPath: /config
+              name: plex-config
+            - mountPath: /transcode
+              name: plex-transcode
+          securityContext:
+            runAsUser: 0
       containers:
         - name: plex
           image: plexinc/pms-docker:latest
           env:
-            - name: PLEX_UID
-              value: "999"
-            - name: PLEX_GID
-              value: "999"
             - name: TZ
               value: "America/Chicago"
             - name: PLEX_CLAIM
@@ -30,8 +38,14 @@ spec:
                 secretKeyRef:
                   name: plex-config
                   key: PLEX_CLAIM
+            - name: PLEX_UID
+              value: "999"
+            - name: PLEX_GID
+              value: "999"
             - name: NVIDIA_VISIBLE_DEVICES
               value: "all"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "compute,video,utility"
           ports:
             - containerPort: 32400
               name: web
@@ -59,8 +73,6 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: plex-config
-            - mountPath: /data
-              name: plex-data
             - mountPath: /transcode
               name: plex-transcode
             - mountPath: /media
@@ -68,21 +80,21 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
-            supplementalGroups: [1001]
-            privileged: true
           livenessProbe:
             httpGet:
               path: /web/index.html
               port: 32400
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            failureThreshold: 3
+            initialDelaySeconds: 180
+            timeoutSeconds: 5
+            periodSeconds: 15
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /web/index.html
               port: 32400
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 120
+            timeoutSeconds: 5
+            periodSeconds: 15
           resources:
             limits:
               nvidia.com/gpu: "1"
@@ -90,10 +102,6 @@ spec:
         - name: plex-config
           hostPath:
             path: /d/k8s/volumes/plex/config
-            type: Directory
-        - name: plex-data
-          hostPath:
-            path: /d/k8s/volumes/plex/data
             type: Directory
         - name: plex-transcode
           hostPath:

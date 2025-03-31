@@ -56,7 +56,7 @@ kubectl exec -it <pod-name> -n <namespace> -- /bin/sh
 ```
   - get pod config
 ```bash
-kubectl get pod <pod-name> -n <namespace> -o yaml
+kubectl describe pod <pod-name> -n <namespace> -o yaml
 ```
   - get pod logs
 ```bash

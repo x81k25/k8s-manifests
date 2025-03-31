@@ -19,9 +19,9 @@ spec:
         - name: plex
           image: plexinc/pms-docker:latest
           securityContext:
-            runAsUser: 1005  
-            runAsGroup: 1001
-            fsGroup: 1001 
+            runAsUser: 1001  
+            runAsGroup: 1005
+            fsGroup: 1005
           env:
             - name: TZ
               value: "America/Chicago"

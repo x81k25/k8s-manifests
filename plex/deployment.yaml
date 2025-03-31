@@ -21,7 +21,6 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
-            supplementalGroups: [1001]
           env:
             - name: TZ
               value: "America/Chicago"

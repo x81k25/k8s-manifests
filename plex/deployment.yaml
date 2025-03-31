@@ -69,8 +69,6 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
             privileged: true
-            supplementalGroups:
-              - 1001
           livenessProbe:
             httpGet:
               path: /web/index.html

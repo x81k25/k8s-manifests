@@ -1,3 +1,4 @@
+# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +19,9 @@ spec:
         - name: plex
           image: plexinc/pms-docker:latest
           securityContext:
-            supplementalGroups: [1001]
+            runAsUser: 1005  
+            runAsGroup: 1001
+            fsGroup: 1001 
           env:
             - name: TZ
               value: "America/Chicago"

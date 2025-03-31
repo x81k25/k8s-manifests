@@ -5,7 +5,7 @@ metadata:
   name: plex
   namespace: media-prod
 spec:
-  type: ClusterIP
+  type: NodePort  
   ports:
     - port: 32400
       targetPort: 32400

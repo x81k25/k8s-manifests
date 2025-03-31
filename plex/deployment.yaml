@@ -17,10 +17,10 @@ spec:
       hostNetwork: true
       containers:
         - name: plex
-          image: linuxserver/plex:1.32.8
+          image: linuxserver/plex:latest
           env:
             - name: PUID
-              value: "911"
+              value: "1000"
             - name: PGID
               value: "1000"
             - name: TZ
@@ -66,11 +66,10 @@ spec:
             - mountPath: /media
               name: plex-media
           securityContext:
-            runAsUser: 911
+            runAsUser: 1000
             runAsGroup: 1000
             privileged: true
             supplementalGroups:
-              - 44 
               - 1001
           livenessProbe:
             httpGet:

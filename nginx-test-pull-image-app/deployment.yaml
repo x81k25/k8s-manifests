@@ -2,23 +2,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-test-pull-image-app
-  namespace: argocd-test
+  name: nginx-test
+  labels:
+    app: nginx-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-test-pull-image-app
+      app: nginx-test
   template:
     metadata:
       labels:
-        app: nginx-test-pull-image-app
+        app: nginx-test
     spec:
-      imagePullSecrets:
-      - name: ghcr-pull-image-token 
       containers:
-      - name: nginx-test-pull-image-app
-        image: ghcr.io/x81k25/nginx-test-pull-image-app:latest
+      - name: nginx
+        image: ghcr.io/${GITHUB_USERNAME}/nginx-test-pull-image-app:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+        env:
+        - name: DOCKER_REGISTRY
+          value: ghcr.io
+        - name: DOCKER_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: ghcr-pull-secrets
+              key: username
+        - name: DOCKER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ghcr-pull-secrets
+              key: password
+      imagePullSecrets:
+      - name: ghcr-pull-secrets

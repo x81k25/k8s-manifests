@@ -23,14 +23,17 @@ patches:
               value: "http://{{server_ip}}:30400/"
             - name: PLEX_CLAIM
               $patch: delete
+            volumeMounts:
+            - name: plex-media
+              mountPath: /data
           volumes:
           - name: plex-config
             hostPath:
               path: /d/k8s/volumes/plex-dev/config
           - name: plex-transcode
             hostPath:
-              path: /d/k8s/volumes/plex-dev/transcode          
-          - name: plex-data
+              path: /d/k8s/volumes/plex-dev/transcode
+          - name: plex-media
             hostPath:
               path: /d/k8s/volumes/plex-dev/data
 - target:

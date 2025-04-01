@@ -20,7 +20,7 @@ patches:
           - name: plex
             env:
             - name: ADVERTISE_IP
-              value: "http://{{server_ip}}:33400/"
+              value: "http://192.168.1.100:30400/"
           volumes:
           - name: plex-config
             hostPath:
@@ -35,55 +35,55 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/port
-      value: 33400
+      value: 30400
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 33400
+      value: 30400
     - op: replace
       path: /spec/ports/1/port
-      value: 1901
+      value: 30900
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 1901
+      value: 30900
     - op: replace
       path: /spec/ports/2/port
-      value: 3006
+      value: 30050
     - op: replace
       path: /spec/ports/2/nodePort
-      value: 3006
+      value: 30050
     - op: replace
       path: /spec/ports/3/port
-      value: 8325
+      value: 30824
     - op: replace
       path: /spec/ports/3/nodePort
-      value: 8325
+      value: 30824
     - op: replace
       path: /spec/ports/4/port
-      value: 32470
+      value: 30469
     - op: replace
       path: /spec/ports/4/nodePort
-      value: 32470
+      value: 30469
     - op: replace
       path: /spec/ports/5/port
-      value: 32420
+      value: 30410
     - op: replace
       path: /spec/ports/5/nodePort
-      value: 32420
+      value: 30410
     - op: replace
       path: /spec/ports/6/port
-      value: 32422
+      value: 30412
     - op: replace
       path: /spec/ports/6/nodePort
-      value: 32422
+      value: 30412
     - op: replace
       path: /spec/ports/7/port
-      value: 32423
+      value: 30413
     - op: replace
       path: /spec/ports/7/nodePort
-      value: 32423
+      value: 30413
     - op: replace
       path: /spec/ports/8/port
-      value: 32424
+      value: 30414
     - op: replace
       path: /spec/ports/8/nodePort
-      value: 32424
+      value: 30414

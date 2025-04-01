@@ -16,7 +16,7 @@ spec:
   - list:
       elements:
       # prod containers
-      - name: plex
+      - name: plex-prod
         path: plex/overlays/prod
         enviroment: prod
       - name: atd-prod
@@ -35,7 +35,7 @@ spec:
         enviroment: dev
       - name: plex-dev
         path: plex/overlays/dev
-        environment: dev
+        enviroment: dev
   template:
     metadata:
       name: '{{name}}'

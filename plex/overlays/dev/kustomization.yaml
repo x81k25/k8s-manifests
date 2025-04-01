@@ -1,0 +1,89 @@
+# ./overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: plex
+    spec:
+      template:
+        spec:
+          hostNetwork: false
+          containers:
+          - name: plex
+            env:
+            - name: ADVERTISE_IP
+              value: "http://{{server_ip}}:33400/"
+          volumes:
+          - name: plex-config
+            hostPath:
+              path: /d/k8s/volumes/plex-dev/config
+          - name: plex-transcode
+            hostPath:
+              path: /d/k8s/volumes/plex-dev/transcode
+- target:
+    version: v1
+    kind: Service
+    name: plex
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/port
+      value: 33400
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 33400
+    - op: replace
+      path: /spec/ports/1/port
+      value: 1901
+    - op: replace
+      path: /spec/ports/1/nodePort
+      value: 1901
+    - op: replace
+      path: /spec/ports/2/port
+      value: 3006
+    - op: replace
+      path: /spec/ports/2/nodePort
+      value: 3006
+    - op: replace
+      path: /spec/ports/3/port
+      value: 8325
+    - op: replace
+      path: /spec/ports/3/nodePort
+      value: 8325
+    - op: replace
+      path: /spec/ports/4/port
+      value: 32470
+    - op: replace
+      path: /spec/ports/4/nodePort
+      value: 32470
+    - op: replace
+      path: /spec/ports/5/port
+      value: 32420
+    - op: replace
+      path: /spec/ports/5/nodePort
+      value: 32420
+    - op: replace
+      path: /spec/ports/6/port
+      value: 32422
+    - op: replace
+      path: /spec/ports/6/nodePort
+      value: 32422
+    - op: replace
+      path: /spec/ports/7/port
+      value: 32423
+    - op: replace
+      path: /spec/ports/7/nodePort
+      value: 32423
+    - op: replace
+      path: /spec/ports/8/port
+      value: 32424
+    - op: replace
+      path: /spec/ports/8/nodePort
+      value: 32424

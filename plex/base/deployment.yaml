@@ -1,9 +1,7 @@
-# deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: plex
-  namespace: media-prod
 spec:
   replicas: 1
   selector:
@@ -14,7 +12,6 @@ spec:
       labels:
         app: plex
     spec:
-      hostNetwork: true
       containers:
         - name: plex
           image: plexinc/pms-docker:latest
@@ -26,8 +23,6 @@ spec:
                 secretKeyRef:
                   name: plex-config
                   key: PLEX_CLAIM
-            - name: ADVERTISE_IP
-              value: "http://{{server_ip}}:32400/"
             - name: PLEX_UID
               value: "1005"
             - name: PLEX_GID
@@ -39,8 +34,6 @@ spec:
               name: plex-transcode
             - mountPath: /data
               name: plex-media
-            - mountPath: /dev/bus/usb
-              name: usb-devices
       volumes:
         - name: plex-config
           hostPath:
@@ -51,6 +44,3 @@ spec:
         - name: plex-media
           hostPath:
             path: /k/media
-        - name: usb-devices
-          hostPath:
-            path: /dev/bus/usb

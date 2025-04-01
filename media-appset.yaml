@@ -15,8 +15,9 @@ spec:
   generators:
   - list:
       elements:
+      # prod containers
       - name: plex
-        path: plex
+        path: plex/overalys/prod
         environment: prod
       - name: atd-prod
         path: atd/overlays/prod
@@ -24,14 +25,17 @@ spec:
       - name: music
         path: atd/overlays/music
         enviroment: prod
-
+      # stg containers
       - name: atd-stg
         path: atd/overlays/stg
         enviroment: stg
-      
+      # dev containers
       - name: atd-dev
         path: atd/overlays/dev
         enviroment: dev
+      - name: plex-dev
+        path: plex/overlays/dev
+        environment: dev
   template:
     metadata:
       name: '{{name}}'

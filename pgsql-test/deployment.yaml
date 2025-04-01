@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgsql-test
+  labels:
+    app: pgsql-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgsql-test
+  template:
+    metadata:
+      labels:
+        app: pgsql-test
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        ports:
+        - containerPort: 5433
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "postgres"

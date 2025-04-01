@@ -1,0 +1,36 @@
+# ./app.yaml
+# patch command:
+## kubectl apply -f pgsql-appset.yaml
+# verify patch command:
+## kubectl get applicationset pgsql-appset -n argocd -o yaml
+# delete appset
+## kubectl delete applicationset pgsql-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pgsql-appset
+  namespace: pgsql
+spec:
+  generators:
+  - list:
+      elements:
+      - name: pgsql-test
+        path: pgsql-test
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "pgsql-test"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+ 

@@ -1,46 +1,46 @@
-apiVersion: apps/v1
-kind: Deployment
+# ./plex/base/service.yaml
+apiVersion: v1
+kind: Service
 metadata:
   name: plex
 spec:
-  replicas: 1
+  type: NodePort
+  ports:
+    - port: 32400
+      targetPort: 32400
+      protocol: TCP
+      name: web
+    - port: 1900
+      targetPort: 1900
+      protocol: UDP
+      name: dlna
+    - port: 3005
+      targetPort: 3005
+      protocol: TCP
+      name: control
+    - port: 8324
+      targetPort: 8324
+      protocol: TCP
+      name: control-alt
+    - port: 32469
+      targetPort: 32469
+      protocol: TCP
+      name: streaming
+    - port: 32410
+      targetPort: 32410
+      protocol: UDP
+      name: gdm-1
+    - port: 32412
+      targetPort: 32412
+      protocol: UDP
+      name: gdm-2
+    - port: 32413
+      targetPort: 32413
+      protocol: UDP
+      name: gdm-3
+    - port: 32414
+      targetPort: 32414
+      protocol: UDP
+      name: gdm-4
   selector:
-    matchLabels:
-      app: plex
-  template:
-    metadata:
-      labels:
-        app: plex
-    spec:
-      containers:
-        - name: plex
-          image: plexinc/pms-docker:latest
-          env:
-            - name: TZ
-              value: "America/Chicago"
-            - name: PLEX_CLAIM
-              valueFrom:
-                secretKeyRef:
-                  name: plex-config
-                  key: PLEX_CLAIM
-            - name: PLEX_UID
-              value: "1005"
-            - name: PLEX_GID
-              value: "1001"
-          volumeMounts:
-            - mountPath: /config
-              name: plex-config
-            - mountPath: /transcode
-              name: plex-transcode
-            - mountPath: /data
-              name: plex-media
-      volumes:
-        - name: plex-config
-          hostPath:
-            path: /d/k8s/volumes/plex/config
-        - name: plex-transcode
-          hostPath:
-            path: /d/k8s/volumes/plex/transcode
-        - name: plex-media
-          hostPath:
-            path: /k/media
+    app: plex

@@ -18,6 +18,10 @@ This repository contains Kubernetes manifests for applications deployed via Argo
       - `prod`: Production environment
       - `music`: Specialized music configuration
   - `plex`: Media server deployment
+    - `base`: Common configuration
+    - `overlays`: Environment-specific configurations
+      - `dev`: Development environment
+      - `prod`: Production environment
   - `pgsql-test`: PostgreSQL database deployment
   - `nginx-test-*`: Various Nginx test applications
 
@@ -42,13 +46,13 @@ Used for managing environment-specific configurations:
 
 ```bash
 # Deploy ApplicationSet
-kubectl apply -f media-appset.yaml
+kubectl apply -f <appset.yaml>
 
 # Verify ApplicationSet
-kubectl get applicationset media-appset -n argocd -o yaml
+kubectl get applicationset <appset_name> -n argocd -o yaml
 
 # Delete ApplicationSet
-kubectl delete applicationset media-appset -n argocd
+kubectl delete applicationset <appset_name> -n argocd
 
 # Force delete application
 kubectl delete applications.argoproj.io <appname> -n argocd --force --grace-period=0

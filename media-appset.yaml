@@ -17,7 +17,7 @@ spec:
       elements:
       # prod containers
       - name: plex
-        path: plex/overalys/prod
+        path: plex/overlays/prod
         environment: prod
       - name: atd-prod
         path: atd/overlays/prod

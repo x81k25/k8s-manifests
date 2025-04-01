@@ -18,11 +18,6 @@ spec:
       containers:
         - name: plex
           image: plexinc/pms-docker:latest
-          securityContext:
-            privileged: true
-            runAsUser: 0 
-            runAsGroup: 0 
-            supplementalGroups: [1001] 
           env:
             - name: TZ
               value: "America/Chicago"
@@ -33,6 +28,10 @@ spec:
                   key: PLEX_CLAIM
             - name: ADVERTISE_IP
               value: "http://{{server_ip}}:32400/"
+            - name: PLEX_UID
+              value: "1005"
+            - name: PLEX_GID
+              value: "1001"
           volumeMounts:
             - mountPath: /config
               name: plex-config

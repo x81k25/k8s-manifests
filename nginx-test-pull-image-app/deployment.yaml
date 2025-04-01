@@ -22,17 +22,17 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: DOCKER_REGISTRY
+        - name: GITHUB_REGISTRY
           value: ghcr.io
-        - name: DOCKER_USERNAME
+        - name: GITHUB_USERNAME
           valueFrom:
             secretKeyRef:
-              name: ghcr-pull-secrets
+              name: ghcr-pull-image-token
               key: username
-        - name: DOCKER_PASSWORD
+        - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
-              name: ghcr-pull-secrets
+              name: ghcr-pull-image-token
               key: password
       imagePullSecrets:
-      - name: ghcr-pull-secrets
+      - name: ghcr-pull-image-token

@@ -17,6 +17,21 @@ spec:
       elements:
       - name: plex
         path: plex
+        environment: prod
+      - name: atd-prod
+        path: atd/overlays/prod
+        enviroment: prod
+      - name: music
+        path: atd/overlays/music
+        enviroment: prod
+
+      - name: atd-stg
+        path: atd/overlays/stg
+        enviroment: stg
+      
+      - name: atd-dev
+        path: atd/overlays/dev
+        enviroment: dev
   template:
     metadata:
       name: '{{name}}'
@@ -28,7 +43,7 @@ spec:
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "media-prod"
+        namespace: "media-{{enviroment}}"
       syncPolicy:
         automated:
           prune: true

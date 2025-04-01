@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-test
+  name: nginx-test-pull-image-app
   labels:
     app: nginx-test-pull-image-app
 spec:

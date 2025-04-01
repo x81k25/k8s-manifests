@@ -10,7 +10,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: pgsql-appset
-  namespace: pgsql
+  namespace: argocd
 spec:
   generators:
   - list:
@@ -28,7 +28,7 @@ spec:
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "pgsql-test"
+        namespace: "pgsql"
       syncPolicy:
         automated:
           prune: true

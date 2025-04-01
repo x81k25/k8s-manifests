@@ -30,6 +30,9 @@ patches:
           - name: plex-transcode
             hostPath:
               path: /d/k8s/volumes/plex-dev/transcode          
+          - name: plex-data
+            hostPath:
+              path: /d/k8s/volumes/plex-dev/data
 - target:
     version: v1
     kind: Service

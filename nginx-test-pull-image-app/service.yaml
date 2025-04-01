@@ -10,12 +10,3 @@ spec:
   - port: 8080
     targetPort: 80
   type: ClusterIP
----
-# secret.yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ghcr-pull-secrets
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: ${BASE64_ENCODED_DOCKER_CONFIG}

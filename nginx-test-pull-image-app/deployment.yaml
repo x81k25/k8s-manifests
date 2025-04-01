@@ -2,13 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-test-pull-image-app
+  name: nginx-test
+  labels:
+    app: nginx-test-pull-image-app
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: nginx-test-pull-image-app
   template:
+    metadata:
+      labels:
+        app: nginx-test-pull-image-app
     spec:
       containers:
       - name: nginx
@@ -19,10 +24,5 @@ spec:
         env:
         - name: GITHUB_REGISTRY
           value: ghcr.io
-        - name: GITHUB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: ghcr-pull-image-token
-              key: .dockerconfigjson
       imagePullSecrets:
       - name: ghcr-pull-image-token

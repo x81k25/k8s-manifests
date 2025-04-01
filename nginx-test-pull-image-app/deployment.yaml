@@ -2,18 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-test
-  labels:
-    app: nginx-test
+  name: nginx-test-pull-image-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-test
+      app: nginx-test-pull-image-app
   template:
-    metadata:
-      labels:
-        app: nginx-test
     spec:
       containers:
       - name: nginx

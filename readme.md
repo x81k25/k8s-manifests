@@ -74,17 +74,16 @@ kubectl apply -k <overlay-dir>
 ```
 
 - app actions
-  - delete stubborn apps
+  - nullify finalizers
+```bash
+kubectl patch application <app_name> -n <namespace> -p '{"metadata":{"finalizers":[]}}' --type=merge
+```
+
+- appset actions
+  - delete appset forcefully
 ```bash 
 kubectl delete applications.argoproj.io <appset> -n argocd --force --grace-period=0
 ```
-  - nullify finalizers
-```bash
-kubectl patch application <pod_name> -n <namespace> -p '{"metadata":{"finalizers":[]}}' --type=merge
-```bash
-
-
-- appset actions
   - get logs
 ```bash
 kubectl logs -n argocd -l app.kubernetes.io/name=argocd-applicationset-controller

@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-test-pull-image-app
+  name: nginx-test
   labels:
     app: nginx-test-pull-image-app
 spec:
@@ -21,8 +21,5 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-        env:
-        - name: GITHUB_REGISTRY
-          value: ghcr.io
       imagePullSecrets:
       - name: ghcr-pull-image-token

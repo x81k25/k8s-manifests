@@ -20,7 +20,7 @@ patches:
           - name: plex
             env:
             - name: ADVERTISE_IP
-              value: "http://192.168.1.100:30400/"
+              value: "http://{{server_ip}}:30400/"
           volumes:
           - name: plex-config
             hostPath:

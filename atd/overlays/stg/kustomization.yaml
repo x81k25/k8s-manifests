@@ -12,7 +12,6 @@ patches:
     kind: Deployment
     metadata:
       name: atd
-      namespace: automatic-transmission
     spec:
       template:
         spec:

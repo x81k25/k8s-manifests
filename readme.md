@@ -1,102 +1,116 @@
-# kubernetes manifests repository
+# Kubernetes Manifests Repository
 
 This repository contains Kubernetes manifests for applications deployed via ArgoCD to a k3s cluster.
 
-## repository structure
+## Repository Structure
 
-- **app.yaml**: top-level app definition
-- **atd-overlays.yaml**: app definition for ATD overlays
-- **nginx-test-*.yaml**: various nginx test applications
-- **postgres**: PostgreSQL StatefulSet deployment
-- **postgres-full**: PostgreSQL deployment with additional resources (network policies, etc.)
-- **atd**: application with base configuration and environment overlays
+- **ApplicationSets**
+  - `app.yaml`: ApplicationSet for directory-based applications
+  - `media-appset.yaml`: ApplicationSet for media applications (Plex, ATD)
+  - `pgsql-appset.yaml`: ApplicationSet for PostgreSQL applications
 
-## application management
+- **Applications**
+  - `atd`: Automatic Transmission Daemon with base/overlay pattern
+    - `base`: Common configuration
+    - `overlays`: Environment-specific configurations
+      - `dev`: Development environment
+      - `stg`: Staging environment
+      - `prod`: Production environment
+      - `music`: Specialized music configuration
+  - `plex`: Media server deployment
+  - `pgsql-test`: PostgreSQL database deployment
+  - `nginx-test-*`: Various Nginx test applications
 
-All applications are managed using ApplicationSets at the top level. the repository connects directly to ArgoCD through Terraform, automatically deploying changes to the k3s cluster.
+## Deployment Patterns
 
-## deployment patterns
+### ApplicationSet Deployments
+Applications are managed using ApplicationSets which automatically sync and deploy to the k3s cluster:
 
-### basic applications
-standard Kubernetes manifests with app, deployment, and service definitions.
+- **Directory-based**: Automatically discovers and deploys applications from directories ending with `-app`
+- **List-based**: Explicitly defined applications with specific configurations for different environments
 
-### kustomize applications
-applications using Kustomize for configuration management:
-- base configurations in `/atd/base`
-- environment-specific overlays in `/atd/overlays/{dev,stg}`
+### Kustomize Overlay Pattern
+Used for managing environment-specific configurations:
 
-### database deployments
-- **postgres**: simple StatefulSet-based deployment
-- **postgres-full**: comprehensive deployment with persistent volumes, network policies, etc.
+- Base configuration in `/atd/base`
+- Environment overlays in `/atd/overlays/{dev,stg,prod,music}`
+- Each environment has specialized paths, ports, and image tags
 
-## CI/CD pipeline
+## Application Management
 
-1. commit changes to this repository
-2. terraform connects the repository to ArgoCD
-3. argocd automatically syncs manifests to the k3s cluster
-4. applications are deployed based on their respective manifests
+### Deployment Commands
 
-## adding new applications
-
-1. create a new directory with your application manifests
-2. reference the application in an ApplicationSet
-3. commit and push changes
-4. argocd will automatically deploy the new application
-
-## useful code
-
-- pod actions
-  - deploy pod
 ```bash
-kubectl apply -k <app.yaml>
+# Deploy ApplicationSet
+kubectl apply -f media-appset.yaml
+
+# Verify ApplicationSet
+kubectl get applicationset media-appset -n argocd -o yaml
+
+# Delete ApplicationSet
+kubectl delete applicationset media-appset -n argocd
+
+# Force delete application
+kubectl delete applications.argoproj.io <appname> -n argocd --force --grace-period=0
 ```
-  - exec into pod
+
+### Pod Management
+
 ```bash
+# Apply kustomize configuration
+kubectl apply -k <overlay-dir>
+
+# Execute into pod
 kubectl exec -it <pod-name> -n <namespace> -- /bin/sh
-```
-  - get pod config
-```bash
+
+# Get pod configuration
 kubectl describe pod <pod-name> -n <namespace> -o yaml
-```
-  - get pod logs
-```bash
+
+# Get pod logs
 kubectl logs <pod-name> -n <namespace>
-```
-  - delete pod
-```bash
+
+# Delete pod
 kubectl delete pod <pod-name> -n <namespace>
 ```
 
-- overlay actions
-  - deploy overlay
+### Namespace Operations
+
 ```bash
-kubectl apply -k <overlay-dir>
+# List pods in namespace
+kubectl get pods -n <namespace>
+
+# Check port usage
+kubectl get svc --all-namespaces | grep <port-number>
 ```
 
-- app actions
-  - nullify finalizers
+### ArgoCD Operations
+
 ```bash
+# Remove application finalizers
 kubectl patch application <app_name> -n <namespace> -p '{"metadata":{"finalizers":[]}}' --type=merge
-```
 
-- appset actions
-  - delete appset forcefully
-```bash 
-kubectl delete applications.argoproj.io <appset> -n argocd --force --grace-period=0
-```
-  - get logs
-```bash
+# View ApplicationSet controller logs
 kubectl logs -n argocd -l app.kubernetes.io/name=argocd-applicationset-controller
 ```
 
-- namespace actions
-  - get pods within namespace
-```bash
-kubectl get pods -n <namespace>
-```
+## Adding New Applications
 
-- k8s actions
-  - check port usage by kubernetes
-```bash
-kubectl get svc --all-namespaces | grep <port-number>
-```
+1. Create a new directory with your application manifests
+2. Either:
+   - Add directory to an existing ApplicationSet
+   - Create a new ApplicationSet referencing your application
+3. Commit and push changes
+4. ArgoCD will automatically deploy the application
+
+## Environment Structure
+
+The repository supports multiple environments:
+- `dev`: Development testing
+- `stg`: Staging environment
+- `prod`: Production environment
+- Specialized environments (e.g., `music`)
+
+Each environment uses:
+- Distinct namespaces (e.g., `media-prod`, `media-stg`)
+- Environment-specific image tags
+- Custom storage paths and port configurations

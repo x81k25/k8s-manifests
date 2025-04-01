@@ -20,9 +20,9 @@ spec:
           image: plexinc/pms-docker:latest
           securityContext:
             privileged: true
-            runAsUser: 999  # Plex's expected UID
-            runAsGroup: 999 # Plex's expected GID
-            supplementalGroups: [1001]  # For media access
+            runAsUser: 0 
+            runAsGroup: 0 
+            supplementalGroups: [1001] 
           env:
             - name: TZ
               value: "America/Chicago"

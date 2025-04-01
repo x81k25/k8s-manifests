@@ -28,11 +28,6 @@ spec:
           valueFrom:
             secretKeyRef:
               name: ghcr-pull-image-token
-              key: username
-        - name: GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: ghcr-pull-image-token
-              key: password
+              key: .dockerconfigjson
       imagePullSecrets:
       - name: ghcr-pull-image-token

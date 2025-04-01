@@ -21,13 +21,15 @@ patches:
             env:
             - name: ADVERTISE_IP
               value: "http://{{server_ip}}:30400/"
+            - name: PLEX_CLAIM
+              $patch: delete
           volumes:
           - name: plex-config
             hostPath:
               path: /d/k8s/volumes/plex-dev/config
           - name: plex-transcode
             hostPath:
-              path: /d/k8s/volumes/plex-dev/transcode
+              path: /d/k8s/volumes/plex-dev/transcode          
 - target:
     version: v1
     kind: Service

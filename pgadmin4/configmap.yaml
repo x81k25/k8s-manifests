@@ -1,8 +1,0 @@
-# This ConfigMap is used for Kustomize to substitute the SERVER_IP variable
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pgadmin4-ingress-config
-  namespace: pgsql
-data:
-  SERVER_IP: "$(SERVER_IP)"

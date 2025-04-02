@@ -5,20 +5,19 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
-- configmap.yaml
 
-replacements:
-  - source:
-      kind: Secret
-      name: global-config
-      fieldPath: data.server_ip
-    targets:
-      - select:
-          kind: Ingress
-          name: pgadmin4
-        fieldPaths:
-          - spec.rules.0.host
-        options:
-          create: true
-          delimiter: "."
-          index: 1
+# We'll use a ConfigMap to store the server IP for Kustomize replacement
+configMapGenerator:
+- name: server-ip-config
+  literals:
+  - server_ip=PLACEHOLDER_IP
+
+# Replace the placeholder in the ingress host
+patches:
+- target:
+    kind: Ingress
+    name: pgadmin4
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: pgadmin.$(server-ip-config.server_ip).nip.io

@@ -1,3 +1,4 @@
+# File: service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,8 +9,8 @@ metadata:
     managed-by: terraform
 spec:
   ports:
-  - port: ${pgadmin4_config.port}
-    targetPort: ${pgadmin4_config.listen_port}
+  - port: ${{pgadmin4_config.port}}
+    targetPort: ${{pgadmin4_config.listen_port}}
     protocol: TCP
   selector:
     app: pgadmin4

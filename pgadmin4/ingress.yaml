@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: pgadmin.${server_ip}.nip.io
+  - host: "pgadmin.${server_ip}.nip.io"
     http:
       paths:
       - path: /
@@ -20,4 +20,4 @@ spec:
           service:
             name: pgadmin4
             port:
-              number: ${pgadmin4_config.port}
+              number: ${{pgadmin4_config.port}}

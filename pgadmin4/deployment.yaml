@@ -1,4 +1,4 @@
-# pgadmin4/deployment.yaml
+# File: deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,40 +20,25 @@ spec:
         app: pgadmin4
     spec:
       securityContext:
-        fsGroup: $(FS_GROUP)
-        runAsUser: $(UID)
-        runAsGroup: $(GID)
+        fsGroup: ${{pgadmin4_config.fs_grounp}}
+        runAsUser: ${{pgadmin4_config.UID}}
+        runAsGroup: ${{pgadmin4_config.GID}}
       containers:
       - name: pgadmin4
         image: dpage/pgadmin4:latest
         ports:
-        - containerPort: $(LISTEN_PORT)
+        - containerPort: ${{pgadmin4_config.listen_port}}
         env:
         - name: PGADMIN_DEFAULT_EMAIL
-          valueFrom:
-            configMapKeyRef:
-              name: pgadmin4-env
-              key: email
+          value: "${pgadmin4_config.email}"
         - name: PGADMIN_DEFAULT_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: pgadmin4-env
-              key: password
+          value: "${pgadmin4_config.password}"
         - name: PGADMIN_LISTEN_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: pgadmin4-env
-              key: listen_port
+          value: "${{pgadmin4_config.listen_port}}"
         - name: PGADMIN_LISTEN_ADDRESS
-          valueFrom:
-            configMapKeyRef:
-              name: pgadmin4-env
-              key: listen_address
+          value: "${pgadmin4_config.listen_address}"
         - name: PGADMIN_SERVER_MODE
-          valueFrom:
-            configMapKeyRef:
-              name: pgadmin4-env
-              key: server_mode
+          value: "${pgadmin4_config.server_mode}"
         - name: PGADMIN_SERVER_JSON_FILE
           value: "/pgadmin4/servers.json"
         volumeMounts:
@@ -64,7 +49,7 @@ spec:
       volumes:
       - name: pgadmin4-data
         hostPath:
-          path: $(MOUNT)
+          path: "${pgadmin4_config.mount}"
           type: DirectoryOrCreate
       - name: pgadmin4-servers
         configMap:

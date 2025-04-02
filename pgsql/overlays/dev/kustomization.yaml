@@ -32,15 +32,10 @@ patches:
                 secretKeyRef:
                   name: pgsql-dev-config
                   key: pgsql_dev_database
-            - name: PG_MOUNT_PATH
-              valueFrom:
-                secretKeyRef:
-                  name: pgsql-dev-config
-                  key: pgsql_dev_mount
           volumes:
           - name: postgres-data
             hostPath:
-              path: $(PG_MOUNT_PATH)
+              path: /d/postgres/dev
   target:
     kind: Deployment
     name: postgres

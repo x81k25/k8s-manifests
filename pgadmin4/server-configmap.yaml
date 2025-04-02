@@ -8,37 +8,37 @@ metadata:
     app: pgadmin4
     managed-by: terraform
 data:
-  servers.json: |
+  servers.json: |-
     {
       "Servers": {
         "1": {
           "Name": "PostgreSQL-DEV",
           "Group": "Development",
           "Host": "dev-postgres.pgsql.svc.cluster.local",
-          "Port": $(DEV_PORT),
-          "MaintenanceDB": "$(DEV_DATABASE)",
-          "Username": "$(DEV_USER)",
-          "Password": "$(DEV_PASSWORD)",
+          "Port": ${pgsql_config.dev.port},
+          "MaintenanceDB": "${pgsql_config.dev.database}",
+          "Username": "${pgsql_config.dev.user}",
+          "Password": "${pgsql_config.dev.password}",
           "SSLMode": "prefer"
         },
         "2": {
           "Name": "PostgreSQL-STG",
           "Group": "Staging",
           "Host": "stg-postgres.pgsql.svc.cluster.local",
-          "Port": $(STG_PORT),
-          "MaintenanceDB": "$(STG_DATABASE)",
-          "Username": "$(STG_USER)",
-          "Password": "$(STG_PASSWORD)",
+          "Port": ${pgsql_config.stg.port},
+          "MaintenanceDB": "${pgsql_config.stg.database}",
+          "Username": "${pgsql_config.stg.user}",
+          "Password": "${pgsql_config.stg.password}",
           "SSLMode": "prefer"
         },
         "3": {
           "Name": "PostgreSQL-PROD",
           "Group": "Production",
           "Host": "prod-postgres.pgsql.svc.cluster.local",
-          "Port": $(PROD_PORT),
-          "MaintenanceDB": "$(PROD_DATABASE)",
-          "Username": "$(PROD_USER)",
-          "Password": "$(PROD_PASSWORD)",
+          "Port": ${pgsql_config.prod.port},
+          "MaintenanceDB": "${pgsql_config.prod.database}",
+          "Username": "${pgsql_config.prod.user}",
+          "Password": "${pgsql_config.prod.password}",
           "SSLMode": "prefer"
         }
       }

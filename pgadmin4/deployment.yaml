@@ -30,15 +30,30 @@ spec:
         - containerPort: $(LISTEN_PORT)
         env:
         - name: PGADMIN_DEFAULT_EMAIL
-          value: $(EMAIL)
+          valueFrom:
+            configMapKeyRef:
+              name: pgadmin4-env
+              key: email
         - name: PGADMIN_DEFAULT_PASSWORD
-          value: $(PASSWORD)
+          valueFrom:
+            configMapKeyRef:
+              name: pgadmin4-env
+              key: password
         - name: PGADMIN_LISTEN_PORT
-          value: "$(LISTEN_PORT)"
+          valueFrom:
+            configMapKeyRef:
+              name: pgadmin4-env
+              key: listen_port
         - name: PGADMIN_LISTEN_ADDRESS
-          value: $(LISTEN_ADDRESS)
+          valueFrom:
+            configMapKeyRef:
+              name: pgadmin4-env
+              key: listen_address
         - name: PGADMIN_SERVER_MODE
-          value: "$(SERVER_MODE)"
+          valueFrom:
+            configMapKeyRef:
+              name: pgadmin4-env
+              key: server_mode
         - name: PGADMIN_SERVER_JSON_FILE
           value: "/pgadmin4/servers.json"
         volumeMounts:

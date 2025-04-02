@@ -5,259 +5,67 @@ resources:
 - deployment.yaml
 - service.yaml
 - servers-configmap.yaml
+- env-configmap.yaml
 - ingress.yaml
 
-replacements:
-  - source:
-      kind: Kustomization
-      fieldPath: data.EMAIL
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.containers.[name=pgadmin4].env.[name=PGADMIN_DEFAULT_EMAIL].value
-  - source:
-      kind: Kustomization
-      fieldPath: data.PASSWORD
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.containers.[name=pgadmin4].env.[name=PGADMIN_DEFAULT_PASSWORD].value
-  - source:
-      kind: Kustomization
-      fieldPath: data.LISTEN_PORT
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.containers.[name=pgadmin4].ports.[containerPort].containerPort
-          - spec.template.spec.containers.[name=pgadmin4].env.[name=PGADMIN_LISTEN_PORT].value
-      - select:
-          kind: Service
-          name: pgadmin4
-        fieldPaths:
-          - spec.ports.[port].targetPort
-  - source:
-      kind: Kustomization
-      fieldPath: data.PORT
-    targets:
-      - select:
-          kind: Service
-          name: pgadmin4
-        fieldPaths:
-          - spec.ports.[port].port
-      - select:
-          kind: Ingress
-          name: pgadmin4
-        fieldPaths:
-          - spec.rules.[host].http.paths.[path=/].backend.service.port.number
-  - source:
-      kind: Kustomization
-      fieldPath: data.LISTEN_ADDRESS
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.containers.[name=pgadmin4].env.[name=PGADMIN_LISTEN_ADDRESS].value
-  - source:
-      kind: Kustomization
-      fieldPath: data.SERVER_MODE
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.containers.[name=pgadmin4].env.[name=PGADMIN_SERVER_MODE].value
-  - source:
-      kind: Kustomization
-      fieldPath: data.MOUNT
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.volumes.[name=pgadmin4-data].hostPath.path
-  - source:
-      kind: Kustomization
-      fieldPath: data.UID
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.securityContext.runAsUser
-  - source:
-      kind: Kustomization
-      fieldPath: data.GID
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.securityContext.runAsGroup
-  - source:
-      kind: Kustomization
-      fieldPath: data.FS_GROUP
-    targets:
-      - select:
-          kind: Deployment
-          name: pgadmin4
-        fieldPaths:
-          - spec.template.spec.securityContext.fsGroup
-  - source:
-      kind: Kustomization
-      fieldPath: data.SERVER_IP
-    targets:
-      - select:
-          kind: Ingress
-          name: pgadmin4
-        fieldPaths:
-          - spec.rules.[].host
+vars:
+  - name: UID
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.uid
+  - name: GID
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.gid
+  - name: FS_GROUP
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.fs_group
+  - name: MOUNT
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.mount
+  - name: PORT
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.port
+  - name: LISTEN_PORT
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.listen_port
+  - name: SERVER_IP
+    objref:
+      kind: ConfigMap
+      name: pgadmin4-vars
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.server_ip
 
-  # PostgreSQL server configurations
-  - source:
-      kind: Kustomization
-      fieldPath: data.DEV_PORT
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.DEV_DATABASE
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.DEV_USER
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.DEV_PASSWORD
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.STG_PORT
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.STG_DATABASE
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.STG_USER
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.STG_PASSWORD
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.PROD_PORT
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.PROD_DATABASE
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.PROD_USER
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-  - source:
-      kind: Kustomization
-      fieldPath: data.PROD_PASSWORD
-    targets:
-      - select:
-          kind: ConfigMap
-          name: pgadmin4-servers
-        fieldPaths:
-          - data.[servers.json]
-
-# Variable definitions from Terraform variables
-data:
-  # PgAdmin4 configuration
-  EMAIL: "${pgadmin4_config.email}"
-  PASSWORD: "${pgadmin4_config.password}"
-  UID: "${pgadmin4_config.UID}"
-  GID: "${pgadmin4_config.GID}"
-  FS_GROUP: "${pgadmin4_config.fs_grounp}"
-  MOUNT: "${pgadmin4_config.mount}"
-  PORT: "${pgadmin4_config.port}"
-  SERVER_MODE: "${pgadmin4_config.server_mode}"
-  LISTEN_ADDRESS: "${pgadmin4_config.listen_address}"
-  LISTEN_PORT: "${pgadmin4_config.listen_port}"
-  SERVER_IP: "${server_ip}"
-  
-  # PostgreSQL dev instance
-  DEV_PORT: "${pgsql_config.dev.port}"
-  DEV_USER: "${pgsql_config.dev.user}"
-  DEV_PASSWORD: "${pgsql_config.dev.password}"
-  DEV_DATABASE: "${pgsql_config.dev.database}"
-  
-  # PostgreSQL staging instance
-  STG_PORT: "${pgsql_config.stg.port}"
-  STG_USER: "${pgsql_config.stg.user}"
-  STG_PASSWORD: "${pgsql_config.stg.password}"
-  STG_DATABASE: "${pgsql_config.stg.database}"
-  
-  # PostgreSQL production instance
-  PROD_PORT: "${pgsql_config.prod.port}"
-  PROD_USER: "${pgsql_config.prod.user}"
-  PROD_PASSWORD: "${pgsql_config.prod.password}"
-  PROD_DATABASE: "${pgsql_config.prod.database}"
+configMapGenerator:
+- name: pgadmin4-vars
+  literals:
+  - uid=${pgadmin4_config.UID}
+  - gid=${pgadmin4_config.GID}
+  - fs_group=${pgadmin4_config.fs_grounp}
+  - mount=${pgadmin4_config.mount}
+  - port=${pgadmin4_config.port}
+  - listen_port=${pgadmin4_config.listen_port}
+  - server_ip=${server_ip}

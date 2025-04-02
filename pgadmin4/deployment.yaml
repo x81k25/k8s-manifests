@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+piVersion: apps/v1
 kind: Deployment
 metadata:
   name: pgadmin4
@@ -17,7 +17,7 @@ spec:
         app: pgadmin4
     spec:
       securityContext:
-        fsGroup: $((PGADMIN4_FS_GROUP))
+        fsGroup: 1001
       containers:
         - name: pgadmin4
           image: dpage/pgadmin4:8.8
@@ -48,13 +48,6 @@ spec:
                   key: pgadmin4_listen_port
             - name: PGADMIN_SERVER_JSON_FILE
               value: /pgadmin4/servers.json
-          resources:
-            limits:
-              cpu: "1"
-              memory: "1Gi"
-            requests:
-              cpu: "500m"
-              memory: "512Mi"
           volumeMounts:
             - name: pgadmin-data
               mountPath: /var/lib/pgadmin
@@ -62,12 +55,12 @@ spec:
               mountPath: /pgadmin4/servers.json
               subPath: servers.json
           securityContext:
-            runAsUser: $((PGADMIN4_UID))
-            runAsGroup: $((PGADMIN4_GID))
+            runAsUser: 1000
+            runAsGroup: 1001
       volumes:
         - name: pgadmin-data
           hostPath:
-            path: ${PGADMIN4_MOUNT}
+            path: /data/pgadmin
         - name: servers-json
           configMap:
             name: pgadmin4-servers-json

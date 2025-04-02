@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: pgadmin.${SERVER_IP}.nip.io
+    - host: pgadmin.example.com
       http:
         paths:
           - path: /
@@ -20,4 +20,4 @@ spec:
               service:
                 name: pgadmin4
                 port:
-                  number: $((PGADMIN4_PORT))
+                  number: 80

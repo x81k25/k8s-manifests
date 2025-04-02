@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-dev
+  name: postgres
   namespace: pgsql
   labels:
-    app: postgres-dev
+    app: postgres
     managed-by: terraform
 spec:
   ports:
@@ -12,5 +12,5 @@ spec:
     targetPort: 5432
     protocol: TCP
   selector:
-    app: postgres-dev
+    app: postgres
   type: ClusterIP

@@ -1,4 +1,4 @@
-# ./app.yaml
+# ./pgsql-appset.yaml
 # patch command:
 ## kubectl apply -f pgsql-appset.yaml
 # verify patch command:
@@ -15,8 +15,15 @@ spec:
   generators:
   - list:
       elements:
-      - name: pgsql-test
-        path: pgsql-test
+      - name: pgsql-dev
+        path: pgsql/overlays/dev
+        environment: dev
+      #- name: pgsql-stg
+      #  path: pgsql/overlays/stg
+      #  environment: stg
+      #- name: pgsql-prod
+      #  path: pgsql/overlays/prod
+      #  environment: prod
   template:
     metadata:
       name: '{{name}}'
@@ -33,4 +40,3 @@ spec:
         automated:
           prune: true
           selfHeal: true
- 

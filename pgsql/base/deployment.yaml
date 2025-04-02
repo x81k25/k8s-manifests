@@ -1,23 +1,22 @@
-# PostgreSQL Deployment for Development Environment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-dev
+  name: postgres
   namespace: pgsql
   labels:
-    app: postgres-dev
+    app: postgres
     managed-by: terraform
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres-dev
+      app: postgres
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: postgres-dev
+        app: postgres
     spec:
       securityContext:
         fsGroup: 999
@@ -41,5 +40,5 @@ spec:
       volumes:
       - name: postgres-data
         hostPath:
-          path: /mnt/data/postgres-dev
+          path: /mnt/data/postgres
           type: DirectoryOrCreate

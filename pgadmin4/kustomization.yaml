@@ -1,24 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: pgsql
+
 resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
 
-# Use replacements instead of vars
-replacements:
-- source:
-    kind: ConfigMap
-    name: server-ip-config
-    fieldPath: data.SERVER_IP
-  targets:
-  - select:
-      kind: Ingress
-      name: pgadmin4
-    fieldPaths:
-    - spec.rules.0.host
-    options:
-      create: true
-      delimiter: .
-      index: 1
+# Let's try a different approach - use a configMapGenerator instead
+configMapGenerator:
+- name: host-config
+  literals:
+  - HOST=pgadmin.SERVER_IP.nip.io
+
+# Use patches to modify the ingress host
+patches:
+- patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: pgadmin.SERVER_IP.nip.io
+  target:
+    kind: Ingress
+    name: pgadmin4

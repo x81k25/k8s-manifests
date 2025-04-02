@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: "pgadmin.${server_ip}.nip.io"
+  - host: "pgadmin.${SERVER_IP}.nip.io"
     http:
       paths:
       - path: /

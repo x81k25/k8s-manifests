@@ -1,4 +1,3 @@
-# File: kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -7,3 +6,19 @@ resources:
 - service.yaml
 - ingress.yaml
 - configmap.yaml
+
+replacements:
+  - source:
+      kind: Secret
+      name: global-config
+      fieldPath: data.server_ip
+    targets:
+      - select:
+          kind: Ingress
+          name: pgadmin4
+        fieldPaths:
+          - spec.rules.0.host
+        options:
+          create: true
+          delimiter: "."
+          index: 1

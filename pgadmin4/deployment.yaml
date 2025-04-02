@@ -29,15 +29,30 @@ spec:
         - containerPort: 80
         env:
         - name: PGADMIN_DEFAULT_EMAIL
-          value: "${pgadmin4_config.email}"
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin4-secrets
+              key: email
         - name: PGADMIN_DEFAULT_PASSWORD
-          value: "${pgadmin4_config.password}"
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin4-secrets
+              key: password
         - name: PGADMIN_LISTEN_PORT
-          value: "80"
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin4-secrets
+              key: listen_port
         - name: PGADMIN_LISTEN_ADDRESS
-          value: "${pgadmin4_config.listen_address}"
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin4-secrets
+              key: listen_address
         - name: PGADMIN_SERVER_MODE
-          value: "${pgadmin4_config.server_mode}"
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin4-secrets
+              key: server_mode
         - name: PGADMIN_SERVER_JSON_FILE
           value: "/pgadmin4/servers.json"
         volumeMounts:
@@ -48,8 +63,8 @@ spec:
       volumes:
       - name: pgadmin4-data
         hostPath:
-          path: "${pgadmin4_config.mount}"
+          path: "/mnt/data/pgadmin"
           type: DirectoryOrCreate
       - name: pgadmin4-servers
-        configMap:
-          name: pgadmin4-servers
+        secret:
+          secretName: pgadmin4-servers-secret

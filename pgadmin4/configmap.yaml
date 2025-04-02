@@ -1,44 +1,8 @@
+# This ConfigMap is used for Kustomize to substitute the SERVER_IP variable
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: pgadmin4-servers
+  name: pgadmin4-ingress-config
   namespace: pgsql
-  labels:
-    app: pgadmin4
-    managed-by: terraform
 data:
-  servers.json: |-
-    {
-      "Servers": {
-        "1": {
-          "Name": "PostgreSQL-DEV",
-          "Group": "Development",
-          "Host": "dev-postgres.pgsql.svc.cluster.local",
-          "Port": 5432,
-          "MaintenanceDB": "${pgsql_config.dev.database}",
-          "Username": "${pgsql_config.dev.user}",
-          "Password": "${pgsql_config.dev.password}",
-          "SSLMode": "prefer"
-        },
-        "2": {
-          "Name": "PostgreSQL-STG",
-          "Group": "Staging",
-          "Host": "stg-postgres.pgsql.svc.cluster.local",
-          "Port": 5432,
-          "MaintenanceDB": "${pgsql_config.stg.database}",
-          "Username": "${pgsql_config.stg.user}",
-          "Password": "${pgsql_config.stg.password}",
-          "SSLMode": "prefer"
-        },
-        "3": {
-          "Name": "PostgreSQL-PROD",
-          "Group": "Production",
-          "Host": "prod-postgres.pgsql.svc.cluster.local",
-          "Port": 5432,
-          "MaintenanceDB": "${pgsql_config.prod.database}",
-          "Username": "${pgsql_config.prod.user}",
-          "Password": "${pgsql_config.prod.password}",
-          "SSLMode": "prefer"
-        }
-      }
-    }
+  SERVER_IP: "$(SERVER_IP)"

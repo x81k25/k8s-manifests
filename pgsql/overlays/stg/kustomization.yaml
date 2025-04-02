@@ -1,0 +1,33 @@
+# overlays/stg/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namePrefix: stg-
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: postgres
+      namespace: pgsql
+    spec:
+      template:
+        spec:
+          containers:
+          - name: postgres
+            env:
+            - name: POSTGRES_USER
+              value: postgres-stg
+            - name: POSTGRES_PASSWORD
+              value: stg-password
+            - name: POSTGRES_DB
+              value: stgdb
+          volumes:
+          - name: postgres-data
+            hostPath:
+              path: /mnt/data/postgres-stg
+  target:
+    kind: Deployment
+    name: postgres
+    namespace: pgsql

@@ -16,23 +16,20 @@ spec:
   - list:
       elements:
       - name: pgsql-dev
-        path: pgsql/overlays/dev
         environment: dev
-      #- name: pgsql-stg
-      #  path: pgsql/overlays/stg
-      #  environment: stg
-      #- name: pgsql-prod
-      #  path: pgsql/overlays/prod
-      #  environment: prod
+      - name: pgsql-stg
+        environment: stg
+      - name: pgsql-prod
+        environment: prod
   template:
     metadata:
-      name: '{{name}}'
+      name: 'pgsql-{{environment:}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}"
+        path: "pgsql/overlays/{{environment:}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "pgsql"

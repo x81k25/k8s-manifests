@@ -17,7 +17,7 @@ spec:
         app: pgadmin4
     spec:
       securityContext:
-        fsGroup: 1001
+        fsGroup: 5050
       containers:
         - name: pgadmin4
           image: dpage/pgadmin4:8.8
@@ -55,8 +55,8 @@ spec:
               mountPath: /pgadmin4/servers.json
               subPath: servers.json
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1001
+            runAsUser: 5050
+            runAsGroup: 5050
       volumes:
         - name: pgadmin-data
           hostPath:

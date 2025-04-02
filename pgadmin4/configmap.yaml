@@ -1,4 +1,3 @@
-# File: configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -15,7 +14,7 @@ data:
           "Name": "PostgreSQL-DEV",
           "Group": "Development",
           "Host": "dev-postgres.pgsql.svc.cluster.local",
-          "Port": ${{pgsql_config.dev.port}},
+          "Port": 5432,
           "MaintenanceDB": "${pgsql_config.dev.database}",
           "Username": "${pgsql_config.dev.user}",
           "Password": "${pgsql_config.dev.password}",
@@ -25,7 +24,7 @@ data:
           "Name": "PostgreSQL-STG",
           "Group": "Staging",
           "Host": "stg-postgres.pgsql.svc.cluster.local",
-          "Port": ${{pgsql_config.stg.port}},
+          "Port": 5432,
           "MaintenanceDB": "${pgsql_config.stg.database}",
           "Username": "${pgsql_config.stg.user}",
           "Password": "${pgsql_config.stg.password}",
@@ -35,7 +34,7 @@ data:
           "Name": "PostgreSQL-PROD",
           "Group": "Production",
           "Host": "prod-postgres.pgsql.svc.cluster.local",
-          "Port": ${{pgsql_config.prod.port}},
+          "Port": 5432,
           "MaintenanceDB": "${pgsql_config.prod.database}",
           "Username": "${pgsql_config.prod.user}",
           "Password": "${pgsql_config.prod.password}",

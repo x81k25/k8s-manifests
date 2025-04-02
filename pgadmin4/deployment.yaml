@@ -29,3 +29,15 @@ spec:
             secretKeyRef:
               name: pgadmin-credentials
               key: pgadmin_password
+        - name: PGADMIN_MOUNT_PATH
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin-credentials
+              key: pgadmin_mount
+        volumeMounts:
+        - name: pgadmin-data
+          mountPath: $(PGADMIN_MOUNT_PATH)
+      volumes:
+      - name: pgadmin-data
+        persistentVolumeClaim:
+          claimName: pgadmin-data

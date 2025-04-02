@@ -6,12 +6,19 @@ resources:
 - service.yaml
 - ingress.yaml
 
-# Reference the ConfigMap that Terraform created
-vars:
-- name: SERVER_IP
-  objref:
+# Use replacements instead of vars
+replacements:
+- source:
     kind: ConfigMap
     name: server-ip-config
-    apiVersion: v1
-  fieldref:
-    fieldpath: data.SERVER_IP
+    fieldPath: data.SERVER_IP
+  targets:
+  - select:
+      kind: Ingress
+      name: pgadmin4
+    fieldPaths:
+    - spec.rules.0.host
+    options:
+      create: true
+      delimiter: .
+      index: 1

@@ -36,7 +36,7 @@ spec:
               key: pgadmin_mount
         volumeMounts:
         - name: pgadmin-data
-          mountPath: $(PGADMIN_MOUNT_PATH)
+          mountPath: /d/k8s/volumes/pgadmin4
       volumes:
       - name: pgadmin-data
         persistentVolumeClaim:

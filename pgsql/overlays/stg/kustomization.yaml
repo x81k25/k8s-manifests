@@ -40,3 +40,17 @@ patches:
     kind: Deployment
     name: postgres
     namespace: pgsql
+- patch: |-
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: postgres
+      namespace: pgsql
+    spec:
+      ports:
+      - port: 5433
+        targetPort: 5432
+  target:
+    kind: Service
+    name: postgres
+    namespace: pgsql

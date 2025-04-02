@@ -20,19 +20,19 @@ spec:
         app: postgres-dev
     spec:
       securityContext:
-        fsGroup: ${var.pgsql_config.dev.security.GID}
+        fsGroup: 999
       containers:
       - name: postgres
         image: postgres:latest
         ports:
-        - containerPort: ${var.pgsql_config.dev.port}
+        - containerPort: 5432
         env:
         - name: POSTGRES_USER
-          value: ${var.pgsql_config.dev.user}
+          value: postgres
         - name: POSTGRES_PASSWORD
-          value: ${var.pgsql_config.dev.password}
+          value: postgres
         - name: POSTGRES_DB
-          value: ${var.pgsql_config.dev.database}
+          value: postgres
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         volumeMounts:
@@ -41,5 +41,5 @@ spec:
       volumes:
       - name: postgres-data
         hostPath:
-          path: ${var.pgsql_config.dev.mount}
+          path: /mnt/data/postgres-dev
           type: DirectoryOrCreate

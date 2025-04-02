@@ -8,8 +8,8 @@ metadata:
     managed-by: terraform
 spec:
   ports:
-  - port: ${var.pgsql_config.dev.port}
-    targetPort: ${var.pgsql_config.dev.port}
+  - port: 5432
+    targetPort: 5432
     protocol: TCP
   selector:
     app: postgres-dev

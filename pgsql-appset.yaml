@@ -15,21 +15,23 @@ spec:
   generators:
   - list:
       elements:
-      - name: pgsql-dev
-        environment: dev
-      - name: pgsql-stg
-        environment: stg
       - name: pgsql-prod
-        environment: prod
+        path: pgsql/overlays/prod
+      - name: pgsql-stg
+        path: pgsql/overlays/dev
+      - name: pgsql-dev
+        path: pgsql/overlays/dev
+      - name: pgadmin4
+        path: pgadmin4
   template:
     metadata:
-      name: 'pgsql-{{environment:}}'
+      name: '{{name}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "pgsql/overlays/{{environment:}}"
+        path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "pgsql"

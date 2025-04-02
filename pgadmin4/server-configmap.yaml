@@ -1,0 +1,45 @@
+# pgadmin4/servers-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin4-servers
+  namespace: pgsql
+  labels:
+    app: pgadmin4
+    managed-by: terraform
+data:
+  servers.json: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "PostgreSQL-DEV",
+          "Group": "Development",
+          "Host": "dev-postgres.pgsql.svc.cluster.local",
+          "Port": $(DEV_PORT),
+          "MaintenanceDB": "$(DEV_DATABASE)",
+          "Username": "$(DEV_USER)",
+          "Password": "$(DEV_PASSWORD)",
+          "SSLMode": "prefer"
+        },
+        "2": {
+          "Name": "PostgreSQL-STG",
+          "Group": "Staging",
+          "Host": "stg-postgres.pgsql.svc.cluster.local",
+          "Port": $(STG_PORT),
+          "MaintenanceDB": "$(STG_DATABASE)",
+          "Username": "$(STG_USER)",
+          "Password": "$(STG_PASSWORD)",
+          "SSLMode": "prefer"
+        },
+        "3": {
+          "Name": "PostgreSQL-PROD",
+          "Group": "Production",
+          "Host": "prod-postgres.pgsql.svc.cluster.local",
+          "Port": $(PROD_PORT),
+          "MaintenanceDB": "$(PROD_DATABASE)",
+          "Username": "$(PROD_USER)",
+          "Password": "$(PROD_PASSWORD)",
+          "SSLMode": "prefer"
+        }
+      }
+    }

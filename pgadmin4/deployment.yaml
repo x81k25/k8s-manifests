@@ -1,0 +1,56 @@
+# pgadmin4/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin4
+  namespace: pgsql
+  labels:
+    app: pgadmin4
+    managed-by: terraform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin4
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pgadmin4
+    spec:
+      securityContext:
+        fsGroup: $(FS_GROUP)
+        runAsUser: $(UID)
+        runAsGroup: $(GID)
+      containers:
+      - name: pgadmin4
+        image: dpage/pgadmin4:latest
+        ports:
+        - containerPort: $(LISTEN_PORT)
+        env:
+        - name: PGADMIN_DEFAULT_EMAIL
+          value: $(EMAIL)
+        - name: PGADMIN_DEFAULT_PASSWORD
+          value: $(PASSWORD)
+        - name: PGADMIN_LISTEN_PORT
+          value: "$(LISTEN_PORT)"
+        - name: PGADMIN_LISTEN_ADDRESS
+          value: $(LISTEN_ADDRESS)
+        - name: PGADMIN_SERVER_MODE
+          value: "$(SERVER_MODE)"
+        - name: PGADMIN_SERVER_JSON_FILE
+          value: "/pgadmin4/servers.json"
+        volumeMounts:
+        - name: pgadmin4-data
+          mountPath: /var/lib/pgadmin
+        - name: pgadmin4-servers
+          mountPath: /pgadmin4
+      volumes:
+      - name: pgadmin4-data
+        hostPath:
+          path: $(MOUNT)
+          type: DirectoryOrCreate
+      - name: pgadmin4-servers
+        configMap:
+          name: pgadmin4-servers

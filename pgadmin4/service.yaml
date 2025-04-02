@@ -1,0 +1,17 @@
+# pgadmin4/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin4
+  namespace: pgsql
+  labels:
+    app: pgadmin4
+    managed-by: terraform
+spec:
+  ports:
+  - port: $(PORT)
+    targetPort: $(LISTEN_PORT)
+    protocol: TCP
+  selector:
+    app: pgadmin4
+  type: ClusterIP

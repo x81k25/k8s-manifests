@@ -20,4 +20,4 @@ spec:
               service:
                 name: pgadmin4
                 port:
-                  number: ${PGADMIN4_PORT}
+                  number: $((PGADMIN4_PORT))

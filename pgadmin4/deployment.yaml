@@ -17,7 +17,7 @@ spec:
         app: pgadmin4
     spec:
       securityContext:
-        fsGroup: ${PGADMIN4_FS_GROUP}
+        fsGroup: $((PGADMIN4_FS_GROUP))
       containers:
         - name: pgadmin4
           image: dpage/pgadmin4:8.8
@@ -62,8 +62,8 @@ spec:
               mountPath: /pgadmin4/servers.json
               subPath: servers.json
           securityContext:
-            runAsUser: ${PGADMIN4_UID}
-            runAsGroup: ${PGADMIN4_GID}
+            runAsUser: $((PGADMIN4_UID))
+            runAsGroup: $((PGADMIN4_GID))
       volumes:
         - name: pgadmin-data
           hostPath:

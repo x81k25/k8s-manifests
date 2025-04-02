@@ -10,7 +10,7 @@ spec:
   selector:
     app: pgadmin4
   ports:
-    - port: ${PGADMIN4_PORT}
+    - port: $((PGADMIN4_PORT))
       targetPort: 80
       protocol: TCP
       name: http

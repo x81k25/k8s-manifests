@@ -6,18 +6,12 @@ resources:
 - service.yaml
 - ingress.yaml
 
-# We'll use a ConfigMap to store the server IP for Kustomize replacement
-configMapGenerator:
-- name: server-ip-config
-  literals:
-  - server_ip=PLACEHOLDER_IP
-
-# Replace the placeholder in the ingress host
-patches:
-- target:
-    kind: Ingress
-    name: pgadmin4
-  patch: |-
-    - op: replace
-      path: /spec/rules/0/host
-      value: pgadmin.$(server-ip-config.server_ip).nip.io
+# Reference the ConfigMap that Terraform created
+vars:
+- name: SERVER_IP
+  objref:
+    kind: ConfigMap
+    name: server-ip-config
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.SERVER_IP

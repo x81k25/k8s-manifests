@@ -7,10 +7,11 @@ metadata:
     app: pgadmin4
     managed-by: terraform
 spec:
+  type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
+    - port: ${pgadmin4_config.port}
+      targetPort: pgadmin4
+      protocol: TCP
+      name: http
   selector:
     app: pgadmin4
-  type: ClusterIP

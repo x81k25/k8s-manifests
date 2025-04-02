@@ -1,28 +1,45 @@
+# PostgreSQL Deployment for Development Environment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgsql-test
+  name: postgres-dev
+  namespace: pgsql
   labels:
-    app: pgsql-test
+    app: postgres-dev
+    managed-by: terraform
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pgsql-test
+      app: postgres-dev
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
-        app: pgsql-test
+        app: postgres-dev
     spec:
+      securityContext:
+        fsGroup: ${var.pgsql_config.dev.security.GID}
       containers:
       - name: postgres
-        image: postgres:15
+        image: postgres:latest
         ports:
-        - containerPort: 5433
+        - containerPort: ${var.pgsql_config.dev.port}
         env:
-        - name: POSTGRES_PASSWORD
-          value: "postgres"
         - name: POSTGRES_USER
-          value: "postgres"
+          value: ${var.pgsql_config.dev.user}
+        - name: POSTGRES_PASSWORD
+          value: ${var.pgsql_config.dev.password}
         - name: POSTGRES_DB
-          value: "postgres"
+          value: ${var.pgsql_config.dev.database}
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-data
+        hostPath:
+          path: ${var.pgsql_config.dev.mount}
+          type: DirectoryOrCreate

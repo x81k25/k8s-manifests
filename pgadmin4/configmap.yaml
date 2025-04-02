@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin4-servers-json
+  namespace: pgsql
+  labels:
+    app: pgadmin4
+    managed-by: argocd
+data:
+  servers.json: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "${PGADMIN4_DEV_SERVER_NAME}",
+          "Group": "${PGADMIN4_DEV_SERVER_GROUP}",
+          "Host": "${PGADMIN4_DEV_SERVER_HOST}",
+          "Port": ${PGADMIN4_DEV_SERVER_PORT},
+          "MaintenanceDB": "${PGADMIN4_DEV_SERVER_DB}",
+          "Username": "${PGADMIN4_DEV_SERVER_USER}",
+          "SSLMode": "${PGADMIN4_DEV_SERVER_SSLMODE}",
+          "PassFile": "/pgpassfile-dev"
+        },
+        "2": {
+          "Name": "${PGADMIN4_STG_SERVER_NAME}",
+          "Group": "${PGADMIN4_STG_SERVER_GROUP}",
+          "Host": "${PGADMIN4_STG_SERVER_HOST}",
+          "Port": ${PGADMIN4_STG_SERVER_PORT},
+          "MaintenanceDB": "${PGADMIN4_STG_SERVER_DB}",
+          "Username": "${PGADMIN4_STG_SERVER_USER}",
+          "SSLMode": "${PGADMIN4_STG_SERVER_SSLMODE}",
+          "PassFile": "/pgpassfile-stg"
+        },
+        "3": {
+          "Name": "${PGADMIN4_PROD_SERVER_NAME}",
+          "Group": "${PGADMIN4_PROD_SERVER_GROUP}",
+          "Host": "${PGADMIN4_PROD_SERVER_HOST}",
+          "Port": ${PGADMIN4_PROD_SERVER_PORT},
+          "MaintenanceDB": "${PGADMIN4_PROD_SERVER_DB}",
+          "Username": "${PGADMIN4_PROD_SERVER_USER}",
+          "SSLMode": "${PGADMIN4_PROD_SERVER_SSLMODE}",
+          "PassFile": "/pgpassfile-prod"
+        }
+      }
+    }

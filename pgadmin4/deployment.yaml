@@ -5,7 +5,7 @@ metadata:
   namespace: pgsql
   labels:
     app: pgadmin4
-    managed-by: terraform
+    managed-by: argocd
 spec:
   replicas: 1
   selector:
@@ -17,77 +17,57 @@ spec:
         app: pgadmin4
     spec:
       securityContext:
-        fsGroup: ${pgadmin4_config.fs_grounp}
+        fsGroup: ${PGADMIN4_FS_GROUP}
       containers:
         - name: pgadmin4
-          image: dpage/pgadmin4:latest
+          image: dpage/pgadmin4:8.8
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: ${pgadmin4_config.listen_port}
-              name: pgadmin4
-          securityContext:
-            runAsUser: ${pgadmin4_config.UID}
-            runAsGroup: ${pgadmin4_config.GID}
+            - name: http
+              containerPort: 80
           env:
             - name: PGADMIN_DEFAULT_EMAIL
               valueFrom:
                 secretKeyRef:
                   name: pgadmin4-secrets
-                  key: email
+                  key: pgadmin4_email
             - name: PGADMIN_DEFAULT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgadmin4-secrets
-                  key: password
+                  key: pgadmin4_password
             - name: PGADMIN_LISTEN_ADDRESS
               valueFrom:
-                secretKeyRef:
-                  name: pgadmin4-secrets
-                  key: listen_address
+                configMapKeyRef:
+                  name: pgadmin4-config
+                  key: pgadmin4_listen_address
             - name: PGADMIN_LISTEN_PORT
               valueFrom:
-                secretKeyRef:
-                  name: pgadmin4-secrets
-                  key: listen_port
-            - name: PGADMIN_SERVER_MODE
-              valueFrom:
-                secretKeyRef:
-                  name: pgadmin4-secrets
-                  key: server_mode
-            - name: SERVER_IP
-              valueFrom:
                 configMapKeyRef:
-                  name: server-ip-config
-                  key: SERVER_IP
+                  name: pgadmin4-config
+                  key: pgadmin4_listen_port
+            - name: PGADMIN_SERVER_JSON_FILE
+              value: /pgadmin4/servers.json
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
           volumeMounts:
-            - name: pgadmin4-data
-              mountPath: ${pgadmin4_config.mount}
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
             - name: servers-json
               mountPath: /pgadmin4/servers.json
               subPath: servers.json
-          resources:
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
-          livenessProbe:
-            httpGet:
-              path: /misc/ping
-              port: pgadmin4
-            initialDelaySeconds: 30
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /misc/ping
-              port: pgadmin4
-            initialDelaySeconds: 10
-            periodSeconds: 5
+          securityContext:
+            runAsUser: ${PGADMIN4_UID}
+            runAsGroup: ${PGADMIN4_GID}
       volumes:
-        - name: pgadmin4-data
+        - name: pgadmin-data
           hostPath:
-            path: ${pgadmin4_config.mount}
+            path: ${PGADMIN4_MOUNT}
         - name: servers-json
-          secret:
-            secretName: pgadmin4-servers-secret
+          configMap:
+            name: pgadmin4-servers-json

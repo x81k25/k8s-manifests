@@ -5,13 +5,13 @@ metadata:
   namespace: pgsql
   labels:
     app: pgadmin4
-    managed-by: terraform
+    managed-by: argocd
 spec:
-  type: ClusterIP
-  ports:
-    - port: ${pgadmin4_config.port}
-      targetPort: pgadmin4
-      protocol: TCP
-      name: http
   selector:
     app: pgadmin4
+  ports:
+    - port: ${PGADMIN4_PORT}
+      targetPort: 80
+      protocol: TCP
+      name: http
+  type: ClusterIP

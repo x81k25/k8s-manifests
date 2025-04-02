@@ -1,4 +1,4 @@
-# overlays/dev/kustomization.yaml
+# pgsql/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -18,15 +18,29 @@ patches:
           - name: postgres
             env:
             - name: POSTGRES_USER
-              value: postgres-dev
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-dev-config
+                  key: pgsql_dev_user
             - name: POSTGRES_PASSWORD
-              value: dev-password
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-dev-config
+                  key: pgsql_dev_password
             - name: POSTGRES_DB
-              value: devdb
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-dev-config
+                  key: pgsql_dev_database
+            - name: PG_MOUNT_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-dev-config
+                  key: pgsql_dev_mount
           volumes:
           - name: postgres-data
             hostPath:
-              path: /mnt/data/postgres-dev
+              path: $(PG_MOUNT_PATH)
   target:
     kind: Deployment
     name: postgres

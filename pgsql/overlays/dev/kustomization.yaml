@@ -40,6 +40,7 @@ patches:
     kind: Deployment
     name: postgres
     namespace: pgsql
+# In pgsql/overlays/dev/kustomization.yaml, modify the Service patch:
 - patch: |-
     apiVersion: v1
     kind: Service
@@ -50,6 +51,7 @@ patches:
       ports:
       - port: 5434
         targetPort: 5432
+        name: postgres-dev
   target:
     kind: Service
     name: postgres

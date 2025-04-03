@@ -48,8 +48,9 @@ patches:
       namespace: pgsql
     spec:
       ports:
-      - port: 5433
+      - port: 5434
         targetPort: 5432
+        name: postgres-stg 
   target:
     kind: Service
     name: postgres

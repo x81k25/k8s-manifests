@@ -85,6 +85,9 @@ kubectl get pods -n <namespace>
 
 # Check port usage
 kubectl get svc --all-namespaces | grep <port-number>
+
+# get namespace events
+kubectl get events -n <namespace> --sort-by='.lastTimestamp'
 ```
 
 ### ArgoCD Operations

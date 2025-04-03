@@ -52,7 +52,7 @@ patches:
       ports:
       - port: 5433
         targetPort: 5432
-        NodePort: 31433
+        nodePort: 31433
         name: postgres
         protocol: TCP
       selector:

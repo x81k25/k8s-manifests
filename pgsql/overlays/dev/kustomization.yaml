@@ -55,8 +55,8 @@ patches:
         targetPort: 5432
         name: postgres
         protocol: TCP
-    selector:
-      app: postgres
+      selector:
+        app: postgres
   target:
     kind: Service
     name: postgres

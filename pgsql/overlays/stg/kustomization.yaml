@@ -47,10 +47,12 @@ patches:
       name: postgres
       namespace: pgsql
     spec:
+      $patch: replace
       ports:
-      - port: 5434
+      - port: 5433
         targetPort: 5432
-        name: postgres-stg 
+        name: postgres
+        protocol: TCP
   target:
     kind: Service
     name: postgres

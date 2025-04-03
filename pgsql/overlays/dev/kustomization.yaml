@@ -7,12 +7,16 @@ namePrefix: dev-
 patches:
 - patch: |-
     apiVersion: apps/v1
-    kind: Deployment
+    kind: StatefulSet
     metadata:
       name: postgres
       namespace: pgsql
     spec:
       template:
+        metadata:
+          labels:
+            app: postgres
+            environment: dev
         spec:
           containers:
           - name: postgres
@@ -37,10 +41,9 @@ patches:
             hostPath:
               path: /d/postgres/dev
   target:
-    kind: Deployment
+    kind: StatefulSet
     name: postgres
     namespace: pgsql
-# In pgsql/overlays/dev/kustomization.yaml, modify the Service patch:
 - patch: |-
     apiVersion: v1
     kind: Service
@@ -58,6 +61,7 @@ patches:
         protocol: TCP
       selector:
         app: postgres
+        environment: dev
   target:
     kind: Service
     name: postgres

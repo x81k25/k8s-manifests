@@ -7,12 +7,16 @@ namePrefix: prod-
 patches:
 - patch: |-
     apiVersion: apps/v1
-    kind: Deployment
+    kind: StatefulSet
     metadata:
       name: postgres
       namespace: pgsql
     spec:
       template:
+        metadata:
+          labels:
+            app: postgres
+            environment: prod
         spec:
           containers:
           - name: postgres
@@ -37,6 +41,28 @@ patches:
             hostPath:
               path: /d/postgres/prod
   target:
-    kind: Deployment
+    kind: StatefulSet
+    name: postgres
+    namespace: pgsql
+- patch: |-
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: postgres
+      namespace: pgsql
+    spec:
+      $patch: replace
+      type: NodePort
+      ports:
+      - port: 5432
+        targetPort: 5432
+        nodePort: 31432
+        name: postgres
+        protocol: TCP
+      selector:
+        app: postgres
+        environment: prod
+  target:
+    kind: Service
     name: postgres
     namespace: pgsql

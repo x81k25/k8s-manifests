@@ -7,12 +7,16 @@ namePrefix: stg-
 patches:
 - patch: |-
     apiVersion: apps/v1
-    kind: Deployment
+    kind: StatefulSet
     metadata:
       name: postgres
       namespace: pgsql
     spec:
       template:
+        metadata:
+          labels:
+            app: postgres
+            environment: stg
         spec:
           containers:
           - name: postgres
@@ -37,7 +41,7 @@ patches:
             hostPath:
               path: /d/postgres/stg
   target:
-    kind: Deployment
+    kind: StatefulSet
     name: postgres
     namespace: pgsql
 - patch: |-
@@ -57,6 +61,7 @@ patches:
         protocol: TCP
       selector:
         app: postgres
+        environment: stg
   target:
     kind: Service
     name: postgres

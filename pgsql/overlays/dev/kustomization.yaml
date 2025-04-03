@@ -49,6 +49,7 @@ patches:
       namespace: pgsql
     spec:
       $patch: replace
+      type: NodePort
       ports:
       - port: 5434
         targetPort: 5432

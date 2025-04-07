@@ -19,3 +19,10 @@ spec:
         args: ["--userid-header=kubeflow-userid"]
         ports:
         - containerPort: 8081
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/profile-controller
+      volumes:
+      - name: config-volume
+        configMap:
+          name: profile-controller-config

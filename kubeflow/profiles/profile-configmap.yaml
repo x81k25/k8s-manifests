@@ -1,0 +1,10 @@
+# profile-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: profile-controller-config
+data:
+  namespace-labels.yaml: |
+    # Add any default namespace labels here
+    labels:
+      katib-metricscollector-injection: enabled

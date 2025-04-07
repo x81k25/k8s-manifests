@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notebook-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notebook-controller
+  template:
+    metadata:
+      labels:
+        app: notebook-controller
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: notebook-controller
+        image: kubefloworg/notebook-controller:latest
+        env:
+        - name: USE_ISTIO
+          value: "false"
+        - name: POD_LABELS
+          value: "app"
+        - name: ISTIO_GATEWAY
+          value: kubeflow/kubeflow-gateway
+        volumeMounts:
+        - name: notebook-data
+          mountPath: /notebooks
+      volumes:
+      - name: notebook-data
+        hostPath:
+          path: /d/k8s/volumes/kubeflow/notebooks
+          type: DirectoryOrCreate

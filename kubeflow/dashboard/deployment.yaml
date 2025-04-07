@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeflow-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeflow-dashboard
+  template:
+    metadata:
+      labels:
+        app: kubeflow-dashboard
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: kubeflow-dashboard
+        image: kubefloworg/centraldashboard:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: USERID_HEADER
+          value: kubeflow-userid
+        - name: USERID_PREFIX
+          value: ""
+        - name: PROFILES_KFAM_SERVICE_HOST
+          value: profiles-kfam.ai-ml.svc.cluster.local
+        - name: REGISTRATION_FLOW
+          value: "false"
+        - name: KUBEFLOW_USERID_HEADER
+          value: kubeflow-userid
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: kubeflow-secret
+              key: kubeflow_user
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kubeflow-secret
+              key: kubeflow_password

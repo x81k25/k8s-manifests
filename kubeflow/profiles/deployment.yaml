@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profiles-kfam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profiles-kfam
+  template:
+    metadata:
+      labels:
+        app: profiles-kfam
+    spec:
+      serviceAccountName: kubeflow-sa
+      containers:
+      - name: profiles-kfam
+        image: docker.io/kubeflownotebookswg/profile-controller:v1.8.0
+        args: ["--userid-header=kubeflow-userid"]
+        ports:
+        - containerPort: 8081

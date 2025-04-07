@@ -12,6 +12,7 @@ spec:
       labels:
         app: pipeline
     spec:
+      serviceAccountName: kubeflow-sa
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

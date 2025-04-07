@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - app.yaml
+- rbac.yaml
 - minio/deployment.yaml
 - minio/service.yaml
 - dashboard/deployment.yaml

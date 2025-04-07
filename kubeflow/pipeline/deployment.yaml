@@ -17,7 +17,7 @@ spec:
         runAsGroup: 1000
       containers:
       - name: pipeline
-        image: kubeflownotebookswg/pipeline:v1.8
+        image: gcr.io/ml-pipeline/api-server:v1.8.0
         env:
         - name: POD_NAMESPACE
           valueFrom:

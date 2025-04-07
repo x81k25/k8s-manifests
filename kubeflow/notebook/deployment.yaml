@@ -17,7 +17,7 @@ spec:
         runAsGroup: 1000
       containers:
       - name: notebook-controller
-        image: kubefloworg/notebook-controller:latest
+        image: kubeflownotebookswg/notebook-controller:v1.8.0
         env:
         - name: USE_ISTIO
           value: "false"

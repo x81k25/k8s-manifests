@@ -18,7 +18,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: kubeflow-dashboard
-        image: kubefloworg/centraldashboard:latest
+        image: kubeflownotebookswg/centraldashboard:v1.8.0
         ports:
         - containerPort: 8082
         env:

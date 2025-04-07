@@ -15,8 +15,6 @@ resources:
 - metadata/service.yaml
 - pipeline/deployment.yaml
 - pipeline/service.yaml
-- profiles/deployment.yaml
-- profiles/service.yaml
 
 namespace: ai-ml
 

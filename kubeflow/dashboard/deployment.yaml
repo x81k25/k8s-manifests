@@ -27,8 +27,6 @@ spec:
           value: kubeflow-userid
         - name: USERID_PREFIX
           value: ""
-        - name: PROFILES_KFAM_SERVICE_HOST
-          value: profiles-kfam.ai-ml.svc.cluster.local
         - name: REGISTRATION_FLOW
           value: "false"
         - name: KUBEFLOW_USERID_HEADER

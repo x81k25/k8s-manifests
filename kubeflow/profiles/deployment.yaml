@@ -15,7 +15,7 @@ spec:
       serviceAccountName: kubeflow-sa
       containers:
       - name: profiles-kfam
-        image: gcr.io/kubeflow-images-public/profile-controller:v1.8.0
+        image: kubeflownotebookswg/profile-controller:v1.8.0-rc.4
         args: ["--userid-header=kubeflow-userid"]
         ports:
         - containerPort: 8081

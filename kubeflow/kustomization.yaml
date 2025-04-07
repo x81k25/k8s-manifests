@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- namespace.yaml
+- app.yaml
 - minio/deployment.yaml
 - minio/service.yaml
 - dashboard/deployment.yaml
@@ -13,7 +13,6 @@ resources:
 - metadata/service.yaml
 - pipeline/deployment.yaml
 - pipeline/service.yaml
-- app.yaml
 
 namespace: ai-ml
 

@@ -50,6 +50,7 @@ patches:
           - name: logs
             hostPath:
               path: /d/k8s/volumes/mlflow/dev/logs
+              type: DirectoryOrCreate
           - name: python-packages
             hostPath:
               path: /d/k8s/volumes/mlflow/dev/packages

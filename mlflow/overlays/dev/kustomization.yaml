@@ -78,7 +78,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30501
+      value: 30502
 
 # MinIO Service Patch
 - target:

@@ -56,8 +56,6 @@ patches:
               path: /d/k8s/volumes/mlflow/stg/packages
               type: DirectoryOrCreate
 
-
-
 # MinIO Deployment Patch
 - patch: |-
     apiVersion: apps/v1
@@ -84,7 +82,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30502
+      value: 30501
 
 # MinIO Service Patch
 - target:

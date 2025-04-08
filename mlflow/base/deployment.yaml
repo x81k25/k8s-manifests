@@ -90,9 +90,7 @@ spec:
         volumes:
         - name: logs
           hostPath:
-            path: /d/k8s/volumes/mlflow/ENV/logs
             type: DirectoryOrCreate
         - name: python-packages
           hostPath:
-            path: /d/k8s/volumes/mlflow/ENV/packages
             type: DirectoryOrCreate

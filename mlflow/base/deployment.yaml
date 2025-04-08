@@ -23,20 +23,19 @@ spec:
       - name: mlflow
         image: ghcr.io/mlflow/mlflow:latest
         imagePullPolicy: Always
-        command: ["/bin/bash", "-c"]
+        command: ["/bin/sh"]
         args:
+        - "-c"
         - |
-          # Install jq for URL encoding
-          apt-get update && apt-get install -y jq
-          
-          # URL encode credentials to handle special characters
-          USER=$(echo -n "$DB_USER" | jq -sRr @uri)
-          PASS=$(echo -n "$DB_PASSWORD" | jq -sRr @uri)
-          HOST=$(echo -n "$DB_HOST" | jq -sRr @uri)
-          
-          # Construct proper connection string
-          CONNECTION_STRING="postgresql://$USER:$PASS@$HOST:$DB_PORT/$DB_NAME"
-          echo "Using backend store URI with encoded credentials"
+          # Use python to properly escape the connection string
+          python3 -c "import urllib.parse; \
+          user = urllib.parse.quote_plus('$DB_USER'); \
+          pwd = urllib.parse.quote_plus('$DB_PASSWORD'); \
+          host = urllib.parse.quote_plus('$DB_HOST'); \
+          conn = f'postgresql://{user}:{pwd}@{host}:$DB_PORT/$DB_NAME'; \
+          print(f'Connection string: {conn}'); \
+          import os; \
+          os.environ['CONNECTION_STRING'] = conn"
           
           mlflow server \
             --host=0.0.0.0 \

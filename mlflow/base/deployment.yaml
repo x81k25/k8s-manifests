@@ -21,18 +21,25 @@ spec:
         fsGroup: 1000
       containers:
       - name: mlflow
-        image: ghcr.io/mlflow/mlflow-postgres:latest
+        image: ghcr.io/mlflow/mlflow:latest
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:
         - |
-          pip install psycopg2-binary
+          # Install psycopg2 to a custom location
+          export PYTHONUSERBASE=/packages
+          pip install --user psycopg2-binary
+          export PYTHONPATH="$PYTHONPATH:/packages/lib/python3.10/site-packages"
+          
           mlflow server \
             --host=0.0.0.0 \
             --port=5000 \
             --backend-store-uri=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME} \
             --default-artifact-root=s3://${BUCKET_NAME}/ \
             --gunicorn-opts '--log-level debug --timeout 120 --workers 2'
+        volumeMounts:
+        - name: python-packages
+          mountPath: /packages
         ports:
         - containerPort: 5000
         env:
@@ -78,11 +85,15 @@ spec:
             secretKeyRef:
               name: mlflow-artifact-store-secret
               key: bucket_name
-        volumeMounts:
-        - name: logs
-          mountPath: /mlflow/logs
+      volumeMounts:
+      - name: logs
+        mountPath: /mlflow/logs
       volumes:
       - name: logs
         hostPath:
           path: /d/k8s/volumes/mlflow/ENV/logs
+          type: DirectoryOrCreate
+      - name: python-packages
+        hostPath:
+          path: /d/k8s/volumes/mlflow/ENV/packages
           type: DirectoryOrCreate

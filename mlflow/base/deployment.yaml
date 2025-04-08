@@ -87,10 +87,12 @@ spec:
           mountPath: /mlflow/logs
         - name: python-packages
           mountPath: /packages
-        volumes:
-        - name: logs
-          hostPath:
-            type: DirectoryOrCreate
-        - name: python-packages
-          hostPath:
-            type: DirectoryOrCreate
+      volumes:
+      - name: logs
+        hostPath:
+          path: /d/k8s/volumes/mlflow/ENV/logs
+          type: DirectoryOrCreate
+      - name: python-packages
+        hostPath:
+          path: /d/k8s/volumes/mlflow/ENV/packages
+          type: DirectoryOrCreate

@@ -26,12 +26,16 @@ spec:
         args:
         - "/bin/sh"
         - "-c"
-        - "mlflow server \
-          --host=0.0.0.0 \
-          --port=5000 \
-          --backend-store-uri=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME} \
-          --default-artifact-root=s3://${BUCKET_NAME}/ \
-          --gunicorn-opts '--log-level debug --timeout 120 --workers 2'"
+        - |
+          # Construct the connection string properly
+          CONNECTION_STRING="postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME"
+          echo "Using backend store URI: $CONNECTION_STRING"
+          mlflow server \
+            --host=0.0.0.0 \
+            --port=5000 \
+            --backend-store-uri="$CONNECTION_STRING" \
+            --default-artifact-root=s3://${BUCKET_NAME}/ \
+            --gunicorn-opts '--log-level debug --timeout 120 --workers 2'"
         ports:
         - containerPort: 5000
         env:

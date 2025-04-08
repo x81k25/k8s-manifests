@@ -1,0 +1,39 @@
+# mlflow-appset.yaml
+# Apply with: kubectl apply -f mlflow-appset.yaml
+# Verify with: kubectl get applicationset mlflow-appset -n argocd -o yaml
+# Delete with: kubectl delete applicationset mlflow-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: mlflow-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: mlflow-dev
+        path: mlflow/overlays/dev
+        environment: dev
+      - name: mlflow-stg
+        path: mlflow/overlays/stg
+        environment: stg
+      - name: mlflow-prod
+        path: mlflow/overlays/prod
+        environment: prod
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "ai-ml"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

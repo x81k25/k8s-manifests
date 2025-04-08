@@ -6,7 +6,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: mlflow-appset
+  name: ai-ml-appset
   namespace: argocd
 spec:
   generators:

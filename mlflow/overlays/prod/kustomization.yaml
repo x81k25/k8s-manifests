@@ -64,6 +64,10 @@ patches:
           - name: minio-data
             hostPath:
               path: /d/k8s/volumes/mlflow/prod/minio
+          - name: python-packages
+            hostPath:
+              path: /d/k8s/volumes/mlflow/prod/packages
+              type: DirectoryOrCreate
 
 # MLflow Service Patch
 - target:

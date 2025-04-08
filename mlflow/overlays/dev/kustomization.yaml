@@ -50,6 +50,10 @@ patches:
           - name: logs
             hostPath:
               path: /d/k8s/volumes/mlflow/dev/logs
+          - name: python-packages
+            hostPath:
+              path: /d/k8s/volumes/mlflow/dev/packages
+              type: DirectoryOrCreate
 
 # MinIO Deployment Patch
 - patch: |-

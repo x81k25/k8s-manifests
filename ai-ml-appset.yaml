@@ -1,7 +1,7 @@
 # mlflow-appset.yaml
-# Apply with: kubectl apply -f mlflow-appset.yaml
-# Verify with: kubectl get applicationset mlflow-appset -n argocd -o yaml
-# Delete with: kubectl delete applicationset mlflow-appset -n argocd
+# Apply with: kubectl apply -f ai-ml-appset.yaml
+# Verify with: kubectl get applicationset ai-ml-appset -n argocd -o yaml
+# Delete with: kubectl delete applicationset ai-ml-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet

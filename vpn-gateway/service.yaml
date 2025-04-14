@@ -7,9 +7,11 @@ spec:
   selector:
     app: vpn-gateway
   ports:
-  - port: 1194
+  - name: vpn
+    port: 1194
     protocol: UDP
     targetPort: 1194
-  - port: 8118
+  - name: proxy
+    port: 8118
     protocol: TCP
     targetPort: 8118

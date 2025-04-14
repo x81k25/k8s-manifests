@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: vpn-gateway
   namespace: media-dev  
-  spec:
+spec:
   replicas: 1
   selector:
     matchLabels:

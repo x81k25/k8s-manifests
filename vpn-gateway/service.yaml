@@ -10,3 +10,6 @@ spec:
   - port: 1194
     protocol: UDP
     targetPort: 1194
+  - port: 8118
+    protocol: TCP
+    targetPort: 8118

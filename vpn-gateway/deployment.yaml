@@ -29,7 +29,7 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/privoxy
-        command: ["/bin/sh", "/scripts/setup.sh"]
+        command: ["/bin/sh", "/etc/privoxy/setup.sh"]
       volumes:
       - name: config-volume
         configMap:

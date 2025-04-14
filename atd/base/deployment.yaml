@@ -40,3 +40,5 @@ spec:
         hostPath:
           path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate
+      imagePullSecrets:
+      - name: ghcr-pull-image-token

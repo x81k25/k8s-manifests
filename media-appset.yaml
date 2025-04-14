@@ -30,9 +30,9 @@ spec:
       #  path: atd/overlays/stg
       #  enviroment: stg
       # dev containers
-      #- name: atd-dev
-      #  path: atd/overlays/dev
-      #  enviroment: dev
+      - name: atd-dev
+        path: atd/overlays/dev
+        enviroment: dev
       - name: plex-dev
         path: plex/overlays/dev
         enviroment: dev

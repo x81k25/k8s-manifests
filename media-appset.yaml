@@ -19,22 +19,25 @@ spec:
       - name: plex-prod
         path: plex/overlays/prod
         enviroment: prod
-      - name: atd-prod
-        path: atd/overlays/prod
-        enviroment: prod
-      - name: music
-        path: atd/overlays/music
-        enviroment: prod
+      #- name: atd-prod
+      #  path: atd/overlays/prod
+      #  enviroment: prod
+      #- name: music
+       # path: atd/overlays/music
+       # enviroment: prod
       # stg containers
-      - name: atd-stg
-        path: atd/overlays/stg
-        enviroment: stg
+      #- name: atd-stg
+      #  path: atd/overlays/stg
+      #  enviroment: stg
       # dev containers
-      - name: atd-dev
-        path: atd/overlays/dev
-        enviroment: dev
+      #- name: atd-dev
+      #  path: atd/overlays/dev
+      #  enviroment: dev
       - name: plex-dev
         path: plex/overlays/dev
+        enviroment: dev
+      - name: vpn-gateway-dev
+        path: vpn-gateway
         enviroment: dev
   template:
     metadata:

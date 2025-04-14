@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpn-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpn-gateway
+  template:
+    metadata:
+      labels:
+        app: vpn-gateway
+    spec:
+      containers:
+      - name: vpn-gateway
+        image: ghcr.io/x81k25/vpn-gateway:latest
+        securityContext:
+          privileged: true

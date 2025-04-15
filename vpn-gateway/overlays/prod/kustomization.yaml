@@ -11,7 +11,7 @@ patches:
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: vpn-gateway
+      name: vpn-gateway-prod
     spec:
       template:
         spec:

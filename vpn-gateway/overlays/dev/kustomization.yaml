@@ -15,3 +15,22 @@ patches:
     - op: replace
       path: /spec/template/spec/containers/0/image
       value: ghcr.io/x81k25/vpn-gateway:dev
+    - op: add
+      path: /spec/template/spec/containers/0/volumeMounts
+      value:
+        - name: vpn-config
+          mountPath: /etc/privoxy/config
+          subPath: config
+        - name: vpn-setup
+          mountPath: /setup.sh
+          subPath: setup.sh
+    - op: add
+      path: /spec/template/spec/volumes
+      value:
+        - name: vpn-config
+          configMap:
+            name: vpn-gateway-config-dev
+        - name: vpn-setup
+          configMap:
+            name: vpn-gateway-config-dev
+            defaultMode: 0755

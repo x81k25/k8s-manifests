@@ -17,7 +17,7 @@ patches:
         spec:
           containers:
           - name: automatic-transmission-daemon
-            image: ghcr.io/x81k25/automatic-transmission-daemon:stg
+            image: ghcr.io/x81k25/automatic-transmission-daemon:dev
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/dev/complete

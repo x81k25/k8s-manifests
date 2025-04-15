@@ -7,17 +7,15 @@ commonLabels:
   variant: prod
 namespace: media-prod
 patches:
-- patch: |-
-    apiVersion: apps/v1
+- target:
+    group: apps
+    version: v1
     kind: Deployment
-    metadata:
-      name: vpn-gateway-prod
-    spec:
-      template:
-        spec:
-          containers:
-          - name: vpn-gateway
-            image: ghcr.io/x81k25/vpn-gateway:main
+    name: vpn-gateway
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/image
+      value: ghcr.io/x81k25/vpn-gateway:main
 - target:
     version: v1
     kind: Service

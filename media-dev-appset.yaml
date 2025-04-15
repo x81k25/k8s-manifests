@@ -13,21 +13,21 @@ spec:
   generators:
   - list:
       elements:
-      - name: atd-dev
-        path: atd/overlays/dev
-      - name: plex-dev
-        path: plex/overlays/dev
-      - name: vpn-gateway-dev
-        path: vpn-gateway
+      - name: atd
+        path: atd/overlays
+      - name: plex
+        path: plex/overlays
+      - name: vpn-gateway
+        path: vpn-gateway/overlays
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{name}}-dev'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}"
+        path: "{{path}}/dev"
       destination:
         server: https://kubernetes.default.svc
         namespace: "media-dev"

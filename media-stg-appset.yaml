@@ -15,17 +15,19 @@ spec:
   generators:
   - list:
       elements:
-      - name: atd-stg
-        path: atd/overlays/stg
+      - name: atd
+        path: atd/overlays
+      - name: vpn-gateway
+        path: vpn-gateway/overlays
   template:
     metadata:
-      name: '{{name}}'
+      name: '{{name}}-stg'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}"
+        path: "{{path}}/stg"
       destination:
         server: https://kubernetes.default.svc
         namespace: "media-stg"

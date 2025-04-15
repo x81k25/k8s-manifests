@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -stg
+commonLabels:
+  variant: stg
+namespace: media-stg
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: vpn-gateway
+    spec:
+      template:
+        spec:
+          containers:
+          - name: vpn-gateway
+            image: ghcr.io/x81k25/vpn-gateway:stg
+- target:
+    version: v1
+    kind: Service
+    name: vpn-gateway
+  patch: |-
+    - op: replace
+      path: /spec/ports/1/port
+      value: 8119

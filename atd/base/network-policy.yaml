@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: route-through-vpn-dev
-  namespace: media-dev
 spec:
   podSelector:
     matchLabels:
@@ -11,20 +10,26 @@ spec:
   policyTypes:
   - Egress
   egress:
+  - to: []  # Allow all destinations for UDP tracker traffic
+    ports:
+    - protocol: UDP
+      port: 1337
+    - protocol: UDP
+      port: 6969
+    - protocol: UDP
+      port: 80
+    - protocol: UDP
+      port: 451
+  # Keep existing rules for HTTP proxy
   - to:
     - podSelector:
         matchLabels:
           app: vpn-gateway
           variant: dev
-    ports:
-    - protocol: TCP
-      port: 8118
   - to:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: kube-system
     ports:
     - protocol: UDP
-      port: 53
-    - protocol: TCP
       port: 53

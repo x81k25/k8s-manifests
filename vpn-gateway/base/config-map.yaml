@@ -6,9 +6,22 @@ metadata:
 data:
   setup.sh: |
     #!/bin/sh
+    # Original TCP forwarding rules
     iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
     iptables -A FORWARD -i eth0 -o tun0 -j ACCEPT
     iptables -A FORWARD -i tun0 -o eth0 -j ACCEPT
+    
+    # UDP-specific forwarding rules for trackers
+    iptables -A FORWARD -p udp -i eth0 -o tun0 -j ACCEPT
+    iptables -A FORWARD -p udp -i tun0 -o eth0 -j ACCEPT
+    iptables -t nat -A POSTROUTING -p udp -o tun0 -j MASQUERADE
+    
+    # Allow specific tracker ports
+    iptables -A FORWARD -p udp --dport 1337 -j ACCEPT
+    iptables -A FORWARD -p udp --dport 6969 -j ACCEPT
+    iptables -A FORWARD -p udp --dport 80 -j ACCEPT
+    iptables -A FORWARD -p udp --dport 451 -j ACCEPT
+    
     echo 1 > /proc/sys/net/ipv4/ip_forward
     
     # Install and configure Privoxy if not already installed
@@ -32,7 +45,7 @@ data:
     enable-remote-toggle 0
     enable-remote-http-toggle 0
     enable-edit-actions 0
-    debug 1
+    debug 1024
     # Use direct connection instead of SOCKS
     forward / .
     forwarded-connect-retries 5

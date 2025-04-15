@@ -23,9 +23,9 @@ spec:
         - containerPort: 9091
         env:
         - name: http_proxy
-          value: "http://vpn-gateway.media-dev.svc.cluster.local:8118"
+          value: "http://vpn-gateway.media-dev:8118"
         - name: https_proxy
-          value: "http://vpn-gateway.media-dev.svc.cluster.local:8118"
+          value: "http://vpn-gateway.media-dev:8118"
         volumeMounts:
         - name: complete-volume
           mountPath: /media-cache/complete

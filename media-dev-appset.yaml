@@ -1,15 +1,13 @@
 # ./app.yaml
 # patch command:
 ## kubectl apply -f media-dev-appset.yaml
-# verify patch command:
-## kubectl get applicationset media-dev-appset -n argocd -o yaml
 # delete appset
 ## kubectl delete applicationset media-dev-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: media-appset
+  name: media-dev-appset
   namespace: argocd
 spec:
   generators:

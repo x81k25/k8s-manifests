@@ -15,6 +15,7 @@ spec:
     - podSelector:
         matchLabels:
           app: vpn-gateway
+          variant: dev
     ports:
     - protocol: TCP
       port: 8118

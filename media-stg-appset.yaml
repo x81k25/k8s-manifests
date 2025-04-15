@@ -9,7 +9,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: media-appset
+  name: media-stg-appset
   namespace: argocd
 spec:
   generators:

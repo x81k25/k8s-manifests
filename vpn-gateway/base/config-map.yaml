@@ -11,27 +11,29 @@ data:
     iptables -A FORWARD -i eth0 -o tun0 -j ACCEPT
     iptables -A FORWARD -i tun0 -o eth0 -j ACCEPT
     
-    # UDP-specific forwarding rules for trackers
+    # UDP-specific forwarding rules for trackers - allow all UDP traffic
     iptables -A FORWARD -p udp -i eth0 -o tun0 -j ACCEPT
     iptables -A FORWARD -p udp -i tun0 -o eth0 -j ACCEPT
     iptables -t nat -A POSTROUTING -p udp -o tun0 -j MASQUERADE
     
-    # Allow specific tracker ports
-    iptables -A FORWARD -p udp --dport 1337 -j ACCEPT
-    iptables -A FORWARD -p udp --dport 6969 -j ACCEPT
-    iptables -A FORWARD -p udp --dport 80 -j ACCEPT
-    iptables -A FORWARD -p udp --dport 451 -j ACCEPT
-    
     echo 1 > /proc/sys/net/ipv4/ip_forward
     
-    # Install and configure Privoxy if not already installed
-    if ! command -v privoxy &> /dev/null; then
-      apt-get update && apt-get install -y privoxy
-    fi
+    # Install and configure Privoxy properly
+    apt-get update && apt-get install -y privoxy
     
-    # Configure privoxy to accept more connections
+    # Create minimal templates that Privoxy needs
+    mkdir -p /etc/privoxy/templates
+    
+    # Create minimal connect-failed template
+    echo "<html><body><h1>Connection Failed</h1><p>Connection to {host}:{port} failed.</p></body></html>" > /etc/privoxy/templates/connect-failed
+    
+    # Create minimal no-such-domain template
+    echo "<html><body><h1>Domain Not Found</h1><p>The domain {host} could not be resolved.</p></body></html>" > /etc/privoxy/templates/no-such-domain
+    
+    # Configure privoxy
     sed -i 's/listen-address.*/listen-address 0.0.0.0:8118/' /etc/privoxy/config
     sed -i 's/max-client-connections.*/max-client-connections 256/' /etc/privoxy/config
+    echo "forward / ." >> /etc/privoxy/config
     
     # Start Privoxy
     privoxy --no-daemon /etc/privoxy/config &

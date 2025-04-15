@@ -1,11 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: route-through-vpn
+  name: route-through-vpn-dev
+  namespace: media-dev
 spec:
   podSelector:
     matchLabels:
       app: atd
+      variant: dev
   policyTypes:
   - Egress
   egress:
@@ -17,9 +19,6 @@ spec:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: kube-system
-      podSelector:
-        matchLabels:
-          k8s-app: coredns
     ports:
     - protocol: UDP
       port: 53

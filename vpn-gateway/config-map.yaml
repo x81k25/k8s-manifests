@@ -27,7 +27,7 @@ data:
     exec "$@"
   config: |
     listen-address 0.0.0.0:8118
-    max-client-connections 256
+    max-client-connections 512
     forward-socks5 / 127.0.0.1:9050 .
     toggle 1
     enable-remote-toggle 0

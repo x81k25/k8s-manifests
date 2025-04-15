@@ -47,5 +47,5 @@ data:
     enable-edit-actions 0
     debug 1024
     # Use direct connection instead of SOCKS
-    forward / .
+    forward-socks5 / .
     forwarded-connect-retries 5

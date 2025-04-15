@@ -1,0 +1,36 @@
+# ./app.yaml
+# patch command:
+## kubectl apply -f media-stg-appset.yaml
+# verify patch command:
+## kubectl get applicationset media-stg-appset -n argocd -o yaml
+# delete appset
+## kubectl delete applicationset media-stg-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: media-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: atd-stg
+        path: atd/overlays/stg
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "media-stg"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+ 

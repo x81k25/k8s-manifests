@@ -1,0 +1,40 @@
+# ./app.yaml
+# patch command:
+## kubectl apply -f media-prod-appset.yaml
+# verify patch command:
+## kubectl get applicationset media-prod-appset -n argocd -o yaml
+# delete appset
+## kubectl delete applicationset media-prod-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: media-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: plex-prod
+        path: plex/overlays/prod
+      #- name: atd-prod
+      #  path: atd/overlays/prod
+      #- name: music
+      #  path: atd/overlays/music
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "media-prod"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+ 

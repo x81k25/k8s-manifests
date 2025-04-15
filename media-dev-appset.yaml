@@ -1,10 +1,10 @@
 # ./app.yaml
 # patch command:
-## kubectl apply -f media-appset.yaml
+## kubectl apply -f media-dev-appset.yaml
 # verify patch command:
-## kubectl get applicationset media-appset -n argocd -o yaml
+## kubectl get applicationset media-dev-appset -n argocd -o yaml
 # delete appset
-## kubectl delete applicationset media-appset -n argocd
+## kubectl delete applicationset media-dev-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -15,30 +15,12 @@ spec:
   generators:
   - list:
       elements:
-      # prod containers
-      - name: plex-prod
-        path: plex/overlays/prod
-        enviroment: prod
-      #- name: atd-prod
-      #  path: atd/overlays/prod
-      #  enviroment: prod
-      #- name: music
-       # path: atd/overlays/music
-       # enviroment: prod
-      # stg containers
-      #- name: atd-stg
-      #  path: atd/overlays/stg
-      #  enviroment: stg
-      # dev containers
       - name: atd-dev
         path: atd/overlays/dev
-        enviroment: dev
       - name: plex-dev
         path: plex/overlays/dev
-        enviroment: dev
       - name: vpn-gateway-dev
         path: vpn-gateway
-        enviroment: dev
   template:
     metadata:
       name: '{{name}}'
@@ -50,7 +32,7 @@ spec:
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "media-{{enviroment}}"
+        namespace: "media-dev"
       syncPolicy:
         automated:
           prune: true

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-all-egress-dev
+  name: route-through-vpn-dev
   namespace: media-dev
 spec:
   podSelector:
@@ -11,4 +11,19 @@ spec:
   policyTypes:
   - Egress
   egress:
-  - to: [] # Allow all egress traffic
+  - to:
+    - podSelector:
+        matchLabels:
+          app: vpn-gateway
+    ports:
+    - protocol: TCP
+      port: 8118
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53

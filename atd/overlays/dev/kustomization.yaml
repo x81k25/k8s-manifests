@@ -18,6 +18,11 @@ patches:
           containers:
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon:dev
+            env:
+            - name: http_proxy
+              value: "http://vpn-gateway.media-dev:8118"
+            - name: https_proxy
+              value: "http://vpn-gateway.media-dev:8118"          
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/dev/complete

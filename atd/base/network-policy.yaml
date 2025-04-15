@@ -15,6 +15,11 @@ spec:
     - podSelector:
         matchLabels:
           app: vpn-gateway
+    ports:
+    - protocol: TCP
+      port: 8118
+    - protocol: UDP
+      port: 1194
   - to:
     - namespaceSelector:
         matchLabels:

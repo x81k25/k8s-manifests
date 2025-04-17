@@ -12,9 +12,7 @@ spec:
       labels:
         app: atd
     spec:
-      securityContext:
-        runAsUser: 1005
-        runAsGroup: 1001
+      # Remove pod-level securityContext entirely
       containers:
       - name: vpn-sidecar
         image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:latest
@@ -24,6 +22,7 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
+          # No user/group restrictions for vpn-sidecar - will run as root
         env:
         - name: VPN_USERNAME
           valueFrom:
@@ -41,11 +40,15 @@ spec:
               name: vpn-config
               key: VPN_CONFIG
         volumeMounts:
-        - name: openvpn-sensitive
-          mountPath: /etc/openvpn/sensitive
+        - name: openvpn-dir
+          mountPath: /etc/openvpn
       - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon:latest
         imagePullPolicy: Always
+        # Specific security context for transmission daemon
+        securityContext:
+          runAsUser: 1005
+          runAsGroup: 1001
         ports:
         - containerPort: 9091
         env:
@@ -67,7 +70,7 @@ spec:
         hostPath:
           path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate
-      - name: openvpn-sensitive
+      - name: openvpn-dir
         emptyDir: {}
       dnsPolicy: "None"
       dnsConfig:

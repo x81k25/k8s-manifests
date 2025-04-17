@@ -19,8 +19,6 @@ spec:
       #  path: atd/overlays/prod
       #- name: music
       #  path: atd/overlays/music
-      - name: vpn-gateway
-        path: vpn-gateway/overlays
   template:
     metadata:
       name: '{{name}}-prod'

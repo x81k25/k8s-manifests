@@ -17,8 +17,6 @@ spec:
       elements:
       - name: atd
         path: atd/overlays
-      - name: vpn-gateway
-        path: vpn-gateway/overlays
   template:
     metadata:
       name: '{{name}}-stg'

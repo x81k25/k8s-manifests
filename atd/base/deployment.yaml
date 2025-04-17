@@ -28,18 +28,18 @@ spec:
         - name: VPN_USERNAME
           valueFrom:
             secretKeyRef:
-              name: vpn-credentials
-              key: username
+              name: vpn-config
+              key: VPN_USERNAME
         - name: VPN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: vpn-credentials
-              key: password
+              name: vpn-config
+              key: VPN_PASSWORD
         - name: VPN_CONFIG
           valueFrom:
             secretKeyRef:
-              name: vpn-credentials
-              key: config
+              name: vpn-config
+              key: VPN_CONFIG
       - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon:latest
         imagePullPolicy: Always

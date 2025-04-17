@@ -17,8 +17,6 @@ spec:
         path: atd/overlays
       - name: plex
         path: plex/overlays
-      - name: vpn-gateway
-        path: vpn-gateway/overlays
   template:
     metadata:
       name: '{{name}}-dev'

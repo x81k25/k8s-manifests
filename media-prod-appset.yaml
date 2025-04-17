@@ -13,21 +13,21 @@ spec:
   generators:
   - list:
       elements:
-      - name: plex
-        path: plex/overlays
-      #- name: atd-prod
-      #  path: atd/overlays/prod
-      #- name: music
-      #  path: atd/overlays/music
+      - name: plex-prod
+        path: plex/overlays/prod
+      - name: atd-prod
+        path: atd/overlays/prod
+      - name: music
+        path: atd/overlays/music
   template:
     metadata:
-      name: '{{name}}-prod'
+      name: '{{name}}'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}/prod"
+        path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "media-prod"

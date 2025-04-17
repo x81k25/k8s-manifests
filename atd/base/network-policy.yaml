@@ -10,8 +10,12 @@ spec:
   policyTypes:
   - Egress
   egress:
-  - to: []  # Allow all destinations for UDP tracker traffic
+  - to: []  # Allow all destinations for VPN traffic
     ports:
+    - protocol: UDP
+      port: 1194
+    - protocol: UDP
+      port: 1195  # Added for your specific VPN connection
     - protocol: UDP
       port: 1337
     - protocol: UDP
@@ -20,12 +24,7 @@ spec:
       port: 80
     - protocol: UDP
       port: 451
-  # Keep existing rules for HTTP proxy
-  - to:
-    - podSelector:
-        matchLabels:
-          app: vpn-gateway
-          variant: dev
+  # Keep existing rules for DNS
   - to:
     - namespaceSelector:
         matchLabels:
@@ -33,3 +32,5 @@ spec:
     ports:
     - protocol: UDP
       port: 53
+  # Allow connection to VPN servers
+  - to: []

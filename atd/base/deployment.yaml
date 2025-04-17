@@ -16,16 +16,40 @@ spec:
         runAsUser: 1005
         runAsGroup: 1001
       containers:
+      - name: vpn-sidecar
+        image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+        env:
+        - name: VPN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: vpn-credentials
+              key: username
+        - name: VPN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vpn-credentials
+              key: password
+        - name: VPN_CONFIG
+          valueFrom:
+            secretKeyRef:
+              name: vpn-credentials
+              key: config
       - name: automatic-transmission-daemon
-        image: ghcr.io/x81k25/automatic-transmission-daemon
+        image: ghcr.io/x81k25/automatic-transmission-daemon:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 9091
         env:
-        - name: http_proxy
-          value: "http://vpn-gateway.media-dev:8118"
-        - name: https_proxy
-          value: "http://vpn-gateway.media-dev:8118"
+        - name: PUID
+          value: "1005"
+        - name: PGID
+          value: "1001"
         volumeMounts:
         - name: complete-volume
           mountPath: /media-cache/complete
@@ -40,5 +64,10 @@ spec:
         hostPath:
           path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
       imagePullSecrets:
       - name: ghcr-pull-image-token

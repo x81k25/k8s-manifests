@@ -1,4 +1,3 @@
-#./overlays/dev/kustomizaton.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -16,13 +15,10 @@ patches:
       template:
         spec:
           containers:
+          - name: vpn-sidecar
+            image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon:dev
-            env:
-            - name: http_proxy
-              value: "http://vpn-gateway-dev.media-dev:8118"
-            - name: https_proxy
-              value: "http://vpn-gateway-dev.media-dev:8118"          
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/dev/complete

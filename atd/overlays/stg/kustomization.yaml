@@ -1,4 +1,3 @@
-#./overlays/stg/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -16,6 +15,8 @@ patches:
       template:
         spec:
           containers:
+          - name: vpn-sidecar
+            image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:stg
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon:stg
             volumeMounts:

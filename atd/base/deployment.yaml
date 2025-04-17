@@ -40,6 +40,9 @@ spec:
             secretKeyRef:
               name: vpn-config
               key: VPN_CONFIG
+        volumeMounts:
+        - name: openvpn-sensitive
+          mountPath: /etc/openvpn/sensitive
       - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon:latest
         imagePullPolicy: Always
@@ -64,6 +67,8 @@ spec:
         hostPath:
           path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate
+      - name: openvpn-sensitive
+        emptyDir: {}
       dnsPolicy: "None"
       dnsConfig:
         nameservers:

@@ -15,13 +15,15 @@ spec:
       labels:
         app: mlflow
     spec:
+      imagePullSecrets:
+      - name: ghcr-pull-image-token 
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
       containers:
       - name: mlflow
-        image: ghcr.io/mlflow/mlflow:2.21.3
+        image: ghcr.io/mlflow/mlflow:v2.21.3
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:

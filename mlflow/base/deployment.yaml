@@ -21,7 +21,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: mlflow
-        image: ghcr.io/mlflow/mlflow:latest
+        image: ghcr.io/mlflow/mlflow:2.21.3
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:

@@ -41,7 +41,7 @@ spec:
         - name: openvpn-dir
           mountPath: /etc/openvpn
       - name: automatic-transmission-daemon
-        image: ghcr.io/x81k25/automatic-transmission-daemon:latest
+        image: ghcr.io/x81k25/automatic-transmission-daemon-atd:latest
         imagePullPolicy: Always
         securityContext:
           runAsUser: 1005

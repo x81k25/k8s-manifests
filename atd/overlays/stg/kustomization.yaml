@@ -18,7 +18,7 @@ patches:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:stg
           - name: automatic-transmission-daemon
-            image: ghcr.io/x81k25/automatic-transmission-daemon:stg
+            image: ghcr.io/x81k25/automatic-transmission-daemon-atd:stg
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/stg/complete

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: reel-driver-api
-        image: ghcr.io/your-username/reel-driver-api:latest
+        image: ghcr.io/x81k25/reel-driver-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8000

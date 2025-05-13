@@ -29,7 +29,7 @@ spec:
         path: reel-driver/overlays/stg
         environment: stg
       - name: reel-driver-prod
-        path: mlflow/overlays/prod
+        path: reel-driver/overlays/prod
         environment: prod
         
   template:

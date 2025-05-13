@@ -16,7 +16,7 @@ patches:
         spec:
           containers:
           - name: reel-driver-api
-            image: ghcr.io/your-username/reel-driver-image:prod
+            image: ghcr.io/your-username/reel-driver-api:prod
             env:
             - name: MODEL_PATH
               value: "/reel-driver/model_artifacts/"

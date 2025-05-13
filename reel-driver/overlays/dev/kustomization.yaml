@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: reel-driver
+    spec:
+      template:
+        spec:
+          containers:
+          - name: reel-driver-api
+            image: ghcr.io/your-username/reel-driver-image:dev
+            env:
+            - name: MODEL_PATH
+              value: "./model_artifacts/"
+            - name: LOG_LEVEL
+              value: "DEBUG"
+            - name: API_HOST
+              value: "0.0.0.0"
+            - name: API_PORT
+              value: "8000"
+- target:
+    version: v1
+    kind: Service
+    name: reel-driver
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30802

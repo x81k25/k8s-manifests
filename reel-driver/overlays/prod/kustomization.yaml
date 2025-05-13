@@ -19,7 +19,7 @@ patches:
             image: ghcr.io/your-username/reel-driver-image:prod
             env:
             - name: MODEL_PATH
-              value: "./model_artifacts/"
+              value: "/reel-driver/model_artifacts/"
             - name: LOG_LEVEL
               value: "INFO"
             - name: API_HOST

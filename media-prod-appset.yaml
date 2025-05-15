@@ -13,12 +13,14 @@ spec:
   generators:
   - list:
       elements:
-      - name: plex-prod
-        path: plex/overlays/prod
       - name: atd-prod
         path: atd/overlays/prod
-      - name: music
+      - name: rear-diff
+        path: rear-diff/overlays/prod
+      - name: atd-music
         path: atd/overlays/music
+      - name: plex-prod
+        path: plex/overlays/prod
   template:
     metadata:
       name: '{{name}}'

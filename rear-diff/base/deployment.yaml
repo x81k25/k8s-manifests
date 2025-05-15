@@ -1,0 +1,55 @@
+# rear-differential/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rear-differential
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rear-differential
+  template:
+    metadata:
+      labels:
+        app: rear-differential
+    spec:
+      containers:
+      - name: rear-differential-api
+        image: ghcr.io/x81k25/rear-differential:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: API_HOST
+          value: "0.0.0.0"
+        - name: API_PORT
+          value: "8000"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: PGSQL_HOST
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config
+              key: PGSQL_HOST
+        - name: PGSQL_PORT
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config
+              key: PGSQL_PORT
+        - name: PGSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config
+              key: PGSQL_USER
+        - name: PGSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config
+              key: PGSQL_PASSWORD
+        - name: PGSQL_NAME
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config
+              key: PGSQL_DATABASE
+      imagePullSecrets:
+      - name: ghcr-pull-image-token

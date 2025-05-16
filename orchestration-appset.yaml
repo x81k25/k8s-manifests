@@ -1,0 +1,40 @@
+# ./orchestartion-appset.yaml
+# patch command:
+## kubectl apply -f orchestartion-appset-appset.yaml
+# delete appset
+## kubectl delete applicationset orchestartion-appset-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: orchestration-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: dagster-dev
+        path: dagster/overlays/dev
+        environment: dev
+      - name: dagster-stg
+        path: dagster/overlays/stg
+        environment: stg
+      - name: dagster-prod
+        path: dagster/overlays/prod
+        environment: prod
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "orchestration"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

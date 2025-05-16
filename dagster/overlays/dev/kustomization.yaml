@@ -1,0 +1,94 @@
+# dagster/overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+  environment: dev
+
+patches:
+# Dagster Deployment Patch
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: dagster
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dagster-dagit
+            image: ghcr.io/x81k25/dagster-dagit:dev
+            env:
+            - name: DAGSTER_PG_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_USER
+            - name: DAGSTER_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PASSWORD
+            - name: DAGSTER_PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_HOST
+            - name: DAGSTER_PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PORT
+            - name: DAGSTER_PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_DATABASE
+          - name: dagster-daemon
+            image: ghcr.io/x81k25/dagster-daemon:dev
+            env:
+            - name: DAGSTER_PG_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_USER
+            - name: DAGSTER_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PASSWORD
+            - name: DAGSTER_PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_HOST
+            - name: DAGSTER_PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PORT
+            - name: DAGSTER_PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_DATABASE
+          volumes:
+          - name: dagster-home
+            hostPath:
+              path: /d/k8s/volumes/dagster/dev/home
+          - name: dagster-workspace
+            hostPath:
+              path: /d/k8s/volumes/dagster/dev/workspace
+
+# Dagster Service Patch
+- target:
+    version: v1
+    kind: Service
+    name: dagster
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30302

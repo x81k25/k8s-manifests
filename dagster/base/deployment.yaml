@@ -1,0 +1,103 @@
+# dagster/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dagster
+  labels:
+    app: dagster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dagster
+  template:
+    metadata:
+      labels:
+        app: dagster
+    spec:
+      imagePullSecrets:
+      - name: ghcr-pull-image-token
+      containers:
+      - name: dagster-dagit
+        image: ghcr.io/x81k25/dagster-dagit:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DAGSTER_HOME
+          value: "/opt/dagster/dagster_home"
+        - name: DAGSTER_PG_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_USER
+        - name: DAGSTER_PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_PASSWORD
+        - name: DAGSTER_PG_HOST
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_HOST
+        - name: DAGSTER_PG_PORT
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_PORT
+        - name: DAGSTER_PG_DB
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_DATABASE
+        volumeMounts:
+        - name: dagster-home
+          mountPath: /opt/dagster/dagster_home
+        - name: dagster-workspace
+          mountPath: /opt/dagster/dagster_workspace
+      - name: dagster-daemon
+        image: ghcr.io/x81k25/dagster-daemon:latest
+        imagePullPolicy: Always
+        env:
+        - name: DAGSTER_HOME
+          value: "/opt/dagster/dagster_home"
+        - name: DAGSTER_PG_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_USER
+        - name: DAGSTER_PG_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_PASSWORD
+        - name: DAGSTER_PG_HOST
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_HOST
+        - name: DAGSTER_PG_PORT
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_PORT
+        - name: DAGSTER_PG_DB
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-config-prod
+              key: PGSQL_DATABASE
+        volumeMounts:
+        - name: dagster-home
+          mountPath: /opt/dagster/dagster_home
+        - name: dagster-workspace
+          mountPath: /opt/dagster/dagster_workspace
+      volumes:
+      - name: dagster-home
+        hostPath:
+          path: /d/k8s/volumes/dagster/ENV/home
+          type: DirectoryOrCreate
+      - name: dagster-workspace
+        hostPath:
+          path: /d/k8s/volumes/dagster/ENV/workspace
+          type: DirectoryOrCreate

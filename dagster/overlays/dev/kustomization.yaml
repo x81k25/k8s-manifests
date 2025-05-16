@@ -20,7 +20,6 @@ patches:
         spec:
           containers:
           - name: dagster-dagit
-            image: ghcr.io/x81k25/dagster-dagit:dev
             env:
             - name: DAGSTER_PG_USERNAME
               valueFrom:
@@ -48,7 +47,6 @@ patches:
                   name: pgsql-config-dev
                   key: PGSQL_DATABASE
           - name: dagster-daemon
-            image: ghcr.io/x81k25/dagster-daemon:dev
             env:
             - name: DAGSTER_PG_USERNAME
               valueFrom:
@@ -79,9 +77,11 @@ patches:
           - name: dagster-home
             hostPath:
               path: /d/k8s/volumes/dagster/dev/home
+              type: DirectoryOrCreate
           - name: dagster-workspace
             hostPath:
               path: /d/k8s/volumes/dagster/dev/workspace
+              type: DirectoryOrCreate
 
 # Dagster Service Patch
 - target:

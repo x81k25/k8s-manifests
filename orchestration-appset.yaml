@@ -1,6 +1,6 @@
 # ./orchestartion-appset.yaml
 # patch command:
-## kubectl apply -f orchestartion-appset-appset.yaml
+## kubectl apply -f orchestartion-appset.yaml
 # delete appset
 ## kubectl delete applicationset orchestartion-appset-appset -n argocd
 

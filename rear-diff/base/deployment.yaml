@@ -29,27 +29,27 @@ spec:
         - name: PGSQL_HOST
           valueFrom:
             secretKeyRef:
-              name: pgsql-config
+              name: rear-diff-pgsql-config
               key: PGSQL_HOST
         - name: PGSQL_PORT
           valueFrom:
             secretKeyRef:
-              name: pgsql-config
+              name: rear-diff-pgsql-config
               key: PGSQL_PORT
         - name: PGSQL_USER
           valueFrom:
             secretKeyRef:
-              name: pgsql-config
+              name: rear-diff-pgsql-config
               key: PGSQL_USER
         - name: PGSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: pgsql-config
+              name: rear-diff-pgsql-config
               key: PGSQL_PASSWORD
         - name: PGSQL_NAME
           valueFrom:
             secretKeyRef:
-              name: pgsql-config
+              name: rear-diff-pgsql-config
               key: PGSQL_DATABASE
       imagePullSecrets:
       - name: ghcr-pull-image-token

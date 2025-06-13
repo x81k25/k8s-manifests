@@ -114,12 +114,10 @@ spec:
           EOL
           
           cat > $DAGSTER_HOME/workspace.yaml << EOL
-          load_from:
-            - python_module:
-                module_name: dagster_examples
+          load_from: []
           EOL
           
-          dagit -h 0.0.0.0 -p 3000
+          dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
         volumeMounts:
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
@@ -169,7 +167,7 @@ spec:
             echo "Waiting for dagster.yaml to be created..."
             sleep 5
           done
-          dagster-daemon run
+          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
         volumeMounts:
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home

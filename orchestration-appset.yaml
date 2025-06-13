@@ -1,8 +1,8 @@
-# ./orchestartion-appset.yaml
+# ./orchestration-appset.yaml
 # patch command:
-## kubectl apply -f orchestartion-appset.yaml
+## kubectl apply -f orchestration-appset.yaml
 # delete appset
-## kubectl delete applicationset orchestartion-appset-appset -n argocd
+## kubectl delete applicationset orchestration-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet

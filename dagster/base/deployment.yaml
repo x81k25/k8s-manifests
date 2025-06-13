@@ -98,19 +98,12 @@ spec:
                 db_name: ${DAGSTER_PG_DB}
                 
           run_coordinator:
-            module: dagster_k8s.coordinator
-            class: K8sRunCoordinator
-            config:
-              load_incluster_config: true
+            module: dagster.core.run_coordinator
+            class: DefaultRunCoordinator
               
           run_launcher:
-            module: dagster_k8s.launcher
-            class: K8sRunLauncher
-            config:
-              load_incluster_config: true
-              job_namespace: ${DAGSTER_K8S_PIPELINE_RUN_NAMESPACE}
-              env_config_maps:
-                - ${DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP}
+            module: dagster.core.launcher
+            class: DefaultRunLauncher
           EOL
           
           cat > $DAGSTER_HOME/workspace.yaml << EOL

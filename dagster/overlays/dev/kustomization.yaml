@@ -20,6 +20,68 @@ patches:
         spec:
           containers:
           - name: dagster-dagit
+            command:
+            - bash
+            - -c
+            - |
+              mkdir -p $DAGSTER_HOME
+              cat > $DAGSTER_HOME/dagster.yaml << EOL
+              run_storage:
+                module: dagster_postgres.run_storage
+                class: PostgresRunStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              schedule_storage:
+                module: dagster_postgres.schedule_storage
+                class: PostgresScheduleStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              event_log_storage:
+                module: dagster_postgres.event_log
+                class: PostgresEventLogStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              run_coordinator:
+                module: dagster_k8s.coordinator
+                class: K8sRunCoordinator
+                config:
+                  load_incluster_config: true
+                  
+              run_launcher:
+                module: dagster_k8s.launcher
+                class: K8sRunLauncher
+                config:
+                  load_incluster_config: true
+                  job_namespace: ${DAGSTER_K8S_PIPELINE_RUN_NAMESPACE}
+                  env_config_maps:
+                    - ${DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP}
+              EOL
+              
+              cat > $DAGSTER_HOME/workspace.yaml << EOL
+              load_from:
+                - python_module:
+                    module_name: dagster_examples
+              EOL
+              
+              dagster-webserver -h 0.0.0.0 -p 3000
             env:
             - name: DAGSTER_PG_USERNAME
               valueFrom:

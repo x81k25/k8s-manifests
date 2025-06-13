@@ -81,7 +81,7 @@ patches:
                     module_name: dagster_examples
               EOL
               
-              dagster-webserver -h 0.0.0.0 -p 3000
+              dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
             env:
             - name: DAGSTER_PG_USERNAME
               valueFrom:

@@ -76,9 +76,7 @@ patches:
               EOL
               
               cat > $DAGSTER_HOME/workspace.yaml << EOL
-              load_from:
-                - python_module:
-                    module_name: dagster_examples
+              load_from: []
               EOL
               
               dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

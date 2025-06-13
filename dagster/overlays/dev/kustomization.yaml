@@ -20,66 +20,6 @@ patches:
         spec:
           containers:
           - name: dagster-dagit
-            command:
-            - bash
-            - -c
-            - |
-              mkdir -p $DAGSTER_HOME
-              cat > $DAGSTER_HOME/dagster.yaml << EOL
-              run_storage:
-                module: dagster_postgres.run_storage
-                class: PostgresRunStorage
-                config:
-                  postgres_db:
-                    username: ${DAGSTER_PG_USERNAME}
-                    password: ${DAGSTER_PG_PASSWORD}
-                    hostname: ${DAGSTER_PG_HOST}
-                    port: ${DAGSTER_PG_PORT}
-                    db_name: ${DAGSTER_PG_DB}
-                    
-              schedule_storage:
-                module: dagster_postgres.schedule_storage
-                class: PostgresScheduleStorage
-                config:
-                  postgres_db:
-                    username: ${DAGSTER_PG_USERNAME}
-                    password: ${DAGSTER_PG_PASSWORD}
-                    hostname: ${DAGSTER_PG_HOST}
-                    port: ${DAGSTER_PG_PORT}
-                    db_name: ${DAGSTER_PG_DB}
-                    
-              event_log_storage:
-                module: dagster_postgres.event_log
-                class: PostgresEventLogStorage
-                config:
-                  postgres_db:
-                    username: ${DAGSTER_PG_USERNAME}
-                    password: ${DAGSTER_PG_PASSWORD}
-                    hostname: ${DAGSTER_PG_HOST}
-                    port: ${DAGSTER_PG_PORT}
-                    db_name: ${DAGSTER_PG_DB}
-                    
-              run_coordinator:
-                module: dagster_k8s.coordinator
-                class: K8sRunCoordinator
-                config:
-                  load_incluster_config: true
-                  
-              run_launcher:
-                module: dagster_k8s.launcher
-                class: K8sRunLauncher
-                config:
-                  load_incluster_config: true
-                  job_namespace: ${DAGSTER_K8S_PIPELINE_RUN_NAMESPACE}
-                  env_config_maps:
-                    - ${DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP}
-              EOL
-              
-              cat > $DAGSTER_HOME/workspace.yaml << EOL
-              load_from: []
-              EOL
-              
-              dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
             env:
             - name: DAGSTER_PG_USERNAME
               valueFrom:
@@ -134,16 +74,32 @@ patches:
                   name: pgsql-config-dev
                   key: PGSQL_DATABASE
           - name: dagster-daemon
-            command:
-            - bash
-            - -c
-            - |
-              # Wait until the shared config file is created by dagit
-              until [ -f $DAGSTER_HOME/dagster.yaml ]; do
-                echo "Waiting for dagster.yaml to be created..."
-                sleep 5
-              done
-              dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
+            env:
+            - name: DAGSTER_PG_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_USER
+            - name: DAGSTER_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PASSWORD
+            - name: DAGSTER_PG_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_HOST
+            - name: DAGSTER_PG_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_PORT
+            - name: DAGSTER_PG_DB
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-config-dev
+                  key: PGSQL_DATABASE
           volumes:
           - name: dagster-home
             hostPath:

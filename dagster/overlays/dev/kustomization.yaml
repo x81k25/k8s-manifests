@@ -135,6 +135,17 @@ patches:
                 secretKeyRef:
                   name: pgsql-config-dev
                   key: PGSQL_DATABASE
+          - name: dagster-daemon
+            command:
+            - bash
+            - -c
+            - |
+              # Wait until the shared config file is created by dagit
+              until [ -f $DAGSTER_HOME/dagster.yaml ]; do
+                echo "Waiting for dagster.yaml to be created..."
+                sleep 5
+              done
+              dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
           volumes:
           - name: dagster-home
             hostPath:

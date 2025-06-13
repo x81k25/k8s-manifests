@@ -37,6 +37,12 @@ This repository contains Kubernetes manifests for applications deployed via Argo
     - `pgsql/overlays/prod`: PostgreSQL database (prod)
     - `pgadmin4`: PgAdmin interface
 
+- **orchestration**
+  - `orchestration-appset.yaml`: ApplicationSet for workflow orchestration applications
+    - `dagster/overlays/dev`: Dagster data orchestration platform (dev)
+    - `dagster/overlays/stg`: Dagster data orchestration platform (stg)
+    - `dagster/overlays/prod`: Dagster data orchestration platform (prod)
+
 ### Application Components
 
 - **atd**: Automatic Transmission Daemon with base/overlay pattern
@@ -67,6 +73,13 @@ This repository contains Kubernetes manifests for applications deployed via Argo
     - `stg`: Staging environment
     - `prod`: Production environment
 
+- **dagster**: Data orchestration platform deployment
+  - `base`: Common configuration with dagster-webserver and dagster-daemon
+  - `overlays`: Environment-specific configurations
+    - `dev`: Development environment (port 30302)
+    - `stg`: Staging environment (port 30301)  
+    - `prod`: Production environment (port 30300)
+
 - **pgadmin4**: PostgreSQL administration interface
 
 - **nginx-test-***: Various Nginx test applications
@@ -74,7 +87,6 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 ### Future Services (Stubs)
 
 The following directories are currently empty stubs for future services:
-- `airflow`: Workflow automation platform (to be implemented)
 - `grafana`: Monitoring and visualization platform (to be implemented)
 - `kafka`: Message streaming platform (to be implemented)
 - `prometheus`: Monitoring system (to be implemented)
@@ -172,6 +184,34 @@ The repository supports multiple environments:
 - Specialized environments (e.g., `music`)
 
 Each environment uses:
-- Distinct namespaces (e.g., `media-prod`, `media-stg`, `ai-ml`)
+- Distinct namespaces (e.g., `media-prod`, `media-stg`, `ai-ml`, `orchestration`)
 - Environment-specific image tags
 - Custom storage paths and port configurations
+
+## Service Access
+
+### External Access Ports (NodePort)
+
+- **Dagster**:
+  - Dev: `http://<node-ip>:30302`
+  - Stg: `http://<node-ip>:30301`
+  - Prod: `http://<node-ip>:30300`
+
+- **Plex**:
+  - Dev: `http://<node-ip>:30400`
+  - Prod: `http://<node-ip>:30400`
+
+- **ATD (Transmission)**:
+  - Dev: `http://<node-ip>:30093`
+
+- **MLflow**:
+  - Dev: `http://<node-ip>:30501`
+  - Stg: `http://<node-ip>:30500`
+  - Prod: `http://<node-ip>:30500`
+
+- **PostgreSQL**:
+  - Dev: `<node-ip>:31434`
+  - Stg: `<node-ip>:31433`
+  - Prod: `<node-ip>:31432`
+
+- **PgAdmin**: `http://<node-ip>:30052`

@@ -49,6 +49,63 @@ patches:
                   key: PGSQL_DATABASE
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-dev
+            command:
+            - bash
+            - -c
+            - |
+              mkdir -p $DAGSTER_HOME
+              cat > $DAGSTER_HOME/dagster.yaml << EOL
+              run_storage:
+                module: dagster_postgres.run_storage
+                class: PostgresRunStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              schedule_storage:
+                module: dagster_postgres.schedule_storage
+                class: PostgresScheduleStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              event_log_storage:
+                module: dagster_postgres.event_log
+                class: PostgresEventLogStorage
+                config:
+                  postgres_db:
+                    username: ${DAGSTER_PG_USERNAME}
+                    password: ${DAGSTER_PG_PASSWORD}
+                    hostname: ${DAGSTER_PG_HOST}
+                    port: ${DAGSTER_PG_PORT}
+                    db_name: ${DAGSTER_PG_DB}
+                    
+              run_coordinator:
+                module: dagster.core.run_coordinator
+                class: DefaultRunCoordinator
+                  
+              run_launcher:
+                module: dagster.core.launcher
+                class: DefaultRunLauncher
+              EOL
+              
+              cat > $DAGSTER_HOME/workspace.yaml << EOL
+              load_from:
+                - git:
+                    url: "https://github.com/x81k25/dagstributor"
+                    branch: "dev"
+                    executable_path: "dagster"
+              EOL
+              
+              dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
           - name: dagster-daemon
             env:
             - name: DAGSTER_PG_USERNAME

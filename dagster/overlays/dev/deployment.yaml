@@ -61,6 +61,9 @@ spec:
         - bash
         - -c
         - |
+          # Install git for repository cloning
+          apt-get update && apt-get install -y git
+          
           mkdir -p $DAGSTER_HOME
           cat > $DAGSTER_HOME/dagster.yaml << EOL
           run_storage:
@@ -105,12 +108,14 @@ spec:
             class: DefaultRunLauncher
           EOL
           
+          # Clone repository
+          git clone -b dev https://github.com/x81k25/dagstributor.git /opt/dagster/dagster_workspace/dagstributor
+          
           cat > $DAGSTER_HOME/workspace.yaml << EOL
           load_from:
-            - git:
-                url: "https://github.com/x81k25/dagstributor"
-                branch: "dev"
-                executable_path: "dagster"
+            - python_file:
+                relative_path: "dagstributor/repositories/main.py"
+                working_directory: "/opt/dagster/dagster_workspace"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

@@ -114,8 +114,7 @@ spec:
           cat > $DAGSTER_HOME/workspace.yaml << EOL
           load_from:
             - python_file:
-                relative_path: "dagstributor/repositories/main.py"
-                working_directory: "/opt/dagster/dagster_workspace"
+                relative_path: "/opt/dagster/dagster_workspace/dagstributor/repositories/main.py"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

@@ -17,6 +17,8 @@ spec:
         path: atd/overlays
       - name: rear-diff
         path: rear-diff/overlays
+      - name: dagster
+        path: dagster/overlays
   template:
     metadata:
       name: '{{name}}-stg'

@@ -19,6 +19,8 @@ spec:
         path: rear-diff/overlays
       - name: plex
         path: plex/overlays
+      - name: dagster
+        path: dagster/overlays
   template:
     metadata:
       name: '{{name}}-dev'

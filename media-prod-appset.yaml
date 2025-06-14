@@ -21,6 +21,8 @@ spec:
         path: atd/overlays/music
       - name: plex-prod
         path: plex/overlays/prod
+      - name: dagster-prod
+        path: dagster/overlays/prod
   template:
     metadata:
       name: '{{name}}'

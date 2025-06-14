@@ -108,13 +108,15 @@ spec:
             class: DefaultRunLauncher
           EOL
           
-          # Clone repository
+          # Clone repository to both locations for compatibility
           git clone -b dev https://github.com/x81k25/dagstributor.git /opt/dagster/dagster_workspace/dagstributor
+          ln -sf /opt/dagster/dagster_workspace/dagstributor $DAGSTER_HOME/dagstributor
           
           cat > $DAGSTER_HOME/workspace.yaml << EOL
           load_from:
             - python_file:
-                relative_path: "/opt/dagster/dagster_workspace/dagstributor/repositories/main.py"
+                relative_path: "dagstributor/repositories/main.py"
+                working_directory: "$DAGSTER_HOME"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

@@ -108,15 +108,17 @@ spec:
             class: DefaultRunLauncher
           EOL
           
-          # Clone repository to both locations for compatibility
+          # Clone repository and install as editable package
           git clone -b dev https://github.com/x81k25/dagstributor.git /opt/dagster/dagster_workspace/dagstributor
-          ln -sf /opt/dagster/dagster_workspace/dagstributor $DAGSTER_HOME/dagstributor
+          cd /opt/dagster/dagster_workspace/dagstributor
+          pip install -e .
+          cd $DAGSTER_HOME
           
           cat > $DAGSTER_HOME/workspace.yaml << EOL
           load_from:
-            - python_file:
-                relative_path: "repositories/main.py"
-                working_directory: "/opt/dagster/dagster_workspace/dagstributor"
+            - python_module:
+                module_name: "repositories.main"
+                attribute: "dagstributor_repository"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

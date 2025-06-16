@@ -24,17 +24,17 @@ spec:
       - name: git-sync-init
         image: registry.k8s.io/git-sync/git-sync:v4.2.1
         env:
-        - name: GIT_SYNC_REPO
+        - name: GITSYNC_REPO
           value: "https://github.com/x81k25/dagstributor"
-        - name: GIT_SYNC_BRANCH
+        - name: GITSYNC_REF
           value: "main"  # Will be overridden per environment
-        - name: GIT_SYNC_ROOT
+        - name: GITSYNC_ROOT
           value: "/git-repo"
-        - name: GIT_SYNC_DEST
+        - name: GITSYNC_LINK
           value: "dagstributor"
-        - name: GIT_SYNC_ONE_TIME
+        - name: GITSYNC_ONE_TIME
           value: "true"
-        - name: GIT_SYNC_VERBOSE
+        - name: GITSYNC_VERBOSE
           value: "1"
         volumeMounts:
         - name: git-repo
@@ -200,19 +200,19 @@ spec:
       - name: git-sync
         image: registry.k8s.io/git-sync/git-sync:v4.2.1
         env:
-        - name: GIT_SYNC_REPO
+        - name: GITSYNC_REPO
           value: "https://github.com/x81k25/dagstributor"
-        - name: GIT_SYNC_BRANCH
+        - name: GITSYNC_REF
           value: "main"  # Will be overridden per environment
-        - name: GIT_SYNC_ROOT
+        - name: GITSYNC_ROOT
           value: "/git-repo"
-        - name: GIT_SYNC_DEST
+        - name: GITSYNC_LINK
           value: "dagstributor"
-        - name: GIT_SYNC_PERIOD
+        - name: GITSYNC_PERIOD
           value: "3600s"
-        - name: GIT_SYNC_ONE_TIME
+        - name: GITSYNC_ONE_TIME
           value: "false"
-        - name: GIT_SYNC_VERBOSE
+        - name: GITSYNC_VERBOSE
           value: "1"
         volumeMounts:
         - name: git-repo

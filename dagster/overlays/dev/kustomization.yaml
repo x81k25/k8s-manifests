@@ -80,12 +80,12 @@ patches:
               value: media-dev
           - name: git-sync
             env:
-            - name: GIT_SYNC_BRANCH
+            - name: GITSYNC_REF
               value: "dev"
           initContainers:
           - name: git-sync-init
             env:
-            - name: GIT_SYNC_BRANCH
+            - name: GITSYNC_REF
               value: "dev"
           volumes:
           - name: dagster-home

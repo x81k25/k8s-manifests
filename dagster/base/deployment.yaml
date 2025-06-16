@@ -21,6 +21,16 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       initContainers:
+      - name: fix-permissions
+        image: busybox:1.36
+        command: ['sh', '-c', 'chown -R 1000:1000 /opt/dagster/dagster_home /opt/dagster/dagster_workspace']
+        volumeMounts:
+        - name: dagster-home
+          mountPath: /opt/dagster/dagster_home
+        - name: dagster-workspace
+          mountPath: /opt/dagster/dagster_workspace
+        securityContext:
+          runAsUser: 0
       - name: git-sync-init
         image: registry.k8s.io/git-sync/git-sync:v4.2.1
         env:
@@ -188,7 +198,7 @@ spec:
             echo "Waiting for dagster.yaml to be created..."
             sleep 5
           done
-          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml --reload
+          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
         volumeMounts:
         - name: git-repo
           mountPath: /opt/dagster/app

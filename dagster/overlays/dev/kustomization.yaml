@@ -78,6 +78,15 @@ patches:
                   key: PGSQL_DATABASE
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-dev
+          - name: git-sync
+            env:
+            - name: GIT_SYNC_BRANCH
+              value: "dev"
+          initContainers:
+          - name: git-sync-init
+            env:
+            - name: GIT_SYNC_BRANCH
+              value: "dev"
           volumes:
           - name: dagster-home
             hostPath:

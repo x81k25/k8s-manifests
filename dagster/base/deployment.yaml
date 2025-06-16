@@ -16,6 +16,29 @@ spec:
         app: dagster
     spec:
       serviceAccountName: dagster  # Correctly placed at the pod spec level
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+      initContainers:
+      - name: git-sync-init
+        image: registry.k8s.io/git-sync/git-sync:v4.2.1
+        env:
+        - name: GIT_SYNC_REPO
+          value: "https://github.com/x81k25/dagstributor"
+        - name: GIT_SYNC_BRANCH
+          value: "main"  # Will be overridden per environment
+        - name: GIT_SYNC_ROOT
+          value: "/git-repo"
+        - name: GIT_SYNC_DEST
+          value: "dagstributor"
+        - name: GIT_SYNC_ONE_TIME
+          value: "true"
+        - name: GIT_SYNC_VERBOSE
+          value: "1"
+        volumeMounts:
+        - name: git-repo
+          mountPath: /git-repo
       containers:
       - name: dagster-dagit
         image: dagster/dagster-k8s:1.5.5
@@ -107,11 +130,16 @@ spec:
           EOL
           
           cat > $DAGSTER_HOME/workspace.yaml << EOL
-          load_from: []
+          load_from:
+            - python_file:
+                relative_path: "/opt/dagster/app/dagstributor/dagstributor/definitions.py"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
         volumeMounts:
+        - name: git-repo
+          mountPath: /opt/dagster/app
+          readOnly: true
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
@@ -160,13 +188,39 @@ spec:
             echo "Waiting for dagster.yaml to be created..."
             sleep 5
           done
-          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
+          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml --reload
         volumeMounts:
+        - name: git-repo
+          mountPath: /opt/dagster/app
+          readOnly: true
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
+      - name: git-sync
+        image: registry.k8s.io/git-sync/git-sync:v4.2.1
+        env:
+        - name: GIT_SYNC_REPO
+          value: "https://github.com/x81k25/dagstributor"
+        - name: GIT_SYNC_BRANCH
+          value: "main"  # Will be overridden per environment
+        - name: GIT_SYNC_ROOT
+          value: "/git-repo"
+        - name: GIT_SYNC_DEST
+          value: "dagstributor"
+        - name: GIT_SYNC_PERIOD
+          value: "3600s"
+        - name: GIT_SYNC_ONE_TIME
+          value: "false"
+        - name: GIT_SYNC_VERBOSE
+          value: "1"
+        volumeMounts:
+        - name: git-repo
+          mountPath: /git-repo
       volumes:
+      - name: git-repo
+        emptyDir:
+          sizeLimit: 100Mi
       - name: dagster-home
         hostPath:
           path: /d/k8s/volumes/dagster/ENV/home

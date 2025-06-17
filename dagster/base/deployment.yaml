@@ -56,6 +56,9 @@ spec:
         ports:
         - containerPort: 3000
           name: dagit-http
+        envFrom:
+        - configMapRef:
+            name: environment
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
@@ -158,6 +161,9 @@ spec:
       - name: dagster-daemon
         image: dagster/dagster-k8s:1.5.5
         imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: environment
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"

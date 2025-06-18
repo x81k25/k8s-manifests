@@ -51,7 +51,7 @@ spec:
           mountPath: /git-repo
       containers:
       - name: dagster-dagit
-        image: dagster/dagster-k8s:1.5.5
+        image: dagster/dagster-k8s:1.10.20
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -159,7 +159,7 @@ spec:
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
       - name: dagster-daemon
-        image: dagster/dagster-k8s:1.5.5
+        image: dagster/dagster-k8s:1.10.20
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:

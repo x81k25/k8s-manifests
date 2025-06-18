@@ -81,12 +81,12 @@ patches:
           - name: git-sync
             env:
             - name: GITSYNC_REF
-              value: "prod"
+              value: "main"
           initContainers:
           - name: git-sync-init
             env:
             - name: GITSYNC_REF
-              value: "prod"
+              value: "main"
           volumes:
           - name: dagster-home
             hostPath:

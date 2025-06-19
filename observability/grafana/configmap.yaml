@@ -28,8 +28,6 @@ data:
     serve_from_sub_path = false
     
     [security]
-    admin_user = ${GF_SECURITY_ADMIN_USER}
-    admin_password = ${GF_SECURITY_ADMIN_PASSWORD}
     
     [users]
     allow_sign_up = false

@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: media-dev
 resources:
 - ../../base
-- volume-configmap.yaml
 nameSuffix: -dev
 commonLabels:
   variant: dev

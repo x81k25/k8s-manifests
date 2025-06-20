@@ -1,0 +1,11 @@
+# dagster/overlays/prod/volume-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dagster-volume-paths
+  labels:
+    app: dagster
+    environment: prod
+data:
+  DAGSTER_HOME_VOLUME_PATH: "/d/k8s/volumes/dagster/prod/home"
+  DAGSTER_WORKSPACE_VOLUME_PATH: "/d/k8s/volumes/dagster/prod/workspace"

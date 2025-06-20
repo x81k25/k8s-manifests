@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media-prod
 resources:
 - ../../base
+- volume-configmap.yaml
 nameSuffix: -prod
 commonLabels:
   variant: prod

@@ -59,6 +59,8 @@ spec:
         envFrom:
         - configMapRef:
             name: environment
+        - configMapRef:
+            name: dagster-volume-paths
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
@@ -164,6 +166,8 @@ spec:
         envFrom:
         - configMapRef:
             name: environment
+        - configMapRef:
+            name: dagster-volume-paths
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"

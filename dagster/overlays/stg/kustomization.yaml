@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media-stg
 resources:
 - ../../base
+- volume-configmap.yaml
 nameSuffix: -stg
 commonLabels:
   variant: stg

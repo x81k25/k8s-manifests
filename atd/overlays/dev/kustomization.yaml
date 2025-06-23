@@ -17,8 +17,28 @@ patches:
           containers:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev
+            livenessProbe:
+              exec:
+                command:
+                - sh
+                - -c
+                - curl -s --fail --connect-timeout 10 ifconfig.me || exit 1
+              initialDelaySeconds: 30
+              periodSeconds: 60
+              timeoutSeconds: 15
+              failureThreshold: 3
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:dev
+            livenessProbe:
+              exec:
+                command:
+                - sh
+                - -c
+                - curl -s --fail --connect-timeout 10 ifconfig.me || exit 1
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 15
+              failureThreshold: 3
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/dev/complete

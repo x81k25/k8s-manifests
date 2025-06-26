@@ -23,6 +23,8 @@ patches:
           - name: dagster-dagit
             envFrom:
             - configMapRef:
+                name: environment
+            - configMapRef:
                 name: wst-config
             - secretRef:
                 name: wst-secrets
@@ -56,6 +58,8 @@ patches:
               value: media-dev
           - name: dagster-daemon
             envFrom:
+            - configMapRef:
+                name: environment
             - configMapRef:
                 name: wst-config
             - secretRef:

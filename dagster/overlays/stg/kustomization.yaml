@@ -32,6 +32,18 @@ patches:
                 name: dagster-config
             - secretRef:
                 name: dagster-secrets
+            - configMapRef:
+                name: rear-diff-config
+            - secretRef:
+                name: rear-diff-secrets
+            - configMapRef:
+                name: reel-driver-config
+            - configMapRef:
+                name: at-config
+            - configMapRef:
+                name: transmission-config
+            - secretRef:
+                name: transmission-secrets
             env:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-stg
@@ -47,6 +59,18 @@ patches:
                 name: dagster-config
             - secretRef:
                 name: dagster-secrets
+            - configMapRef:
+                name: rear-diff-config
+            - secretRef:
+                name: rear-diff-secrets
+            - configMapRef:
+                name: reel-driver-config
+            - configMapRef:
+                name: at-config
+            - configMapRef:
+                name: transmission-config
+            - secretRef:
+                name: transmission-secrets
             env:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-stg

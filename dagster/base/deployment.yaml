@@ -60,13 +60,15 @@ spec:
         - configMapRef:
             name: environment
         - configMapRef:
-            name: at-config
+            name: wst-config
+        - secretRef:
+            name: wst-secrets
         - configMapRef:
             name: dagster-config
         - secretRef:
             name: dagster-secrets
-        - secretRef:
-            name: at-secrets
+        - configMapRef:
+            name: reel-driver-config
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
@@ -148,13 +150,15 @@ spec:
         - configMapRef:
             name: environment
         - configMapRef:
-            name: at-config
+            name: wst-config
+        - secretRef:
+            name: wst-secrets
         - configMapRef:
             name: dagster-config
         - secretRef:
             name: dagster-secrets
-        - secretRef:
-            name: at-secrets
+        - configMapRef:
+            name: reel-driver-config
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"

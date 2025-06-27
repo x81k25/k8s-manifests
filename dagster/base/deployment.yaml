@@ -61,6 +61,8 @@ spec:
             name: environment
         - configMapRef:
             name: at-config
+        - secretRef:
+            name: dagster-secrets
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
@@ -168,6 +170,8 @@ spec:
             name: environment
         - configMapRef:
             name: at-config
+        - secretRef:
+            name: dagster-secrets
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"

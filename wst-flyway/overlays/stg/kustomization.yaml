@@ -46,6 +46,16 @@ patches:
                 secretKeyRef:
                   name: flyway-secrets-stg
                   key: FLYWAY_PGSQL_PASSWORD
+            - name: FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: flyway-secrets-stg
+                  key: FLYWAY_PGSQL_USERNAME
+            - name: FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: flyway-secrets-stg
+                  key: FLYWAY_PGSQL_PASSWORD
   target:
     kind: Deployment
     name: wst-flyway

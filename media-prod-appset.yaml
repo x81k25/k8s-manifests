@@ -15,7 +15,7 @@ spec:
       elements:
       - name: atd-prod
         path: atd/overlays/prod
-      - name: rear-diff
+      - name: rear-diff-prod
         path: rear-diff/overlays/prod
       - name: atd-music
         path: atd/overlays/music

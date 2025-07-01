@@ -26,27 +26,27 @@ patches:
             - name: FLYWAY_PGSQL_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: wst-flyway-config-prod
+                  name: flyway-config-prod
                   key: FLYWAY_PGSQL_HOST
             - name: FLYWAY_PGSQL_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: wst-flyway-config-prod
+                  name: flyway-config-prod
                   key: FLYWAY_PGSQL_PORT
             - name: FLYWAY_PGSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
-                  name: wst-flyway-config-prod
+                  name: flyway-config-prod
                   key: FLYWAY_PGSQL_DATABASE
             - name: FLYWAY_USER
               valueFrom:
                 secretKeyRef:
-                  name: wst-flyway-secrets-prod
+                  name: flyway-secrets-prod
                   key: FLYWAY_PGSQL_USERNAME
             - name: FLYWAY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: wst-flyway-secrets-prod
+                  name: flyway-secrets-prod
                   key: FLYWAY_PGSQL_PASSWORD
           containers:
           - name: wst-flyway-main

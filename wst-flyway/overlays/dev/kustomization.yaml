@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ../../base
 
-namePrefix: wst-flyway-dev-
+nameSuffix: -dev
 
 patches:
 - patch: |-

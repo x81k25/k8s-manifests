@@ -1,8 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-- ../../base
+  - ../../base
+
 namePrefix: wst-flyway-stg-
+
 patches:
 - patch: |-
     apiVersion: apps/v1
@@ -14,61 +17,43 @@ patches:
       template:
         metadata:
           labels:
-            app: wst-flyway
             environment: stg
         spec:
-          containers:
-          - name: wst-flyway-container
-            image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
+          initContainers:
+          - name: wst-flyway-migrate
+            image: ghcr.io/x81k25/wst-flyway:stg
             env:
             - name: FLYWAY_PGSQL_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: flyway-config-stg
+                  name: wst-flyway-config-stg
                   key: FLYWAY_PGSQL_HOST
             - name: FLYWAY_PGSQL_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: flyway-config-stg
+                  name: wst-flyway-config-stg
                   key: FLYWAY_PGSQL_PORT
             - name: FLYWAY_PGSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
-                  name: flyway-config-stg
+                  name: wst-flyway-config-stg
                   key: FLYWAY_PGSQL_DATABASE
-            - name: FLYWAY_PGSQL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: flyway-secrets-stg
-                  key: FLYWAY_PGSQL_USERNAME
-            - name: FLYWAY_PGSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: flyway-secrets-stg
-                  key: FLYWAY_PGSQL_PASSWORD
             - name: FLYWAY_USER
               valueFrom:
                 secretKeyRef:
-                  name: flyway-secrets-stg
+                  name: wst-flyway-secrets-stg
                   key: FLYWAY_PGSQL_USERNAME
             - name: FLYWAY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: flyway-secrets-stg
+                  name: wst-flyway-secrets-stg
                   key: FLYWAY_PGSQL_PASSWORD
+          containers:
+          - name: wst-flyway-main
+            image: ghcr.io/x81k25/wst-flyway:stg
   target:
     kind: Deployment
     name: wst-flyway
-- patch: |-
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: flyway-config
-      namespace: pgsql
-    data:
-      FLYWAY_PGSQL_HOST: stg-postgres
-      FLYWAY_PGSQL_PORT: "5433"
-      FLYWAY_PGSQL_DATABASE: postgres
-  target:
-    kind: ConfigMap
-    name: flyway-config
+
+commonLabels:
+  environment: stg

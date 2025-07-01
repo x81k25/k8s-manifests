@@ -17,36 +17,48 @@ spec:
     spec:
       imagePullSecrets:
       - name: github-secrets
-      containers:
-      - name: wst-flyway-container
+      initContainers:
+      - name: wst-flyway-migrate
         image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
+        imagePullPolicy: Always
         env:
         - name: FLYWAY_URL
           value: "jdbc:postgresql://$(FLYWAY_PGSQL_HOST):$(FLYWAY_PGSQL_PORT)/$(FLYWAY_PGSQL_DATABASE)"
         - name: FLYWAY_USER
           valueFrom:
             secretKeyRef:
-              name: flyway-secrets
+              name: wst-flyway-secrets
               key: FLYWAY_PGSQL_USERNAME
         - name: FLYWAY_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: flyway-secrets
+              name: wst-flyway-secrets
               key: FLYWAY_PGSQL_PASSWORD
         - name: FLYWAY_PGSQL_HOST
           valueFrom:
             configMapKeyRef:
-              name: flyway-config
+              name: wst-flyway-config
               key: FLYWAY_PGSQL_HOST
         - name: FLYWAY_PGSQL_PORT
           valueFrom:
             configMapKeyRef:
-              name: flyway-config
+              name: wst-flyway-config
               key: FLYWAY_PGSQL_PORT
         - name: FLYWAY_PGSQL_DATABASE
           valueFrom:
             configMapKeyRef:
-              name: flyway-config
+              name: wst-flyway-config
               key: FLYWAY_PGSQL_DATABASE
         args: ["migrate"]
-      restartPolicy: Always
+      containers:
+      - name: wst-flyway-main
+        image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
+        imagePullPolicy: Always
+        command: ["sleep", "infinity"]
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "50m"

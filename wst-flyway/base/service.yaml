@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wst-flyway
+  namespace: pgsql
+  labels:
+    app: wst-flyway
+spec:
+  selector:
+    app: wst-flyway
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP

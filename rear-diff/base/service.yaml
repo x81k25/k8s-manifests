@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rear-differential
+  name: rear-diff
 spec:
   type: NodePort
   ports:
@@ -10,4 +10,4 @@ spec:
     targetPort: 8000
     nodePort: 30800
   selector:
-    app: rear-differential
+    app: rear-diff

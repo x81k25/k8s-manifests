@@ -12,12 +12,12 @@ patches:
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: rear-differential
+      name: rear-diff
     spec:
       template:
         spec:
           containers:
-          - name: rear-differential-api
+          - name: rear-diff-api
             image: ghcr.io/x81k25/rear-differential:stg
             env:
             - name: LOG_LEVEL
@@ -25,7 +25,7 @@ patches:
 - target:
     version: v1
     kind: Service
-    name: rear-differential
+    name: rear-diff
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort

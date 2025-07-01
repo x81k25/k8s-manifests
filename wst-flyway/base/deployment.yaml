@@ -21,6 +21,18 @@ spec:
       - name: wst-flyway-container
         image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
         env:
+        - name: FLYWAY_URL
+          value: "jdbc:postgresql://$(FLYWAY_PGSQL_HOST):$(FLYWAY_PGSQL_PORT)/$(FLYWAY_PGSQL_DATABASE)"
+        - name: FLYWAY_USER
+          valueFrom:
+            secretKeyRef:
+              name: flyway-secrets
+              key: FLYWAY_PGSQL_USERNAME
+        - name: FLYWAY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: flyway-secrets
+              key: FLYWAY_PGSQL_PASSWORD
         - name: FLYWAY_PGSQL_HOST
           valueFrom:
             configMapKeyRef:
@@ -36,15 +48,5 @@ spec:
             configMapKeyRef:
               name: flyway-config
               key: FLYWAY_PGSQL_DATABASE
-        - name: FLYWAY_PGSQL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: flyway-secrets
-              key: FLYWAY_PGSQL_USERNAME
-        - name: FLYWAY_PGSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: flyway-secrets
-              key: FLYWAY_PGSQL_PASSWORD
-        command: ["npm", "run", "migrate"]
+        args: ["migrate"]
       restartPolicy: Always

@@ -19,7 +19,7 @@ patches:
         spec:
           containers:
           - name: wst-flyway-container
-            image: ghcr.io/x81k25/wst-flyway:main
+            image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
             env:
             - name: FLYWAY_PGSQL_HOST
               valueFrom:

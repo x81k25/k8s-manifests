@@ -20,7 +20,7 @@ spec:
       initContainers:
       - name: wst-flyway-migrate
         image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
             name: flyway-config
@@ -37,7 +37,7 @@ spec:
       containers:
       - name: wst-flyway-main
         image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         command: ["sleep", "infinity"]
         resources:
           requests:

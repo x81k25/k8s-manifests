@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flyway-config
+  namespace: pgsql
+data:
+  FLYWAY_PGSQL_HOST: postgres
+  FLYWAY_PGSQL_PORT: "5432"
+  FLYWAY_PGSQL_DATABASE: postgres

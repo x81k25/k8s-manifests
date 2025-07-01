@@ -1,0 +1,64 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namePrefix: wst-flyway-prod-
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: wst-flyway
+      namespace: pgsql
+    spec:
+      template:
+        metadata:
+          labels:
+            app: wst-flyway
+            environment: prod
+        spec:
+          containers:
+          - name: wst-flyway-container
+            image: ghcr.io/x81k25/wst-flyway:main
+            env:
+            - name: FLYWAY_PGSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: flyway-config-prod
+                  key: FLYWAY_PGSQL_HOST
+            - name: FLYWAY_PGSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: flyway-config-prod
+                  key: FLYWAY_PGSQL_PORT
+            - name: FLYWAY_PGSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: flyway-config-prod
+                  key: FLYWAY_PGSQL_DATABASE
+            - name: FLYWAY_PGSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: flyway-secrets-prod
+                  key: FLYWAY_PGSQL_USERNAME
+            - name: FLYWAY_PGSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: flyway-secrets-prod
+                  key: FLYWAY_PGSQL_PASSWORD
+  target:
+    kind: Deployment
+    name: wst-flyway
+- patch: |-
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: flyway-config
+      namespace: pgsql
+    data:
+      FLYWAY_PGSQL_HOST: prod-postgres
+      FLYWAY_PGSQL_PORT: "5432"
+      FLYWAY_PGSQL_DATABASE: postgres
+  target:
+    kind: ConfigMap
+    name: flyway-config

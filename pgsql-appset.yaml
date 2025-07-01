@@ -21,6 +21,12 @@ spec:
         path: pgsql/overlays/stg
       - name: pgsql-dev
         path: pgsql/overlays/dev
+      - name: wst-flyway-prod
+        path: wst-flyway/overlays/prod
+      - name: wst-flyway-stg
+        path: wst-flyway/overlays/stg
+      - name: wst-flyway-dev
+        path: wst-flyway/overlays/dev
       - name: pgadmin4
         path: pgadmin4
   template:

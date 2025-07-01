@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - restart-cronjob.yaml
-  - rbac.yaml
 
 commonLabels:
   app: wst-flyway

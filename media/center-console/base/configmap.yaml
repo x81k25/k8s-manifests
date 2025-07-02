@@ -18,3 +18,4 @@ metadata:
     app: center-console
 data:
   CENTER_CONSOLE_API_TIMEOUT: "30"
+  CENTER_CONSOLE_PORT_EXTERNAL: "8501"

@@ -37,6 +37,9 @@ This repository contains Kubernetes manifests for applications deployed via Argo
     - `pgsql/overlays/dev`: PostgreSQL database (dev)
     - `pgsql/overlays/stg`: PostgreSQL database (stg)
     - `pgsql/overlays/prod`: PostgreSQL database (prod)
+    - `wst-flyway/overlays/dev`: WST Flyway migration service (dev)
+    - `wst-flyway/overlays/stg`: WST Flyway migration service (stg)
+    - `wst-flyway/overlays/prod`: WST Flyway migration service (prod)
     - `pgadmin4`: PgAdmin interface
 
 - **orchestration**
@@ -75,6 +78,13 @@ This repository contains Kubernetes manifests for applications deployed via Argo
     - `stg`: Staging environment
     - `prod`: Production environment
 
+- **wst-flyway**: Database migration service using Flyway
+  - `base`: Common configuration with init container for migrations
+  - `overlays`: Environment-specific configurations
+    - `dev`: Development environment (connects to dev-postgres)
+    - `stg`: Staging environment (connects to stg-postgres)
+    - `prod`: Production environment (connects to prod-postgres)
+
 - **dagster**: Data orchestration platform deployment
   - `base`: Common configuration with dagster-webserver and dagster-daemon
   - `overlays`: Environment-specific configurations
@@ -83,8 +93,6 @@ This repository contains Kubernetes manifests for applications deployed via Argo
     - `prod`: Production environment (port 30300)
 
 - **pgadmin4**: PostgreSQL administration interface
-
-- **nginx-test-***: Various Nginx test applications
 
 ### Future Services (Stubs)
 

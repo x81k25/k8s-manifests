@@ -5,7 +5,7 @@ nodePort: 30853
 
 config:
   timeout: 30
-  portExternal: 30853
+  portExternal: 8501
 
 namespace: media-prod
 nameSuffix: "-prod"

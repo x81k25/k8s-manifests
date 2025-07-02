@@ -5,7 +5,7 @@ nodePort: 30852
 
 config:
   timeout: 30
-  portExternal: 30852
+  portExternal: 8501
 
 namespace: media-stg
 nameSuffix: "-stg"

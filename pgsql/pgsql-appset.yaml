@@ -16,19 +16,19 @@ spec:
   - list:
       elements:
       - name: pgsql-prod
-        path: pgsql/overlays/prod
+        path: pgsql/pgsql/overlays/prod
       - name: pgsql-stg
-        path: pgsql/overlays/stg
+        path: pgsql/pgsql/overlays/stg
       - name: pgsql-dev
-        path: pgsql/overlays/dev
+        path: pgsql/pgsql/overlays/dev
       - name: wst-flyway-prod
-        path: wst-flyway/overlays/prod
+        path: pgsql/wst-flyway/overlays/prod
       - name: wst-flyway-stg
-        path: wst-flyway/overlays/stg
+        path: pgsql/wst-flyway/overlays/stg
       - name: wst-flyway-dev
-        path: wst-flyway/overlays/dev
+        path: pgsql/wst-flyway/overlays/dev
       - name: pgadmin4
-        path: pgadmin4
+        path: pgsql/pgadmin4
   template:
     metadata:
       name: '{{name}}'

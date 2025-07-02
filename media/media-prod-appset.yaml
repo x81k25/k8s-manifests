@@ -14,15 +14,15 @@ spec:
   - list:
       elements:
       - name: atd-prod
-        path: atd/overlays/prod
+        path: media/atd/overlays/prod
       - name: rear-diff-prod
-        path: rear-diff/overlays/prod
+        path: media/rear-diff/overlays/prod
       - name: atd-music
-        path: atd/overlays/music
+        path: media/atd/overlays/music
       - name: plex-prod
-        path: plex/overlays/prod
+        path: media/plex/overlays/prod
       - name: dagster-prod
-        path: dagster/overlays/prod
+        path: media/dagster/overlays/prod
   template:
     metadata:
       name: '{{name}}'

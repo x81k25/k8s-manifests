@@ -6,100 +6,108 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 
 ## Repository Structure
 
-### ApplicationSets by Namespace
+### Organization by Namespace
 
-- **argocd**
-  - `app.yaml`: ApplicationSet for directory-based applications
-  
-- **media-dev**
-  - `media-dev-appset.yaml`: ApplicationSet for dev media applications
-    - `atd/overlays/dev`: Automatic Transmission Daemon (dev)
-    - `plex/overlays/dev`: Plex Media Server (dev)
-  
-- **media-stg**
-  - `media-stg-appset.yaml`: ApplicationSet for staging media applications
-    - `atd/overlays/stg`: Automatic Transmission Daemon (stg)
-  
-- **media-prod**
-  - `media-prod-appset.yaml`: ApplicationSet for production media applications
-    - `atd/overlays/prod`: Automatic Transmission Daemon (prod)
-    - `atd/overlays/music`: Automatic Transmission Daemon (music variant)
-    - `plex/overlays/prod`: Plex Media Server (prod)
-  
-- **ai-ml**
-  - `ai-ml-appset.yaml`: ApplicationSet for AI/ML applications
-    - `mlflow/overlays/dev`: MLflow tracking server (dev)
-    - `mlflow/overlays/stg`: MLflow tracking server (stg)
-    - `mlflow/overlays/prod`: MLflow tracking server (prod)
-  
-- **pgsql**
-  - `pgsql-appset.yaml`: ApplicationSet for PostgreSQL applications
-    - `pgsql/overlays/dev`: PostgreSQL database (dev)
-    - `pgsql/overlays/stg`: PostgreSQL database (stg)
-    - `pgsql/overlays/prod`: PostgreSQL database (prod)
-    - `wst-flyway/overlays/dev`: WST Flyway migration service (dev)
-    - `wst-flyway/overlays/stg`: WST Flyway migration service (stg)
-    - `wst-flyway/overlays/prod`: WST Flyway migration service (prod)
-    - `pgadmin4`: PgAdmin interface
+```
+├── ai-ml/
+│   ├── mlflow/
+│   ├── reel-driver/
+│   └── ai-ml-appset.yaml
+├── media/
+│   ├── atd/
+│   ├── dagster/
+│   ├── kafka/
+│   ├── plex/
+│   ├── rear-diff/
+│   ├── media-dev-appset.yaml
+│   ├── media-prod-appset.yaml
+│   └── media-stg-appset.yaml
+├── observability/
+│   ├── fluent-bit/
+│   ├── grafana/
+│   ├── loki/
+│   ├── prometheus/
+│   └── observability-appset.yaml
+├── pgsql/
+│   ├── pgadmin4/
+│   ├── pgsql/
+│   ├── wst-flyway/
+│   └── pgsql-appset.yaml
+├── app.yaml
+└── readme.md
+```
 
-- **orchestration**
-  - `orchestration-appset.yaml`: ApplicationSet for workflow orchestration applications
-    - `dagster/overlays/dev`: Dagster data orchestration platform (dev)
-    - `dagster/overlays/stg`: Dagster data orchestration platform (stg)
-    - `dagster/overlays/prod`: Dagster data orchestration platform (prod)
+### ApplicationSets
+
+- **ai-ml/ai-ml-appset.yaml**: ApplicationSet for AI/ML applications
+  - `mlflow`: Machine learning experiment tracking (dev/stg/prod)
+  - `reel-driver`: Custom ML service (dev/stg/prod)
+  
+- **media/media-{dev,stg,prod}-appset.yaml**: ApplicationSets for media applications
+  - `atd`: Automatic Transmission Daemon with VPN sidecar
+  - `dagster`: Data orchestration platform
+  - `plex`: Media server (dev/prod only)
+  - `rear-diff`: Custom media service
+  
+- **observability/observability-appset.yaml**: ApplicationSet for monitoring stack
+  - `fluent-bit`: Log collector
+  - `grafana`: Metrics visualization
+  - `loki`: Log aggregation
+  - `prometheus`: Metrics collection (stub)
+  
+- **pgsql/pgsql-appset.yaml**: ApplicationSet for database applications
+  - `pgsql`: PostgreSQL database instances
+  - `wst-flyway`: Database migration service
+  - `pgadmin4`: PostgreSQL administration interface
+  
+- **app.yaml**: Directory-based ApplicationSet (root level)
 
 ### Application Components
 
-- **atd**: Automatic Transmission Daemon with base/overlay pattern
-  - `base`: Common configuration
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment
-    - `stg`: Staging environment
-    - `prod`: Production environment
-    - `music`: Specialized music configuration
-
-- **plex**: Media server deployment
-  - `base`: Common configuration
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment
-    - `prod`: Production environment
-
+#### AI/ML Applications (ai-ml/)
 - **mlflow**: Machine learning experiment tracking
   - `base`: Common configuration including MLflow server and MinIO for artifact storage
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment
-    - `stg`: Staging environment
-    - `prod`: Production environment
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  
+- **reel-driver**: Custom ML service
+  - `base`: Common configuration
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
 
+#### Media Applications (media/)
+- **atd**: Automatic Transmission Daemon with VPN sidecar
+  - `base`: Common configuration
+  - `overlays/{dev,stg,prod,music}`: Environment-specific configurations
+  
+- **dagster**: Data orchestration platform
+  - `base`: Common configuration with webserver and daemon
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  
+- **plex**: Media server deployment
+  - `base`: Common configuration
+  - `overlays/{dev,prod}`: Environment-specific configurations
+  
+- **rear-diff**: Custom media service
+  - `base`: Common configuration
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  
+- **kafka**: Message streaming platform (stub)
+
+#### Observability Stack (observability/)
+- **fluent-bit**: Log collector and forwarder
+- **grafana**: Metrics and log visualization
+- **loki**: Log aggregation system
+- **prometheus**: Metrics collection (stub)
+
+#### Database Applications (pgsql/)
 - **pgsql**: PostgreSQL database deployment
   - `base`: Common configuration
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment
-    - `stg`: Staging environment
-    - `prod`: Production environment
-
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  
 - **wst-flyway**: Database migration service using Flyway
-  - `base`: Common configuration with init container for migrations
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment (connects to dev-postgres)
-    - `stg`: Staging environment (connects to stg-postgres)
-    - `prod`: Production environment (connects to prod-postgres)
-
-- **dagster**: Data orchestration platform deployment
-  - `base`: Common configuration with dagster-webserver and dagster-daemon
-  - `overlays`: Environment-specific configurations
-    - `dev`: Development environment (port 30302)
-    - `stg`: Staging environment (port 30301)  
-    - `prod`: Production environment (port 30300)
-
+  - `base`: Common configuration with init container pattern
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  
 - **pgadmin4**: PostgreSQL administration interface
-
-### Future Services (Stubs)
-
-The following directories are currently empty stubs for future services:
-- `grafana`: Monitoring and visualization platform (to be implemented)
-- `kafka`: Message streaming platform (to be implemented)
-- `prometheus`: Monitoring system (to be implemented)
 
 ## Deployment Patterns
 
@@ -194,7 +202,11 @@ The repository supports multiple environments:
 - Specialized environments (e.g., `music`)
 
 Each environment uses:
-- Distinct namespaces (e.g., `media-prod`, `media-stg`, `ai-ml`, `orchestration`)
+- Distinct namespaces organized by function:
+  - `ai-ml`: AI and machine learning applications
+  - `media-{dev,stg,prod}`: Media-related applications
+  - `observability`: Monitoring and logging stack
+  - `pgsql`: Database services
 - Environment-specific image tags
 - Custom storage paths and port configurations
 

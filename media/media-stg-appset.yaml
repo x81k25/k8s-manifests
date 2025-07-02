@@ -1,38 +1,36 @@
 # ./app.yaml
 # patch command:
-## kubectl apply -f media-dev-appset.yaml
+## kubectl apply -f media-stg-appset.yaml
 # delete appset
-## kubectl delete applicationset media-dev-appset -n argocd
+## kubectl delete applicationset media-stg-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: media-dev-appset
+  name: media-stg-appset
   namespace: argocd
 spec:
   generators:
   - list:
       elements:
       - name: atd
-        path: atd/overlays
+        path: media/atd/overlays
       - name: rear-diff
-        path: rear-diff/overlays
-      - name: plex
-        path: plex/overlays
+        path: media/rear-diff/overlays
       - name: dagster
-        path: dagster/overlays
+        path: media/dagster/overlays
   template:
     metadata:
-      name: '{{name}}-dev'
+      name: '{{name}}-stg'
     spec:
       project: default
       source:
         repoURL: https://github.com/x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}/dev"
+        path: "{{path}}/stg"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "media-dev"
+        namespace: "media-stg"
       syncPolicy:
         automated:
           prune: true

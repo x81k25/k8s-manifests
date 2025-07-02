@@ -15,10 +15,12 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 │   └── ai-ml-appset.yaml
 ├── media/
 │   ├── atd/
+│   ├── center-console/
 │   ├── dagster/
 │   ├── kafka/
 │   ├── plex/
 │   ├── rear-diff/
+│   ├── center-console-appset.yaml
 │   ├── media-dev-appset.yaml
 │   ├── media-prod-appset.yaml
 │   └── media-stg-appset.yaml

@@ -1,26 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: center-console{{ .Values.nameSuffix }}
+  name: center-console
   labels:
     app: center-console
-    variant: {{ .Values.variant }}
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: center-console
-      variant: {{ .Values.variant }}
   template:
     metadata:
       labels:
         app: center-console
-        variant: {{ .Values.variant }}
     spec:
       containers:
       - name: center-console
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: ghcr.io/x81k25/center-console:dev
+        imagePullPolicy: Always
         ports:
         - containerPort: 8501
         env:

@@ -1,0 +1,21 @@
+# Default values for center-console
+image:
+  repository: ghcr.io/x81k25/center-console
+  tag: latest
+  pullPolicy: Always
+
+# Environment-specific values
+nodePort: 30851
+
+config:
+  timeout: 30
+  portExternal: 30851
+
+# Namespace and labels
+namespace: media-dev
+nameSuffix: "-dev"
+variant: dev
+
+# Image pull secrets
+imagePullSecrets:
+  - name: ghcr-pull-image-token

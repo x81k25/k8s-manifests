@@ -1,0 +1,12 @@
+image:
+  tag: stg
+
+nodePort: 30852
+
+config:
+  timeout: 30
+  portExternal: 30852
+
+namespace: media-stg
+nameSuffix: "-stg"
+variant: stg

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: center-console{{ .Values.nameSuffix }}
+  labels:
+    app: center-console
+    variant: {{ .Values.variant }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: center-console
+      variant: {{ .Values.variant }}
+  template:
+    metadata:
+      labels:
+        app: center-console
+        variant: {{ .Values.variant }}
+    spec:
+      containers:
+      - name: center-console
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8501
+        env:
+        - name: CENTER_CONSOLE_PORT_EXTERNAL
+          value: "{{ .Values.config.portExternal }}"
+        envFrom:
+        - configMapRef:
+            name: rear-diff-config
+        - configMapRef:
+            name: center-console-config
+      imagePullSecrets:
+{{- range .Values.imagePullSecrets }}
+      - name: {{ .name }}
+{{- end }}

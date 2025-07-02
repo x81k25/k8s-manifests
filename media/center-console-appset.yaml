@@ -1,0 +1,41 @@
+# center-console ApplicationSet using Helm
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: center-console-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: center-console-dev
+        environment: dev
+        namespace: media-dev
+        valuesFile: values-dev.yaml
+      - name: center-console-stg
+        environment: stg
+        namespace: media-stg
+        valuesFile: values-stg.yaml
+      - name: center-console-prod
+        environment: prod
+        namespace: media-prod
+        valuesFile: values-prod.yaml
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: media/center-console/helm
+        helm:
+          valueFiles:
+          - "{{valuesFile}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

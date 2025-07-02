@@ -19,8 +19,6 @@ spec:
         path: media/rear-diff/overlays
       - name: dagster
         path: media/dagster/overlays
-      - name: center-console
-        path: media/center-console/overlays
   template:
     metadata:
       name: '{{name}}-stg'

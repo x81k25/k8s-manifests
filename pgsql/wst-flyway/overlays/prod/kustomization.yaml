@@ -34,5 +34,8 @@ patches:
     kind: Deployment
     name: wst-flyway
 
+patchesStrategicMerge:
+- cronjob-restart-patch.yaml
+
 commonLabels:
   environment: prod

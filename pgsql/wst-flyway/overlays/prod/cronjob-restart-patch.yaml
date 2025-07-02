@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wst-flyway-restart
+  namespace: pgsql
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kubectl
+            command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl rollout restart deployment/wst-flyway-prod -n pgsql

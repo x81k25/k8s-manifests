@@ -7,18 +7,23 @@ nameSuffix: -stg
 resources:
   - ../../base
 
+commonLabels:
+  variant: stg
+
 patches:
-  - target:
+  - patch: |-
+      apiVersion: apps/v1
       kind: Deployment
-      name: center-console
-    patch: |-
-      - op: replace
-        path: /spec/template/metadata/labels/variant
-        value: stg
-      - op: replace
-        path: /spec/template/spec/containers/0/image
-        value: ghcr.io/x81k25/center-console:stg
+      metadata:
+        name: center-console
+      spec:
+        template:
+          spec:
+            containers:
+            - name: center-console
+              image: ghcr.io/x81k25/center-console:stg
   - target:
+      version: v1
       kind: Service
       name: center-console
     patch: |-

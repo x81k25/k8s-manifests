@@ -23,6 +23,8 @@ spec:
         path: media/plex/overlays/prod
       - name: dagster-prod
         path: media/dagster/overlays/prod
+      - name: center-console-prod
+        path: media/center-console/overlays/prod
   template:
     metadata:
       name: '{{name}}'

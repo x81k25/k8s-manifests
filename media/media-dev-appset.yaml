@@ -21,6 +21,8 @@ spec:
         path: media/plex/overlays
       - name: dagster
         path: media/dagster/overlays
+      - name: center-console
+        path: media/center-console/overlays
   template:
     metadata:
       name: '{{name}}-dev'

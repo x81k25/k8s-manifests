@@ -1,0 +1,21 @@
+# center-console/overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namespace: media-dev
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: center-console
+    spec:
+      template:
+        spec:
+          containers:
+          - name: center-console
+            image: ghcr.io/x81k25/center-console:dev

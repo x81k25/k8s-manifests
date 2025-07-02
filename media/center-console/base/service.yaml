@@ -1,0 +1,13 @@
+# center-console/base/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: center-console
+spec:
+  type: NodePort
+  ports:
+  - port: 8501
+    targetPort: 8501
+    nodePort: 30851
+  selector:
+    app: center-console

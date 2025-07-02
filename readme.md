@@ -47,6 +47,7 @@ This repository contains Kubernetes manifests for applications deployed via Argo
   
 - **media/media-{dev,stg,prod}-appset.yaml**: ApplicationSets for media applications
   - `atd`: Automatic Transmission Daemon with VPN sidecar
+  - `center-console`: Streamlit-based UI for media services
   - `dagster`: Data orchestration platform
   - `plex`: Media server (dev/prod only)
   - `rear-diff`: Custom media service
@@ -79,6 +80,10 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 - **atd**: Automatic Transmission Daemon with VPN sidecar
   - `base`: Common configuration
   - `overlays/{dev,stg,prod,music}`: Environment-specific configurations
+  
+- **center-console**: Streamlit-based UI for media services
+  - `base`: Common configuration with rear-diff and center-console ConfigMaps
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations with NodePort assignments
   
 - **dagster**: Data orchestration platform
   - `base`: Common configuration with webserver and daemon

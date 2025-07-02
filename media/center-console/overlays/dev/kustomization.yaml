@@ -8,4 +8,20 @@ resources:
   - ../../base
 
 patches:
-  - path: patch.yaml
+  - target:
+      kind: Deployment
+      name: center-console
+    patch: |-
+      - op: replace
+        path: /spec/template/metadata/labels/variant
+        value: dev
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: ghcr.io/x81k25/center-console:dev
+  - target:
+      kind: Service
+      name: center-console
+    patch: |-
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 30852

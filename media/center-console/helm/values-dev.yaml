@@ -1,11 +1,9 @@
 image:
   tag: dev
 
-nodePort: 30851
-
 config:
   timeout: 30
-  portExternal: 8501
+  portExternal: 30851
 
 namespace: media-dev
 nameSuffix: "-dev"

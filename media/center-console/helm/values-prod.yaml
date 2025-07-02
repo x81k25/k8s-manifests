@@ -1,11 +1,9 @@
 image:
   tag: main
 
-nodePort: 30853
-
 config:
   timeout: 30
-  portExternal: 8501
+  portExternal: 30853
 
 namespace: media-prod
 nameSuffix: "-prod"

@@ -23,6 +23,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 8501
+        env:
+        - name: CENTER_CONSOLE_PORT_EXTERNAL
+          value: "{{ .Values.config.portExternal }}"
         envFrom:
         - configMapRef:
             name: rear-diff-config

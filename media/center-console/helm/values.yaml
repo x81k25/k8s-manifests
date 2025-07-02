@@ -5,8 +5,6 @@ image:
   pullPolicy: Always
 
 # Environment-specific values
-nodePort: 30851
-
 config:
   timeout: 30
   portExternal: 30851

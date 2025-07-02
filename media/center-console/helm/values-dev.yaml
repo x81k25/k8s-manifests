@@ -4,6 +4,8 @@ image:
 config:
   timeout: 30
 
+nodePort: 30852
+
 namespace: media-dev
 nameSuffix: "-dev"
 variant: dev

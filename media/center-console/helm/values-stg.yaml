@@ -4,6 +4,8 @@ image:
 config:
   timeout: 30
 
+nodePort: 30851
+
 namespace: media-stg
 nameSuffix: "-stg"
 variant: stg

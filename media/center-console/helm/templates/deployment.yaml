@@ -32,6 +32,4 @@ spec:
         - configMapRef:
             name: center-console-config
       imagePullSecrets:
-{{- range .Values.imagePullSecrets }}
-      - name: {{ .name }}
-{{- end }}
+      - name: ghcr-pull-image-token

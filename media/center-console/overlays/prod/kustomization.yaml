@@ -19,3 +19,19 @@ patches:
           containers:
           - name: center-console
             image: ghcr.io/x81k25/center-console:main
+- target:
+    version: v1
+    kind: Service
+    name: center-console
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30853
+- target:
+    version: v1
+    kind: ConfigMap
+    name: center-console-config
+  patch: |-
+    - op: replace
+      path: /data/CENTER_CONSOLE_PORT_EXTERNAL
+      value: "30853"

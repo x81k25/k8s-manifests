@@ -7,7 +7,6 @@ image:
 # Environment-specific values
 config:
   timeout: 30
-  portExternal: 30851
 
 # Namespace and labels
 namespace: media-dev

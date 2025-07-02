@@ -10,7 +10,7 @@ spec:
   ports:
   - port: 8501
     targetPort: 8501
-    nodePort: {{ .Values.config.portExternal }}
+    nodePort: {{ (lookup "v1" "ConfigMap" .Values.namespace "center-console-config").data.CENTER_CONSOLE_PORT_EXTERNAL | int }}
   selector:
     app: center-console
     variant: {{ .Values.variant }}

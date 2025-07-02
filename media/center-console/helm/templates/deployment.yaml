@@ -25,7 +25,10 @@ spec:
         - containerPort: 8501
         env:
         - name: CENTER_CONSOLE_PORT_EXTERNAL
-          value: "{{ .Values.config.portExternal }}"
+          valueFrom:
+            configMapKeyRef:
+              name: center-console-config
+              key: CENTER_CONSOLE_PORT_EXTERNAL
         envFrom:
         - configMapRef:
             name: rear-diff-config

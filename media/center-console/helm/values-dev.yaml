@@ -3,7 +3,6 @@ image:
 
 config:
   timeout: 30
-  portExternal: 30851
 
 namespace: media-dev
 nameSuffix: "-dev"

@@ -3,7 +3,6 @@ image:
 
 config:
   timeout: 30
-  portExternal: 30852
 
 namespace: media-stg
 nameSuffix: "-stg"

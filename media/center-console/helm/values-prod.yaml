@@ -3,7 +3,6 @@ image:
 
 config:
   timeout: 30
-  portExternal: 30853
 
 namespace: media-prod
 nameSuffix: "-prod"

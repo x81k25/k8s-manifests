@@ -12,11 +12,9 @@ metadata:
 rules:
 - apiGroups: ["apps"]
   resources: ["deployments"]
-  resourceNames: ["wst-flyway"]
   verbs: ["get", "patch"]
 - apiGroups: ["apps"]
   resources: ["deployments/scale"]
-  resourceNames: ["wst-flyway"]
   verbs: ["get", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

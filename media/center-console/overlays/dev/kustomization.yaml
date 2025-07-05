@@ -10,18 +10,11 @@ resources:
 commonLabels:
   variant: dev
 
+images:
+  - name: ghcr.io/x81k25/center-console
+    newTag: dev
+
 patches:
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: center-console
-      spec:
-        template:
-          spec:
-            containers:
-            - name: center-console
-              image: ghcr.io/x81k25/center-console:dev
   - target:
       version: v1
       kind: Service

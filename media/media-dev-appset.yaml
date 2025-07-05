@@ -15,8 +15,6 @@ spec:
       elements:
       - name: atd
         path: media/atd/overlays
-      - name: center-console
-        path: media/center-console/overlays
       - name: rear-diff
         path: media/rear-diff/overlays
       - name: plex
@@ -26,19 +24,6 @@ spec:
   template:
     metadata:
       name: '{{name}}-dev'
-      annotations:
-        argocd-image-updater.argoproj.io/image-list: |
-          {{ if eq .name "center-console" }}center-console=ghcr.io/x81k25/center-console:dev{{ end }}
-        argocd-image-updater.argoproj.io/center-console.update-strategy: |
-          {{ if eq .name "center-console" }}digest{{ end }}
-        argocd-image-updater.argoproj.io/center-console.pull-secret: |
-          {{ if eq .name "center-console" }}pullsecret:argocd/ghcr-pull-image-token{{ end }}
-        argocd-image-updater.argoproj.io/write-back-method: |
-          {{ if eq .name "center-console" }}git{{ end }}
-        argocd-image-updater.argoproj.io/git-branch: |
-          {{ if eq .name "center-console" }}main{{ end }}
-        argocd-image-updater.argoproj.io/write-back-target: |
-          {{ if eq .name "center-console" }}kustomization:media/center-console/overlays/dev{{ end }}
     spec:
       project: default
       source:

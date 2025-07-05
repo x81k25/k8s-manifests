@@ -9,6 +9,10 @@ commonLabels:
   variant: dev
   environment: dev
 
+images:
+- name: ghcr.io/x81k25/dagstributor
+  newTag: dev
+
 patches:
 # Dagster Deployment Patch
 - patch: |-

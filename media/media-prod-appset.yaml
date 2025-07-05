@@ -28,6 +28,16 @@ spec:
   template:
     metadata:
       name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: "center-console=ghcr.io/x81k25/center-console:main,rear-diff-prod=ghcr.io/x81k25/rear-differential:main,dagster-prod=ghcr.io/x81k25/dagstributor:main"
+        argocd-image-updater.argoproj.io/center-console.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/center-console.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/rear-diff-prod.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/rear-diff-prod.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/dagster-prod.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/dagster-prod.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/write-back-method: "git"
+        argocd-image-updater.argoproj.io/git-branch: "main"
     spec:
       project: default
       source:

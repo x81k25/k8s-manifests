@@ -7,6 +7,11 @@ namespace: media-prod
 nameSuffix: -prod
 commonLabels:
   variant: prod
+
+images:
+- name: ghcr.io/x81k25/rear-differential
+  newTag: main
+
 patches:
 - patch: |-
     apiVersion: apps/v1
@@ -18,7 +23,6 @@ patches:
         spec:
           containers:
           - name: rear-diff-api
-            image: ghcr.io/x81k25/rear-differential:prod
             env:
             - name: LOG_LEVEL
               value: "INFO"

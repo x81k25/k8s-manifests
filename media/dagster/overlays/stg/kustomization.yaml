@@ -9,6 +9,10 @@ commonLabels:
   variant: stg
   environment: stg
 
+images:
+- name: ghcr.io/x81k25/dagstributor
+  newTag: stg
+
 patches:
 # Dagster Deployment Patch
 - patch: |-

@@ -21,21 +21,19 @@ patches:
         spec:
           initContainers:
           - name: wst-flyway-migrate
-            image: ghcr.io/x81k25/wst-flyway:dev
             envFrom:
             - configMapRef:
                 name: flyway-config-dev
             - secretRef:
                 name: flyway-secrets-dev
-          containers:
-          - name: wst-flyway-main
-            image: ghcr.io/x81k25/wst-flyway:dev
   target:
     kind: Deployment
     name: wst-flyway
 
-patchesStrategicMerge:
-- cronjob-restart-patch.yaml
+images:
+- name: ghcr.io/x81k25/wst-flyway
+  newTag: dev
+
 
 commonLabels:
   environment: dev

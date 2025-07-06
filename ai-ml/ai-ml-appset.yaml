@@ -38,7 +38,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/x81k25/k8s-manifests.git
+        repoURL: git@github.com:x81k25/k8s-manifests.git
         targetRevision: HEAD
         path: "{{path}}"
       destination:

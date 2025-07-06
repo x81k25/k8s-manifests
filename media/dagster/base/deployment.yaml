@@ -146,8 +146,6 @@ spec:
             - python_module:
                 module_name: "dagstributor.definitions"
                 working_directory: "/opt/dagster/app/dagstributor"
-                auto_reload_policy: "eager"
-                reload_interval: 60
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml

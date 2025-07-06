@@ -7,3 +7,37 @@ metadata:
     app: dagster
 data:
   DAGSTER_HOME: "/opt/dagster/dagster_home"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dagster-restart-script
+  labels:
+    app: dagster
+data:
+  restart-on-change.sh: |
+    #!/bin/bash
+    echo "Starting Dagster auto-restart watcher..."
+    
+    # Get initial git hash
+    LAST_HASH=$(cd /git-repo/dagstributor && git rev-parse HEAD 2>/dev/null || echo "none")
+    echo "Initial git hash: $LAST_HASH"
+    
+    while true; do
+      sleep 30  # Check every 30 seconds
+      
+      # Get current git hash
+      CURRENT_HASH=$(cd /git-repo/dagstributor && git rev-parse HEAD 2>/dev/null || echo "none")
+      
+      if [ "$CURRENT_HASH" != "$LAST_HASH" ] && [ "$CURRENT_HASH" != "none" ]; then
+        echo "Git repository updated from $LAST_HASH to $CURRENT_HASH"
+        echo "Waiting 10 seconds before restart..."
+        sleep 10
+        
+        echo "Triggering pod restart by terminating dagster-dagit process..."
+        # Find and kill the dagster-webserver process to trigger pod restart
+        pkill -f "dagster-webserver" || true
+        
+        LAST_HASH=$CURRENT_HASH
+      fi
+    done

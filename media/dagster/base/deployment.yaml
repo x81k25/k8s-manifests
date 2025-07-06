@@ -148,7 +148,33 @@ spec:
                 working_directory: "/opt/dagster/app/dagstributor"
           EOL
           
-          dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml
+          # Start watcher in background
+          (
+            sleep 20  # Wait for git-sync to initialize
+            LAST_LINK=$(readlink /opt/dagster/app/dagstributor 2>/dev/null || echo "none")
+            echo "Watcher: Initial symlink target: $LAST_LINK"
+            
+            while true; do
+              sleep 30
+              CURRENT_LINK=$(readlink /opt/dagster/app/dagstributor 2>/dev/null || echo "none")
+              if [ "$CURRENT_LINK" != "$LAST_LINK" ] && [ "$CURRENT_LINK" != "none" ]; then
+                echo "Watcher: Code updated, restarting in 10 seconds..."
+                sleep 10
+                echo "Watcher: Killing dagster process to restart"
+                pkill -f "dagster-webserver" || true
+                exit 0
+              fi
+              LAST_LINK=$CURRENT_LINK
+            done
+          ) &
+          
+          # Start dagster in a loop so it restarts when killed
+          while true; do
+            echo "Starting Dagster webserver..."
+            dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml || true
+            echo "Dagster webserver exited, restarting in 5 seconds..."
+            sleep 5
+          done
         volumeMounts:
         - name: git-repo
           mountPath: /opt/dagster/app

@@ -36,16 +36,6 @@ patches:
             env:
             - name: GITSYNC_REF
               value: "dev"
-          - name: dagster-restart-watcher
-            image: busybox:1.36
-            command: ["/bin/sh", "/scripts/restart-on-change.sh"]
-            volumeMounts:
-            - name: git-repo
-              mountPath: /git-repo
-              readOnly: true
-            - name: restart-script
-              mountPath: /scripts
-              readOnly: true
           initContainers:
           - name: git-sync-init
             env:
@@ -60,10 +50,6 @@ patches:
             hostPath:
               path: /d/k8s/volumes/dagster/dev/workspace
               type: DirectoryOrCreate
-          - name: restart-script
-            configMap:
-              name: dagster-restart-script-dev
-              defaultMode: 0755
 
 # Dagster Service Patch
 - target:

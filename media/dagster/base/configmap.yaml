@@ -37,9 +37,9 @@ data:
         echo "Waiting 10 seconds before restart..."
         sleep 10
         
-        echo "Triggering pod restart by terminating dagster-dagit process..."
-        # Find and kill the dagster-webserver process to trigger pod restart
-        pkill -f "dagster-webserver" || true
+        echo "Triggering pod restart by killing main process..."
+        # Kill the main bash process (PID 1) to force container restart
+        kill 1 || true
         
         LAST_LINK=$CURRENT_LINK
       fi

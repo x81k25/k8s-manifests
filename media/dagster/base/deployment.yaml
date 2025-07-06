@@ -16,6 +16,8 @@ spec:
         app: dagster
     spec:
       serviceAccountName: dagster  # Correctly placed at the pod spec level
+      imagePullSecrets:
+      - name: ghcr-pull-image-token
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
@@ -51,7 +53,7 @@ spec:
           mountPath: /git-repo
       containers:
       - name: dagster-dagit
-        image: ghcr.io/x81k25/dagstributor:latest
+        image: dagster/dagster-k8s:1.10.20
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -156,7 +158,7 @@ spec:
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
       - name: dagster-daemon
-        image: ghcr.io/x81k25/dagstributor:latest
+        image: dagster/dagster-k8s:1.10.20
         imagePullPolicy: Always
         envFrom:
         - configMapRef:

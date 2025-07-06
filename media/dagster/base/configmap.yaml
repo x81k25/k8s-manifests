@@ -19,18 +19,21 @@ data:
     #!/bin/bash
     echo "Starting Dagster auto-restart watcher..."
     
-    # Get initial git hash
-    LAST_HASH=$(cd /git-repo/dagstributor && git rev-parse HEAD 2>/dev/null || echo "none")
-    echo "Initial git hash: $LAST_HASH"
+    # Wait for git-sync to initialize
+    sleep 10
+    
+    # Get initial symlink target
+    LAST_LINK=$(readlink /git-repo/dagstributor 2>/dev/null || echo "none")
+    echo "Initial symlink target: $LAST_LINK"
     
     while true; do
       sleep 30  # Check every 30 seconds
       
-      # Get current git hash
-      CURRENT_HASH=$(cd /git-repo/dagstributor && git rev-parse HEAD 2>/dev/null || echo "none")
+      # Get current symlink target
+      CURRENT_LINK=$(readlink /git-repo/dagstributor 2>/dev/null || echo "none")
       
-      if [ "$CURRENT_HASH" != "$LAST_HASH" ] && [ "$CURRENT_HASH" != "none" ]; then
-        echo "Git repository updated from $LAST_HASH to $CURRENT_HASH"
+      if [ "$CURRENT_LINK" != "$LAST_LINK" ] && [ "$CURRENT_LINK" != "none" ]; then
+        echo "Git repository updated - symlink changed from $LAST_LINK to $CURRENT_LINK"
         echo "Waiting 10 seconds before restart..."
         sleep 10
         
@@ -38,6 +41,6 @@ data:
         # Find and kill the dagster-webserver process to trigger pod restart
         pkill -f "dagster-webserver" || true
         
-        LAST_HASH=$CURRENT_HASH
+        LAST_LINK=$CURRENT_LINK
       fi
     done

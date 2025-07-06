@@ -222,7 +222,7 @@ spec:
         - name: GITSYNC_LINK
           value: "dagstributor"
         - name: GITSYNC_PERIOD
-          value: "3600s"
+          value: "60s"
         - name: GITSYNC_ONE_TIME
           value: "false"
         - name: GITSYNC_VERBOSE

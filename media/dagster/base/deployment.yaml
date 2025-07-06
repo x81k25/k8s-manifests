@@ -148,23 +148,24 @@ spec:
                 working_directory: "/opt/dagster/app/dagstributor"
           EOL
           
-          # Start watcher in background
+          # Start test watcher in background - restarts every 2 minutes
           (
-            sleep 20  # Wait for git-sync to initialize
-            LAST_LINK=$(readlink /opt/dagster/app/dagstributor 2>/dev/null || echo "none")
-            echo "Watcher: Initial symlink target: $LAST_LINK"
+            echo "Watcher: Starting 2-minute restart test cycle"
             
             while true; do
-              sleep 30
-              CURRENT_LINK=$(readlink /opt/dagster/app/dagstributor 2>/dev/null || echo "none")
-              if [ "$CURRENT_LINK" != "$LAST_LINK" ] && [ "$CURRENT_LINK" != "none" ]; then
-                echo "Watcher: Code updated, restarting in 10 seconds..."
-                sleep 10
-                echo "Watcher: Killing dagster process to restart"
-                ps aux | grep "dagster-webserver" | grep -v grep | awk '{print $2}' | xargs kill -TERM 2>/dev/null || true
-                exit 0
-              fi
-              LAST_LINK=$CURRENT_LINK
+              sleep 120  # Test every 2 minutes
+              echo "Watcher: 2-minute test - triggering pod restart via Kubernetes API"
+              
+              # Use curl to call Kubernetes API to delete this pod
+              NAMESPACE=$DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
+              POD_NAME=$HOSTNAME
+              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              
+              curl -X DELETE \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Content-Type: application/json" \
+                -k "https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/pods/$POD_NAME?gracePeriodSeconds=0&force=true" \
+                2>/dev/null || echo "API call failed"
             done
           ) &
           

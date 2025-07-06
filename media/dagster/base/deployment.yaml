@@ -154,18 +154,10 @@ spec:
             
             while true; do
               sleep 120  # Test every 2 minutes
-              echo "Watcher: 2-minute test - triggering pod restart via Kubernetes API"
+              echo "Watcher: 2-minute test - triggering container restart by killing main process"
               
-              # Use curl to call Kubernetes API to delete this pod
-              NAMESPACE=$DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
-              POD_NAME=$HOSTNAME
-              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-              
-              curl -X DELETE \
-                -H "Authorization: Bearer $TOKEN" \
-                -H "Content-Type: application/json" \
-                -k "https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/pods/$POD_NAME?gracePeriodSeconds=0&force=true" \
-                2>/dev/null || echo "API call failed"
+              # Kill the main bash process (PID 1) to force container restart
+              kill 1
             done
           ) &
           

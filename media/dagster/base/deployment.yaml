@@ -65,6 +65,8 @@ spec:
             name: transmission-config
         - secretRef:
             name: transmission-secrets
+        - configMapRef:
+            name: dagster-timeout-config
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
@@ -162,6 +164,8 @@ spec:
             name: transmission-config
         - secretRef:
             name: transmission-secrets
+        - configMapRef:
+            name: dagster-timeout-config
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"

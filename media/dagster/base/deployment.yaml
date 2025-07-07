@@ -126,25 +126,6 @@ spec:
             enabled: true
             max_runtime_seconds: ${DAGSTER_RUN_TIMEOUT:-3600}
             poll_interval_seconds: 30
-            
-          local_artifact_storage:
-            module: dagster.core.storage.root
-            class: LocalArtifactStorage
-            config:
-              base_dir: "/opt/dagster/dagster_workspace"
-              
-          compute_logs:
-            module: dagster.core.storage.compute_log_manager
-            class: LocalComputeLogManager
-            config:
-              base_dir: "/opt/dagster/dagster_workspace"
-              
-          telemetry:
-            enabled: false
-            
-          scheduler:
-            module: dagster.core.scheduler
-            class: DagsterDaemonScheduler
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w /opt/dagster/app/dagstributor/workspace.yaml

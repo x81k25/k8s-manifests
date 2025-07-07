@@ -145,8 +145,6 @@ spec:
           scheduler:
             module: dagster.core.scheduler
             class: DagsterDaemonScheduler
-            config:
-              timezone: "${DAGSTER_TIMEZONE:-UTC}"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w /opt/dagster/app/dagstributor/workspace.yaml

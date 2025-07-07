@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: media-dev
 resources:
 - ../../base
+- configmap.yaml
 nameSuffix: -dev
 commonLabels:
   variant: dev
@@ -51,3 +52,20 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30302
+
+# Add timeout configmap to envFrom
+- target:
+    version: v1
+    kind: Deployment
+    name: dagster
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/envFrom/-
+      value:
+        configMapRef:
+          name: dagster-timeout-config
+    - op: add
+      path: /spec/template/spec/containers/1/envFrom/-
+      value:
+        configMapRef:
+          name: dagster-timeout-config

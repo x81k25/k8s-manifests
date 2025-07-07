@@ -1,0 +1,14 @@
+# dagster/overlays/dev/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dagster-timeout-config
+  labels:
+    app: dagster
+    variant: dev
+    environment: dev
+data:
+  DAGSTER_RUN_TIMEOUT: "600"
+  DAGSTER_OP_TIMEOUT: "300"
+  DAGSTER_SCHEDULE_TIMEOUT: "60"
+  DAGSTER_SENSOR_TIMEOUT: "60"

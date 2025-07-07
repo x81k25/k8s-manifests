@@ -121,6 +121,32 @@ spec:
           run_launcher:
             module: dagster.core.launcher
             class: DefaultRunLauncher
+            
+          execution:
+            config:
+              execution_timeout: ${DAGSTER_RUN_TIMEOUT:-3600}
+              op_timeout: ${DAGSTER_OP_TIMEOUT:-1800}
+              
+          local_artifact_storage:
+            module: dagster.core.storage.root
+            class: LocalArtifactStorage
+            config:
+              base_dir: "/opt/dagster/dagster_workspace"
+              
+          compute_logs:
+            module: dagster.core.launcher
+            class: DefaultComputeLogManager
+            config:
+              base_dir: "/opt/dagster/dagster_workspace"
+              
+          telemetry:
+            enabled: false
+            
+          scheduler:
+            module: dagster.core.scheduler
+            class: DagsterDaemonScheduler
+            config:
+              timezone: "${DAGSTER_TIMEZONE:-UTC}"
           EOL
           
           dagster-webserver -h 0.0.0.0 -p 3000 -w /opt/dagster/app/dagstributor/workspace.yaml

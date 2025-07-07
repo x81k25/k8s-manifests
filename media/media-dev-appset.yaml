@@ -15,6 +15,8 @@ spec:
       elements:
       - name: atd
         path: media/atd/overlays
+      - name: center-console
+        path: media/center-console/overlays
       - name: rear-diff
         path: media/rear-diff/overlays
       - name: plex
@@ -25,7 +27,9 @@ spec:
     metadata:
       name: '{{name}}-dev'
       annotations:
-        argocd-image-updater.argoproj.io/image-list: "rear-diff=ghcr.io/x81k25/rear-differential:dev,dagstributor=ghcr.io/x81k25/dagstributor:dev"
+        argocd-image-updater.argoproj.io/image-list: "center-console=ghcr.io/x81k25/center-console:dev,rear-diff=ghcr.io/x81k25/rear-differential:dev,dagstributor=ghcr.io/x81k25/dagstributor:dev"
+        argocd-image-updater.argoproj.io/center-console.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/center-console.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
         argocd-image-updater.argoproj.io/rear-diff.update-strategy: "digest"
         argocd-image-updater.argoproj.io/rear-diff.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
         argocd-image-updater.argoproj.io/dagstributor.update-strategy: "digest"

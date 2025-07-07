@@ -134,8 +134,8 @@ spec:
               base_dir: "/opt/dagster/dagster_workspace"
               
           compute_logs:
-            module: dagster.core.launcher
-            class: DefaultComputeLogManager
+            module: dagster.core.storage.compute_log_manager
+            class: LocalComputeLogManager
             config:
               base_dir: "/opt/dagster/dagster_workspace"
               

@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/x81k25/wst-flyway@sha256:0a097b8b1802843aedaff14d93c8b05bd589edd9d77de54d351db22699ed034f
+  - ghcr.io/x81k25/wst-flyway@sha256:dc1b8aed0a80f3401b9aebb27b7c4d7c5b1c68ba8dedb3bd5544d8d63b6ffc52

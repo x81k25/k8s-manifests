@@ -29,7 +29,10 @@ spec:
     metadata:
       name: '{{name}}'
       annotations:
-        argocd-image-updater.argoproj.io/image-list: "center-console=ghcr.io/x81k25/center-console:main,rear-diff-prod=ghcr.io/x81k25/rear-differential:main,dagstributor=ghcr.io/x81k25/dagstributor:main"
+        argocd-image-updater.argoproj.io/image-list: >-
+          center-console=ghcr.io/x81k25/center-console:main,
+          rear-diff-prod=ghcr.io/x81k25/rear-differential:main,
+          dagstributor=ghcr.io/x81k25/dagstributor:main
         argocd-image-updater.argoproj.io/center-console.update-strategy: "digest"
         argocd-image-updater.argoproj.io/center-console.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
         argocd-image-updater.argoproj.io/rear-diff-prod.update-strategy: "digest"

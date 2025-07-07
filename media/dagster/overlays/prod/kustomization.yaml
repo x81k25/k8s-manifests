@@ -9,9 +9,9 @@ commonLabels:
   variant: prod
   environment: prod
 
-# images:
-# - name: ghcr.io/x81k25/dagstributor
-#   newTag: main
+images:
+- name: ghcr.io/x81k25/dagstributor
+  newTag: main
 
 patches:
 # Dagster Deployment Patch
@@ -32,15 +32,6 @@ patches:
             env:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-prod
-          - name: git-sync
-            env:
-            - name: GITSYNC_REF
-              value: "main"
-          initContainers:
-          - name: git-sync-init
-            env:
-            - name: GITSYNC_REF
-              value: "main"
           volumes:
           - name: dagster-home
             hostPath:

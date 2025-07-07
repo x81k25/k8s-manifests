@@ -9,9 +9,9 @@ commonLabels:
   variant: stg
   environment: stg
 
-# images:
-# - name: ghcr.io/x81k25/dagstributor
-#   newTag: stg
+images:
+- name: ghcr.io/x81k25/dagstributor
+  newTag: stg
 
 patches:
 # Dagster Deployment Patch
@@ -32,15 +32,6 @@ patches:
             env:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-stg
-          - name: git-sync
-            env:
-            - name: GITSYNC_REF
-              value: "stg"
-          initContainers:
-          - name: git-sync-init
-            env:
-            - name: GITSYNC_REF
-              value: "stg"
           volumes:
           - name: dagster-home
             hostPath:

@@ -33,27 +33,9 @@ spec:
           mountPath: /opt/dagster/dagster_workspace
         securityContext:
           runAsUser: 0
-      - name: git-sync-init
-        image: registry.k8s.io/git-sync/git-sync:v4.2.1
-        env:
-        - name: GITSYNC_REPO
-          value: "https://github.com/x81k25/dagstributor"
-        - name: GITSYNC_REF
-          value: "main"  # Will be overridden per environment
-        - name: GITSYNC_ROOT
-          value: "/git-repo"
-        - name: GITSYNC_LINK
-          value: "dagstributor"
-        - name: GITSYNC_ONE_TIME
-          value: "true"
-        - name: GITSYNC_VERBOSE
-          value: "1"
-        volumeMounts:
-        - name: git-repo
-          mountPath: /git-repo
       containers:
       - name: dagster-dagit
-        image: dagster/dagster-k8s:1.10.20
+        image: ghcr.io/x81k25/dagstributor:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -141,43 +123,14 @@ spec:
             class: DefaultRunLauncher
           EOL
           
-          cat > $DAGSTER_HOME/workspace.yaml << EOL
-          load_from:
-            - python_module:
-                module_name: "dagstributor.definitions"
-                working_directory: "/opt/dagster/app/dagstributor"
-          EOL
-          
-          # Start test watcher in background - restarts every 2 minutes
-          (
-            echo "Watcher: Starting 2-minute restart test cycle"
-            
-            while true; do
-              sleep 120  # Test every 2 minutes
-              echo "Watcher: 2-minute test - triggering container restart by killing main process"
-              
-              # Kill the main bash process (PID 1) to force container restart
-              kill 1
-            done
-          ) &
-          
-          # Start dagster in a loop so it restarts when killed
-          while true; do
-            echo "Starting Dagster webserver..."
-            dagster-webserver -h 0.0.0.0 -p 3000 -w $DAGSTER_HOME/workspace.yaml || true
-            echo "Dagster webserver exited, restarting in 5 seconds..."
-            sleep 5
-          done
+          dagster-webserver -h 0.0.0.0 -p 3000 -w /opt/dagster/app/dagstributor/workspace.yaml
         volumeMounts:
-        - name: git-repo
-          mountPath: /opt/dagster/app
-          readOnly: true
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
       - name: dagster-daemon
-        image: dagster/dagster-k8s:1.10.20
+        image: ghcr.io/x81k25/dagstributor:latest
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
@@ -220,39 +173,13 @@ spec:
             echo "Waiting for dagster.yaml to be created..."
             sleep 5
           done
-          dagster-daemon run -w $DAGSTER_HOME/workspace.yaml
+          dagster-daemon run -w /opt/dagster/app/dagstributor/workspace.yaml
         volumeMounts:
-        - name: git-repo
-          mountPath: /opt/dagster/app
-          readOnly: true
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
-      - name: git-sync
-        image: registry.k8s.io/git-sync/git-sync:v4.2.1
-        env:
-        - name: GITSYNC_REPO
-          value: "https://github.com/x81k25/dagstributor"
-        - name: GITSYNC_REF
-          value: "main"  # Will be overridden per environment
-        - name: GITSYNC_ROOT
-          value: "/git-repo"
-        - name: GITSYNC_LINK
-          value: "dagstributor"
-        - name: GITSYNC_PERIOD
-          value: "60s"
-        - name: GITSYNC_ONE_TIME
-          value: "false"
-        - name: GITSYNC_VERBOSE
-          value: "1"
-        volumeMounts:
-        - name: git-repo
-          mountPath: /git-repo
       volumes:
-      - name: git-repo
-        emptyDir:
-          sizeLimit: 100Mi
       - name: dagster-home
         hostPath:
           path: /d/k8s/volumes/dagster/ENV/home

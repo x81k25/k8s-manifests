@@ -122,11 +122,11 @@ spec:
             module: dagster.core.launcher
             class: DefaultRunLauncher
             
-          execution:
-            config:
-              execution_timeout: ${DAGSTER_RUN_TIMEOUT:-3600}
-              op_timeout: ${DAGSTER_OP_TIMEOUT:-1800}
-              
+          run_monitoring:
+            enabled: true
+            max_runtime_seconds: ${DAGSTER_RUN_TIMEOUT:-3600}
+            poll_interval_seconds: 30
+            
           local_artifact_storage:
             module: dagster.core.storage.root
             class: LocalArtifactStorage

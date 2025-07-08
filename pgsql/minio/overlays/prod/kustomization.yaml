@@ -1,0 +1,39 @@
+# minio/overlays/prod/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namespace: pgsql
+nameSuffix: -prod
+commonLabels:
+  variant: prod
+  environment: prod
+
+patches:
+# MinIO Deployment Patch
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: minio
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: minio-data
+            hostPath:
+              path: /d/k8s/volumes/minio/prod/data
+              type: DirectoryOrCreate
+
+# MinIO Service Patch
+- target:
+    version: v1
+    kind: Service
+    name: minio
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30930
+    - op: replace
+      path: /spec/ports/1/nodePort
+      value: 30931

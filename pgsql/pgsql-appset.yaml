@@ -29,6 +29,12 @@ spec:
         path: pgsql/mlflow/overlays/stg
       - name: mlflow-dev
         path: pgsql/mlflow/overlays/dev
+      - name: minio-prod
+        path: pgsql/minio/overlays/prod
+      - name: minio-stg
+        path: pgsql/minio/overlays/stg
+      - name: minio-dev
+        path: pgsql/minio/overlays/dev
   - list:
       elements:
       - name: wst-flyway-prod

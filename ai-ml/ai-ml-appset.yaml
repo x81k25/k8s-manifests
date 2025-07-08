@@ -13,15 +13,6 @@ spec:
   generators:
   - list:
       elements:
-      - name: mlflow-dev
-        path: ai-ml/mlflow/overlays/dev
-        environment: dev
-      - name: mlflow-stg
-        path: ai-ml/mlflow/overlays/stg
-        environment: stg
-      - name: mlflow-prod
-        path: ai-ml/mlflow/overlays/prod
-        environment: prod
       - name: reel-driver-dev
         path: ai-ml/reel-driver/overlays/dev
         environment: dev

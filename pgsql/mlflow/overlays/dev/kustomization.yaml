@@ -3,6 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
+namespace: pgsql
 nameSuffix: -dev
 commonLabels:
   variant: dev
@@ -55,20 +56,10 @@ patches:
             hostPath:
               path: /d/k8s/volumes/mlflow/dev/packages
               type: DirectoryOrCreate
-
-# MinIO Deployment Patch
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: minio
-    spec:
-      template:
-        spec:
-          volumes:
-          - name: minio-data
+          - name: artifacts
             hostPath:
-              path: /d/k8s/volumes/mlflow/dev/minio
+              path: /d/k8s/volumes/mlflow/dev/artifacts
+              type: DirectoryOrCreate
 
 # MLflow Service Patch
 - target:
@@ -79,16 +70,3 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30502
-
-# MinIO Service Patch
-- target:
-    version: v1
-    kind: Service
-    name: minio
-  patch: |-
-    - op: replace
-      path: /spec/ports/0/nodePort
-      value: 30911
-    - op: replace
-      path: /spec/ports/1/nodePort
-      value: 30912

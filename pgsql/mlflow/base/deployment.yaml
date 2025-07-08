@@ -37,23 +37,11 @@ spec:
             --host=0.0.0.0 \
             --port=5000 \
             --backend-store-uri=postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME} \
-            --default-artifact-root=s3://${BUCKET_NAME}/ \
+            --default-artifact-root=file:///mlflow/artifacts \
             --gunicorn-opts '--log-level debug --timeout 120 --workers 2'
         ports:
         - containerPort: 5000
         env:
-        - name: MLFLOW_S3_ENDPOINT_URL
-          value: "http://minio:9000"
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: minio-secret
-              key: minio_access_key
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: minio-secret
-              key: minio_secret_key
         - name: DB_USER
           valueFrom:
             secretKeyRef:
@@ -79,16 +67,13 @@ spec:
             secretKeyRef:
               name: mlflow-db-secret
               key: db_name
-        - name: BUCKET_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mlflow-artifact-store-secret
-              key: bucket_name
         volumeMounts:
         - name: logs
           mountPath: /mlflow/logs
         - name: python-packages
           mountPath: /packages
+        - name: artifacts
+          mountPath: /mlflow/artifacts
       volumes:
       - name: logs
         hostPath:
@@ -97,4 +82,8 @@ spec:
       - name: python-packages
         hostPath:
           path: /d/k8s/volumes/mlflow/ENV/packages
+          type: DirectoryOrCreate
+      - name: artifacts
+        hostPath:
+          path: /d/k8s/volumes/mlflow/ENV/artifacts
           type: DirectoryOrCreate

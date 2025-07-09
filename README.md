@@ -68,9 +68,9 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 ### Application Components
 
 #### AI/ML Applications (ai-ml/)
-- **mlflow**: Machine learning experiment tracking
-  - `base`: Common configuration including MLflow server and MinIO for artifact storage
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+- **mlflow**: Machine learning experiment tracking with PostgreSQL backend and MinIO artifact storage
+  - `base`: Common configuration including MLflow server with S3-compatible artifact storage
+  - `overlays/{dev,stg,prod}`: Environment-specific configurations with terraform-managed ConfigMaps/Secrets
   
 - **reel-driver**: Custom ML service
   - `base`: Common configuration
@@ -257,8 +257,8 @@ All applications use ArgoCD Image Updater for automated image updates:
   - Prod: `http://<node-ip>:30300`
 
 - **MLflow**:
-  - Dev:  `http://<node-ip>:30501`
-  - Stg:  `http://<node-ip>:30500`
+  - Dev:  `http://<node-ip>:30502`
+  - Stg:  `http://<node-ip>:30501`
   - Prod: `http://<node-ip>:30500`
 
 - **PgAdmin**: `http://<node-ip>:30052`

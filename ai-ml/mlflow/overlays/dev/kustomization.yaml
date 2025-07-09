@@ -68,16 +68,26 @@ patches:
                 configMapKeyRef:
                   name: mlflow-config-dev
                   key: MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT
-            - name: MLFLOW_MINIO_ENDPOINT
+            - name: MLFLOW_MINIO_ENDPOINT_EXTERNAL
               valueFrom:
                 configMapKeyRef:
                   name: mlflow-config-dev
-                  key: MLFLOW_MINIO_ENDPOINT
-            - name: MLFLOW_MINIO_PORT
+                  key: MLFLOW_MINIO_ENDPOINT_EXTERNAL
+            - name: MLFLOW_MINIO_ENDPOINT_INTERNAL
               valueFrom:
                 configMapKeyRef:
                   name: mlflow-config-dev
-                  key: MLFLOW_MINIO_PORT
+                  key: MLFLOW_MINIO_ENDPOINT_INTERNAL
+            - name: MLFLOW_MINIO_PORT_EXTERNAL
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-dev
+                  key: MLFLOW_MINIO_PORT_EXTERNAL
+            - name: MLFLOW_MINIO_PORT_INTERNAL
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-dev
+                  key: MLFLOW_MINIO_PORT_INTERNAL
             # Secret values - replace ENV with dev
             - name: MLFLOW_USERNAME
               valueFrom:

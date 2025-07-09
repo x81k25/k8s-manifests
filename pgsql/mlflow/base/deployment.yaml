@@ -23,15 +23,16 @@ spec:
         fsGroup: 1000
       containers:
       - name: mlflow
-        image: ghcr.io/mlflow/mlflow:v2.21.3
+        image: python:3.10-slim
         imagePullPolicy: Always
         command: ["/bin/bash", "-c"]
         args:
         - |
-          # Install psycopg2 to a custom location
+          # Install MLflow and psycopg2 to a custom location
           export PYTHONUSERBASE=/packages
-          pip install --user psycopg2-binary
+          pip install --user mlflow psycopg2-binary
           export PYTHONPATH="$PYTHONPATH:/packages/lib/python3.10/site-packages"
+          export PATH="$PATH:/packages/bin"
           
           mlflow server \
             --host=0.0.0.0 \

@@ -50,7 +50,7 @@ patches:
 
 # MinIO Service Patch - Hardcoded to match ConfigMap values
 # API: 30903 (MINIO_PORT_EXTERNAL_API from minio-config-prod)
-# Console: 30900 (MINIO_PORT_EXTERNAL_CONSOLE from minio-config-prod)
+# Console: 30906 (30900 from ConfigMap conflicts with plex-dev UDP port)
 - target:
     version: v1
     kind: Service
@@ -61,4 +61,4 @@ patches:
       value: 30903
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 30900
+      value: 30906

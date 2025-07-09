@@ -19,6 +19,19 @@ patches:
     spec:
       template:
         spec:
+          containers:
+          - name: minio
+            env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_access_key
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-secret
+                  key: minio_secret_key
           volumes:
           - name: minio-data
             hostPath:

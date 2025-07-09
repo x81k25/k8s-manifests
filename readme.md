@@ -239,32 +239,35 @@ All applications use ArgoCD Image Updater for automated image updates:
 ## Service Access
 
 ### External Access Ports (NodePort)
+- default k8s nodeport-range: `30000`-`32767`
 
 - **ATD (Transmission)**:
-  - Dev: `http://<node-ip>:30093`
+  - Dev:  `http://<node-ip>:30093`
+  - Stg:  `http://<node-ip>:30092`
+  - Pord: `http://<node-ip>:30091`
 
 - **Center Console**:
-  - Dev: `http://<node-ip>:30084`
-  - Stg: `http://<node-ip>:30085`
-  - Prod: `http://<node-ip>:30086`
+  - Dev:  `http://<node-ip>:30850`
+  - Stg:  `http://<node-ip>:30851`
+  - Prod: `http://<node-ip>:30852`
 
 - **Dagster**:
-  - Dev: `http://<node-ip>:30302`
-  - Stg: `http://<node-ip>:30301`
+  - Dev:  `http://<node-ip>:30302`
+  - Stg:  `http://<node-ip>:30301`
   - Prod: `http://<node-ip>:30300`
 
 - **MLflow**:
-  - Dev: `http://<node-ip>:30501`
-  - Stg: `http://<node-ip>:30500`
+  - Dev:  `http://<node-ip>:30501`
+  - Stg:  `http://<node-ip>:30500`
   - Prod: `http://<node-ip>:30500`
 
 - **PgAdmin**: `http://<node-ip>:30052`
 
 - **Plex**:
-  - Dev: `http://<node-ip>:30400`
+  - Dev:  `http://<node-ip>:30400`
   - Prod: `http://<node-ip>:30400`
 
 - **PostgreSQL**:
-  - Dev: `<node-ip>:31434`
-  - Stg: `<node-ip>:31433`
+  - Dev:  `<node-ip>:31434`
+  - Stg:  `<node-ip>:31433`
   - Prod: `<node-ip>:31432`

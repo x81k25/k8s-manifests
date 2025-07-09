@@ -32,6 +32,11 @@ patches:
                 secretKeyRef:
                   name: minio-secrets-stg
                   key: MINIO_SECRET_KEY
+            - name: MINIO_PORT_EXTERNAL
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config-stg
+                  key: MINIO_PORT_EXTERNAL
           volumes:
           - name: minio-data
             hostPath:

@@ -9,6 +9,7 @@ commonLabels:
   variant: dev
   environment: dev
 
+
 patches:
 # MinIO Deployment Patch
 - patch: |-
@@ -32,13 +33,18 @@ patches:
                 secretKeyRef:
                   name: minio-secrets-dev
                   key: MINIO_SECRET_KEY
+            - name: MINIO_PORT_EXTERNAL
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config-dev
+                  key: MINIO_PORT_EXTERNAL
           volumes:
           - name: minio-data
             hostPath:
               path: /d/k8s/volumes/minio/dev/data
               type: DirectoryOrCreate
 
-# MinIO Service Patch
+# MinIO Service Patch - Use ConfigMap value: 30902 (API), 30904 (Console to avoid conflict)
 - target:
     version: v1
     kind: Service
@@ -49,4 +55,4 @@ patches:
       value: 30902
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 30903
+      value: 30904

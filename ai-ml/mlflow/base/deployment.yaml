@@ -37,7 +37,9 @@ spec:
           # Set MinIO environment variables for S3 compatibility
           export AWS_ACCESS_KEY_ID=${MLFLOW_MINIO_AWS_ACCESS_KEY_ID}
           export AWS_SECRET_ACCESS_KEY=${MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY}
-          export MLFLOW_S3_ENDPOINT_URL=${MLFLOW_MINIO_ENDPOINT}:${MLFLOW_MINIO_PORT}
+          
+          # Use external MinIO endpoint for artifact URLs (so external clients can access)
+          export MLFLOW_S3_ENDPOINT_URL=${MLFLOW_MINIO_ENDPOINT_EXTERNAL}:${MLFLOW_MINIO_PORT_EXTERNAL}
           
           mlflow server \
             --host=0.0.0.0 \
@@ -104,6 +106,26 @@ spec:
             configMapKeyRef:
               name: mlflow-config-ENV
               key: MLFLOW_MINIO_PORT
+        - name: MLFLOW_MINIO_ENDPOINT_EXTERNAL
+          valueFrom:
+            configMapKeyRef:
+              name: mlflow-config-ENV
+              key: MLFLOW_MINIO_ENDPOINT_EXTERNAL
+        - name: MLFLOW_MINIO_ENDPOINT_INTERNAL
+          valueFrom:
+            configMapKeyRef:
+              name: mlflow-config-ENV
+              key: MLFLOW_MINIO_ENDPOINT_INTERNAL
+        - name: MLFLOW_MINIO_PORT_EXTERNAL
+          valueFrom:
+            configMapKeyRef:
+              name: mlflow-config-ENV
+              key: MLFLOW_MINIO_PORT_EXTERNAL
+        - name: MLFLOW_MINIO_PORT_INTERNAL
+          valueFrom:
+            configMapKeyRef:
+              name: mlflow-config-ENV
+              key: MLFLOW_MINIO_PORT_INTERNAL
         # Secret values
         - name: MLFLOW_USERNAME
           valueFrom:

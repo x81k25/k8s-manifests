@@ -71,6 +71,7 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 - **mlflow**: Machine learning experiment tracking with PostgreSQL backend and MinIO artifact storage
   - `base`: Common configuration including MLflow server with S3-compatible artifact storage
   - `overlays/{dev,stg,prod}`: Environment-specific configurations with terraform-managed ConfigMaps/Secrets
+  - **MinIO Integration**: Uses external MinIO endpoint for artifact storage to support both internal and external access
   
 - **reel-driver**: Custom ML service
   - `base`: Common configuration
@@ -217,6 +218,38 @@ Each environment uses:
 - Environment-specific image tags
 - Custom storage paths and port configurations
 
+## MLflow MinIO Configuration
+
+MLflow uses MinIO for S3-compatible artifact storage with dual endpoint support:
+
+### Architecture
+- **Metadata Store**: PostgreSQL databases (separate per environment)
+- **Artifact Store**: MinIO S3-compatible object storage
+- **Configuration**: Terraform-managed ConfigMaps and Secrets
+
+### Endpoint Configuration
+Each MLflow environment is configured with both internal and external MinIO endpoints:
+
+- **Internal Endpoint**: `http://minio-{env}.pgsql.svc.cluster.local:9000` (for pod-to-pod communication)
+- **External Endpoint**: `<node-ip>:310xx` (for external client access)
+
+### Environment Variables
+```yaml
+# ConfigMap values
+MLFLOW_MINIO_ENDPOINT_INTERNAL: http://minio-dev.pgsql.svc.cluster.local
+MLFLOW_MINIO_ENDPOINT_EXTERNAL: 192.168.50.2
+MLFLOW_MINIO_PORT_INTERNAL: 9000
+MLFLOW_MINIO_PORT_EXTERNAL: 31005  # Dev example
+MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT: s3://mlflow/
+
+# Secret values
+MLFLOW_MINIO_AWS_ACCESS_KEY_ID: MinIO access key
+MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY: MinIO secret key
+```
+
+### External Access
+When accessing MLflow externally via NodePort, it generates artifact URLs using the external MinIO endpoint, ensuring artifacts are accessible from outside the cluster.
+
 ## Automated Image Updates
 
 All applications use ArgoCD Image Updater for automated image updates:
@@ -244,17 +277,22 @@ All applications use ArgoCD Image Updater for automated image updates:
 - **ATD (Transmission)**:
   - Dev:  `http://<node-ip>:30093`
   - Stg:  `http://<node-ip>:30092`
-  - Pord: `http://<node-ip>:30091`
+  - Prod: `http://<node-ip>:30091`
+  - Music: `http://<node-ip>:30094`
 
 - **Center Console**:
-  - Dev:  `http://<node-ip>:30850`
+  - Dev:  `http://<node-ip>:30852`
   - Stg:  `http://<node-ip>:30851`
-  - Prod: `http://<node-ip>:30852`
+  - Prod: `http://<node-ip>:30850`
 
 - **Dagster**:
   - Dev:  `http://<node-ip>:30302`
   - Stg:  `http://<node-ip>:30301`
   - Prod: `http://<node-ip>:30300`
+
+- **Grafana**: `http://<node-ip>:30303`
+
+- **Loki**: `http://<node-ip>:30310`
 
 - **MLflow**:
   - Dev:  `http://<node-ip>:30502`
@@ -264,10 +302,25 @@ All applications use ArgoCD Image Updater for automated image updates:
 - **PgAdmin**: `http://<node-ip>:30052`
 
 - **Plex**:
-  - Dev:  `http://<node-ip>:30400`
-  - Prod: `http://<node-ip>:30400`
+  - Dev:  `http://<node-ip>:30400` (+ UDP ports 30900, 30410-30414)
+  - Prod: `http://<node-ip>:30132` (+ multiple TCP/UDP ports for media streaming)
 
 - **PostgreSQL**:
   - Dev:  `<node-ip>:31434`
   - Stg:  `<node-ip>:31433`
   - Prod: `<node-ip>:31432`
+
+- **Rear-Diff**:
+  - Dev:  `http://<node-ip>:30812`
+  - Stg:  `http://<node-ip>:30811`
+  - Prod: `http://<node-ip>:30810`
+
+- **Reel-Driver**:
+  - Dev:  `http://<node-ip>:30802`
+  - Stg:  `http://<node-ip>:30801`
+  - Prod: `http://<node-ip>:30800`
+
+- **MinIO (S3-compatible storage)**:
+  - Dev:  `<node-ip>:31005` (API), `<node-ip>:31002` (Console)
+  - Stg:  `<node-ip>:31004` (API), `<node-ip>:31001` (Console)
+  - Prod: `<node-ip>:31003` (API), `<node-ip>:31000` (Console)

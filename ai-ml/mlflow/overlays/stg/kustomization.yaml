@@ -22,31 +22,93 @@ patches:
           containers:
           - name: mlflow
             env:
-            - name: DB_USER
+            # ConfigMap values - replace ENV with stg
+            - name: MLFLOW_UID
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_UID
+            - name: MLFLOW_GID
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_GID
+            - name: MLFLOW_PORT_EXTERNAL
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PORT_EXTERNAL
+            - name: MLFLOW_PATH_LOGS
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PATH_LOGS
+            - name: MLFLOW_PATH_PACKAGES
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PATH_PACKAGES
+            - name: MLFLOW_PGSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PGSQL_HOST
+            - name: MLFLOW_PGSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PGSQL_PORT
+            - name: MLFLOW_PGSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_PGSQL_DATABASE
+            - name: MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT
+            - name: MLFLOW_MINIO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_MINIO_ENDPOINT
+            - name: MLFLOW_MINIO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mlflow-config-stg
+                  key: MLFLOW_MINIO_PORT
+            # Secret values - replace ENV with stg
+            - name: MLFLOW_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-stg-secret
-                  key: mlflow_stg_user
-            - name: DB_PASSWORD
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_USERNAME
+            - name: MLFLOW_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-stg-secret
-                  key: mlflow_stg_password
-            - name: DB_HOST
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_PASSWORD
+            - name: MLFLOW_PGSQL_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-stg-secret
-                  key: mlflow_stg_name
-            - name: DB_PORT
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_PGSQL_USERNAME
+            - name: MLFLOW_PGSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-stg-secret
-                  key: mlflow_stg_port
-            - name: DB_NAME
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_PGSQL_PASSWORD
+            - name: MLFLOW_MINIO_AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-stg-secret
-                  key: mlflow_stg_database
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_MINIO_AWS_ACCESS_KEY_ID
+            - name: MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secrets-stg
+                  key: MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY
           volumes:
           - name: logs
             hostPath:
@@ -56,12 +118,9 @@ patches:
             hostPath:
               path: /d/k8s/volumes/mlflow/stg/packages
               type: DirectoryOrCreate
-          - name: artifacts
-            hostPath:
-              path: /d/k8s/volumes/mlflow/stg/artifacts
-              type: DirectoryOrCreate
 
 # MLflow Service Patch
+# NOTE: Using hardcoded port 30501 from terraform ConfigMap MLFLOW_PORT_EXTERNAL for stg
 - target:
     version: v1
     kind: Service

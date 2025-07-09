@@ -3,11 +3,34 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
+- configmap-ref.yaml
 namespace: pgsql
 nameSuffix: -dev
 commonLabels:
   variant: dev
   environment: dev
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: minio-config-dev
+    fieldPath: data.MINIO_PORT_EXTERNAL_API
+  targets:
+  - select:
+      kind: Service
+      name: minio
+    fieldPaths:
+    - spec.ports.[name=api].nodePort
+- source:
+    kind: ConfigMap
+    name: minio-config-dev
+    fieldPath: data.MINIO_PORT_EXTERNAL_CONSOLE
+  targets:
+  - select:
+      kind: Service
+      name: minio
+    fieldPaths:
+    - spec.ports.[name=console].nodePort
 
 
 patches:
@@ -44,15 +67,3 @@ patches:
               path: /d/k8s/volumes/minio/dev/data
               type: DirectoryOrCreate
 
-# MinIO Service Patch - Use ConfigMap value: 30902 (API), 30904 (Console to avoid conflict)
-- target:
-    version: v1
-    kind: Service
-    name: minio
-  patch: |-
-    - op: replace
-      path: /spec/ports/0/nodePort
-      value: 30902
-    - op: replace
-      path: /spec/ports/1/nodePort
-      value: 30904

@@ -48,9 +48,9 @@ patches:
               path: /d/k8s/volumes/minio/stg/data
               type: DirectoryOrCreate
 
-# MinIO Service Patch - Hardcoded to match ConfigMap values
-# API: 30904 (MINIO_PORT_EXTERNAL_API from minio-config-stg)
-# Console: 30901 (MINIO_PORT_EXTERNAL_CONSOLE from minio-config-stg)
+# MinIO Service Patch - Using clean 31000-31009 range
+# API: 31004 (to match ConfigMap MINIO_PORT_EXTERNAL_API)
+# Console: 31001 (to match ConfigMap MINIO_PORT_EXTERNAL_CONSOLE)
 - target:
     version: v1
     kind: Service
@@ -58,7 +58,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30904
+      value: 31004
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 30901
+      value: 31001

@@ -25,13 +25,13 @@ patches:
             - name: MINIO_ROOT_USER
               valueFrom:
                 secretKeyRef:
-                  name: minio-secret
-                  key: minio_access_key
+                  name: minio-secrets-dev
+                  key: MINIO_ACCESS_KEY
             - name: MINIO_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: minio-secret
-                  key: minio_secret_key
+                  name: minio-secrets-dev
+                  key: MINIO_SECRET_KEY
           volumes:
           - name: minio-data
             hostPath:
@@ -46,7 +46,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30911
+      value: 30902
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 30912
+      value: 30903

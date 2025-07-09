@@ -1,13 +1,13 @@
-# mlflow/overlays/prod/kustomization.yaml
+# mlflow/overlays/dev/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-namespace: pgsql
-nameSuffix: -prod
+namespace: ai-ml
+nameSuffix: -dev
 commonLabels:
-  variant: prod
-  environment: prod
+  variant: dev
+  environment: dev
 
 patches:
 # MLflow Deployment Patch
@@ -25,39 +25,40 @@ patches:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-prod-secret
-                  key: mlflow_prod_user
+                  name: mlflow-dev-secret
+                  key: mlflow_dev_user
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-prod-secret
-                  key: mlflow_prod_password
+                  name: mlflow-dev-secret
+                  key: mlflow_dev_password
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-prod-secret
-                  key: mlflow_prod_name
+                  name: mlflow-dev-secret
+                  key: mlflow_dev_name
             - name: DB_PORT
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-prod-secret
-                  key: mlflow_prod_port
+                  name: mlflow-dev-secret
+                  key: mlflow_dev_port
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: mlflow-prod-secret
-                  key: mlflow_prod_database
+                  name: mlflow-dev-secret
+                  key: mlflow_dev_database
           volumes:
           - name: logs
             hostPath:
-              path: /d/k8s/volumes/mlflow/prod/logs
+              path: /d/k8s/volumes/mlflow/dev/logs
+              type: DirectoryOrCreate
           - name: python-packages
             hostPath:
-              path: /d/k8s/volumes/mlflow/prod/packages
+              path: /d/k8s/volumes/mlflow/dev/packages
               type: DirectoryOrCreate
           - name: artifacts
             hostPath:
-              path: /d/k8s/volumes/mlflow/prod/artifacts
+              path: /d/k8s/volumes/mlflow/dev/artifacts
               type: DirectoryOrCreate
 
 # MLflow Service Patch
@@ -68,4 +69,4 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30500
+      value: 30502

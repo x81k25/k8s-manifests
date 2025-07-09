@@ -23,12 +23,6 @@ spec:
         path: pgsql/pgsql/overlays/dev
       - name: pgadmin4
         path: pgsql/pgadmin4
-      - name: mlflow-prod
-        path: pgsql/mlflow/overlays/prod
-      - name: mlflow-stg
-        path: pgsql/mlflow/overlays/stg
-      - name: mlflow-dev
-        path: pgsql/mlflow/overlays/dev
       - name: minio-prod
         path: pgsql/minio/overlays/prod
       - name: minio-stg

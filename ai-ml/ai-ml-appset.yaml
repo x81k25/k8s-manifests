@@ -22,6 +22,15 @@ spec:
       - name: reel-driver-prod
         path: ai-ml/reel-driver/overlays/prod
         environment: prod
+      - name: mlflow-dev
+        path: ai-ml/mlflow/overlays/dev
+        environment: dev
+      - name: mlflow-stg
+        path: ai-ml/mlflow/overlays/stg
+        environment: stg
+      - name: mlflow-prod
+        path: ai-ml/mlflow/overlays/prod
+        environment: prod
         
   template:
     metadata:

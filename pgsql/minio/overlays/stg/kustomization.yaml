@@ -32,18 +32,25 @@ patches:
                 secretKeyRef:
                   name: minio-secrets-stg
                   key: MINIO_SECRET_KEY
-            - name: MINIO_PORT_EXTERNAL
+            - name: MINIO_PORT_EXTERNAL_API
               valueFrom:
                 configMapKeyRef:
                   name: minio-config-stg
-                  key: MINIO_PORT_EXTERNAL
+                  key: MINIO_PORT_EXTERNAL_API
+            - name: MINIO_PORT_EXTERNAL_CONSOLE
+              valueFrom:
+                configMapKeyRef:
+                  name: minio-config-stg
+                  key: MINIO_PORT_EXTERNAL_CONSOLE
           volumes:
           - name: minio-data
             hostPath:
               path: /d/k8s/volumes/minio/stg/data
               type: DirectoryOrCreate
 
-# MinIO Service Patch
+# MinIO Service Patch - Hardcoded to match ConfigMap values
+# API: 30904 (MINIO_PORT_EXTERNAL_API from minio-config-stg)
+# Console: 30901 (MINIO_PORT_EXTERNAL_CONSOLE from minio-config-stg)
 - target:
     version: v1
     kind: Service
@@ -51,7 +58,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30901
+      value: 30904
     - op: replace
       path: /spec/ports/1/nodePort
-      value: 30902
+      value: 30901

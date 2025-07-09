@@ -118,10 +118,6 @@ patches:
             hostPath:
               path: /d/k8s/volumes/mlflow/dev/packages
               type: DirectoryOrCreate
-          - name: artifacts
-            hostPath:
-              path: /d/k8s/volumes/mlflow/dev/artifacts
-              type: DirectoryOrCreate
 
 # MLflow Service Patch
 # NOTE: Using hardcoded port 30502 from terraform ConfigMap MLFLOW_PORT_EXTERNAL for dev

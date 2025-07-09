@@ -30,15 +30,20 @@ spec:
         - |
           # Install MLflow and psycopg2 to a custom location
           export PYTHONUSERBASE=/packages
-          pip install --user mlflow psycopg2-binary
+          pip install --user mlflow psycopg2-binary boto3
           export PYTHONPATH="$PYTHONPATH:/packages/lib/python3.10/site-packages"
           export PATH="$PATH:/packages/bin"
+          
+          # Set MinIO environment variables for S3 compatibility
+          export AWS_ACCESS_KEY_ID=${MLFLOW_MINIO_AWS_ACCESS_KEY_ID}
+          export AWS_SECRET_ACCESS_KEY=${MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY}
+          export MLFLOW_S3_ENDPOINT_URL=${MLFLOW_MINIO_ENDPOINT}:${MLFLOW_MINIO_PORT}
           
           mlflow server \
             --host=0.0.0.0 \
             --port=5000 \
             --backend-store-uri=postgresql://${MLFLOW_PGSQL_USERNAME}:${MLFLOW_PGSQL_PASSWORD}@${MLFLOW_PGSQL_HOST}:${MLFLOW_PGSQL_PORT}/${MLFLOW_PGSQL_DATABASE} \
-            --default-artifact-root=file:///mlflow/artifacts \
+            --default-artifact-root=${MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT} \
             --gunicorn-opts '--log-level debug --timeout 120 --workers 2'
         ports:
         - containerPort: 5000
@@ -135,8 +140,6 @@ spec:
           mountPath: /mlflow/logs
         - name: python-packages
           mountPath: /packages
-        - name: artifacts
-          mountPath: /mlflow/artifacts
       volumes:
       - name: logs
         hostPath:
@@ -145,8 +148,4 @@ spec:
       - name: python-packages
         hostPath:
           path: /d/k8s/volumes/mlflow/ENV/packages
-          type: DirectoryOrCreate
-      - name: artifacts
-        hostPath:
-          path: /d/k8s/volumes/mlflow/ENV/artifacts
           type: DirectoryOrCreate

@@ -68,16 +68,6 @@ patches:
                 configMapKeyRef:
                   name: mlflow-config-stg
                   key: MLFLOW_MINIO_DEFAULT_ARTIFACT_ROOT
-            - name: MLFLOW_MINIO_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: mlflow-config-stg
-                  key: MLFLOW_MINIO_ENDPOINT
-            - name: MLFLOW_MINIO_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: mlflow-config-stg
-                  key: MLFLOW_MINIO_PORT
             - name: MLFLOW_MINIO_ENDPOINT_EXTERNAL
               valueFrom:
                 configMapKeyRef:

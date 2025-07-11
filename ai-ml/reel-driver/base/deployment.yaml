@@ -28,4 +28,4 @@ spec:
         - name: API_PORT
           value: "8000"
       imagePullSecrets:
-      - name: ghcr-pull-image-token
+      - name: github-registry

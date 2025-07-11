@@ -58,6 +58,12 @@ spec:
         - configMapRef:
             name: reel-driver-config
         - configMapRef:
+            name: reel-driver-training-config
+        - secretRef:
+            name: reel-driver-secrets
+        - secretRef:
+            name: reel-driver-training-secrets
+        - configMapRef:
             name: at-config
         - secretRef:
             name: at-secrets
@@ -156,6 +162,12 @@ spec:
             name: rear-diff-secrets
         - configMapRef:
             name: reel-driver-config
+        - configMapRef:
+            name: reel-driver-training-config
+        - secretRef:
+            name: reel-driver-secrets
+        - secretRef:
+            name: reel-driver-training-secrets
         - configMapRef:
             name: at-config
         - secretRef:

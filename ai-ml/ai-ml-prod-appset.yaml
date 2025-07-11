@@ -1,40 +1,32 @@
-# mlflow-appset.yaml
+# ai-ml-prod-appset.yaml
 # apply:
-# kubectl apply -f ai-ml-appset.yaml
+# kubectl apply -f ai-ml-prod-appset.yaml
 # delete:
-# kubectl delete applicationset ai-ml-appset -n argocd
+# kubectl delete applicationset ai-ml-prod-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ai-ml-appset
+  name: ai-ml-prod-appset
   namespace: argocd
 spec:
   generators:
   - list:
       elements:
-      - name: reel-driver-dev
-        path: ai-ml/reel-driver/overlays/dev
-        environment: dev
-      - name: reel-driver-stg
-        path: ai-ml/reel-driver/overlays/stg
-        environment: stg
       - name: reel-driver-prod
         path: ai-ml/reel-driver/overlays/prod
-        environment: prod
-      - name: mlflow-dev
-        path: ai-ml/mlflow/overlays/dev
-        environment: dev
-      - name: mlflow-stg
-        path: ai-ml/mlflow/overlays/stg
-        environment: stg
       - name: mlflow-prod
         path: ai-ml/mlflow/overlays/prod
-        environment: prod
-        
   template:
     metadata:
       name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: >-
+          reel-driver-prod=ghcr.io/x81k25/reel-driver-api:main
+        argocd-image-updater.argoproj.io/reel-driver-prod.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/reel-driver-prod.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/write-back-method: "git"
+        argocd-image-updater.argoproj.io/git-branch: "main"
     spec:
       project: default
       source:

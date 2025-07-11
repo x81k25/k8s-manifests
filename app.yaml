@@ -14,7 +14,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/x81k25/k8s-manifests
+      repoURL: git@github.com:x81k25/k8s-manifests.git
       revision: HEAD
       directories:
       - path: "*-app"
@@ -24,7 +24,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/x81k25/k8s-manifests
+        repoURL: git@github.com:x81k25/k8s-manifests.git
         targetRevision: HEAD
         path: '{{path}}'
       destination:

@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/x81k25/dagstributor@sha256:b826bb74b9d888856237e7eb922febf9b474515647f5a7e582543973a9ea0fc2
+  - ghcr.io/x81k25/dagstributor@sha256:58855eac13ea5d1584074f83baf568015e0a2656ba380619b7ba55b7a8e09d97

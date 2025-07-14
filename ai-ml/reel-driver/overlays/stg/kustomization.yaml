@@ -17,6 +17,13 @@ patches:
           containers:
           - name: reel-driver-api
             image: ghcr.io/x81k25/reel-driver-api:stg
+            envFrom:
+            - configMapRef:
+                name: reel-driver-config-stg
+            - configMapRef:
+                name: reel-driver-api-config-stg
+            - secretRef:
+                name: reel-driver-secrets-stg
             env:
             - name: MODEL_PATH
               value: "/reel-driver/model_artifacts/"

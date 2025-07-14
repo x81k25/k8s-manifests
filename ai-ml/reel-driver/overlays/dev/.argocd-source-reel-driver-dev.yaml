@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/x81k25/reel-driver-api@sha256:5f23a08777b03e033444300b368ec95fc815c4a41feda0639a29653761437998
+  - ghcr.io/x81k25/reel-driver-api@sha256:9b4287604d6bfda1732a5406b5a2a3f1163642097a787bf084cac7d06695e4d2

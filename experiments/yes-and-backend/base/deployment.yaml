@@ -25,5 +25,3 @@ spec:
           value: "0.0.0.0"
         - name: API_PORT
           value: "8000"
-      imagePullSecrets:
-      - name: github-registry

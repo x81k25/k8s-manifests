@@ -1,0 +1,35 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: ai-ml
+  name: dagster-job-creator
+rules:
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create", "get", "list", "watch", "delete"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dagster-job-creator
+  namespace: ai-ml
+subjects:
+- kind: ServiceAccount
+  name: dagster-dev
+  namespace: media-dev
+- kind: ServiceAccount
+  name: dagster-stg
+  namespace: media-stg
+- kind: ServiceAccount
+  name: dagster-prod
+  namespace: media-prod
+roleRef:
+  kind: Role
+  name: dagster-job-creator
+  apiGroup: rbac.authorization.k8s.io

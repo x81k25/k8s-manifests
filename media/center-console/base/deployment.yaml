@@ -32,4 +32,4 @@ spec:
         - configMapRef:
             name: center-console-config
       imagePullSecrets:
-      - name: ghcr-pull-image-token
+      - name: ghcr-pull-image-secret

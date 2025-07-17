@@ -16,7 +16,7 @@ spec:
         app: wst-flyway
     spec:
       imagePullSecrets:
-      - name: github-secrets
+      - name: ghcr-pull-image-secret
       initContainers:
       - name: wst-flyway-migrate
         image: ghcr.io/x81k25/wst-flyway:sha-1dc332f

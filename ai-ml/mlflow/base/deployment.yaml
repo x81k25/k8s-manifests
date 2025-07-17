@@ -16,7 +16,7 @@ spec:
         app: mlflow
     spec:
       imagePullSecrets:
-      - name: ghcr-pull-image-token 
+      - name: ghcr-pull-image-secret 
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

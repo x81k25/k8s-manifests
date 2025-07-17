@@ -17,11 +17,6 @@ patches:
           containers:
           - name: yes-and-backend-api
             image: ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
-            envFrom:
-            - configMapRef:
-                name: yes-and-backend-config-dev
-            - secretRef:
-                name: yes-and-backend-secrets-dev
 - target:
     version: v1
     kind: Service

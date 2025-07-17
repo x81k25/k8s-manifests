@@ -1,0 +1,40 @@
+# experiments-dev-appset.yaml
+# apply:
+# kubectl apply -f experiments-dev-appset.yaml
+# delete:
+# kubectl delete applicationset experiments-dev-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: experiments-dev-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: yes-and-backend
+        path: experiments/yes-and-backend/overlays
+  template:
+    metadata:
+      name: '{{name}}-dev'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: >-
+          yes-and-backend=ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
+        argocd-image-updater.argoproj.io/yes-and-backend.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/yes-and-backend.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/write-back-method: "git"
+        argocd-image-updater.argoproj.io/git-branch: "main"
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}/dev"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "experiments"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

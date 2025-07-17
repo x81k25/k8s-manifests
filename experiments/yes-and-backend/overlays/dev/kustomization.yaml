@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: yes-and-backend
+    spec:
+      template:
+        spec:
+          containers:
+          - name: yes-and-backend-api
+            image: ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
+            envFrom:
+            - configMapRef:
+                name: yes-and-backend-config-dev
+            - secretRef:
+                name: yes-and-backend-secrets-dev
+- target:
+    version: v1
+    kind: Service
+    name: yes-and-backend
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30812

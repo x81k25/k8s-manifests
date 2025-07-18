@@ -30,7 +30,7 @@ patches:
               value: media-dev
             resources:
               limits:
-                memory: 512Mi
+                memory: 768Mi
                 cpu: 500m
           - name: dagster-daemon
             env:

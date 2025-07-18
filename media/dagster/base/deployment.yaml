@@ -185,10 +185,6 @@ spec:
           value: "media-dev"
         - name: DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP
           value: "dagster-pipeline-env"
-        - name: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
-          value: "ghcr-pull-image-secret"
-        - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
-          value: "dagster"
         command:
         - bash
         - -c

@@ -263,7 +263,7 @@ All applications use ArgoCD Image Updater for automated image updates:
 ### Configuration Requirements
 - ApplicationSets must use SSH URL: `git@github.com:x81k25/k8s-manifests.git`
 - Image tags follow environment conventions: `:dev`, `:stg`, `:prod` or `:main`
-- Pull secrets configured via `pullsecret:argocd/ghcr-image-updater-pull`
+- Pull secrets configured via `pullsecret:argocd/ghcr-pull-image-secret`
 - All applications use `imagePullPolicy: Always`
 
 ### Generated Files

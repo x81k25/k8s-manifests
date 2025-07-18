@@ -24,7 +24,7 @@ spec:
         argocd-image-updater.argoproj.io/image-list: >-
           reel-driver-prod=ghcr.io/x81k25/reel-driver-api:main
         argocd-image-updater.argoproj.io/reel-driver-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/reel-driver-prod.pull-secret: "pullsecret:argocd/ghcr-image-updater-pull"
+        argocd-image-updater.argoproj.io/reel-driver-prod.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

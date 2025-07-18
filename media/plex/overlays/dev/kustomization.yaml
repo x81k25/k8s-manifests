@@ -23,6 +23,10 @@ patches:
               value: "http://{{server_ip}}:30400/"
             - name: PLEX_CLAIM
               $patch: delete
+            resources:
+              limits:
+                memory: 1Gi
+                cpu: 500m
             volumeMounts:
             - name: plex-media
               mountPath: /data

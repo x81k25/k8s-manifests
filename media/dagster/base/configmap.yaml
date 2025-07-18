@@ -7,5 +7,3 @@ metadata:
     app: dagster
 data:
   DAGSTER_HOME: "/opt/dagster/dagster_home"
-  DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS: "ghcr-pull-image-secret"
-  DAGSTER_K8S_JOB_SERVICE_ACCOUNT: "dagster"

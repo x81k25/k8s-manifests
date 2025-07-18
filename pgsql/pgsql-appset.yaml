@@ -1,8 +1,6 @@
 # ./pgsql-appset.yaml
 # patch command:
-## kubectl apply -f pgsql-appset.yaml
-# verify patch command:
-## kubectl get applicationset pgsql-appset -n argocd -o yaml
+## kubectl apply -f ./pgsql/pgsql-appset.yaml
 # delete appset
 ## kubectl delete applicationset pgsql-appset -n argocd
 

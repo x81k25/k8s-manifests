@@ -45,13 +45,6 @@ spec:
           mountPath: /etc/loki
         - name: storage
           mountPath: /loki
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1Gi
-          requests:
-            cpu: 250m
-            memory: 500Mi
         readinessProbe:
           httpGet:
             path: /ready

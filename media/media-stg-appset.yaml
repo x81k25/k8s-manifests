@@ -1,6 +1,6 @@
 # ./app.yaml
 # patch command:
-## kubectl apply -f media-stg-appset.yaml
+## kubectl apply -f ./media/media-stg-appset.yaml
 # delete appset
 ## kubectl delete applicationset media-stg-appset -n argocd
 

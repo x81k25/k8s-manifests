@@ -40,7 +40,7 @@ patches:
               value: media-stg
             resources:
               limits:
-                memory: 768Mi
+                memory: 1Gi
                 cpu: 500m
           - name: dagster-daemon
             env:
@@ -52,7 +52,7 @@ patches:
               value: "dagster-stg"
             resources:
               limits:
-                memory: 512Mi
+                memory: 256Mi
                 cpu: 500m
           volumes:
           - name: dagster-home

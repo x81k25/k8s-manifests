@@ -52,7 +52,7 @@ patches:
               value: "dagster-stg"
             resources:
               limits:
-                memory: 256Mi
+                memory: 500Mi
                 cpu: 500m
           volumes:
           - name: dagster-home

@@ -52,7 +52,7 @@ patches:
               value: "dagster-prod"
             resources:
               limits:
-                memory: 0.5Gi
+                memory: 1Gi
                 cpu: 500m
           volumes:
           - name: dagster-home

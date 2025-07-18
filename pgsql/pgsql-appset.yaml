@@ -47,7 +47,6 @@ spec:
           annotations:
             argocd-image-updater.argoproj.io/image-list: "{{image}}=ghcr.io/x81k25/wst-flyway:{{tag}}"
             argocd-image-updater.argoproj.io/{{image}}.update-strategy: "digest"
-            argocd-image-updater.argoproj.io/{{image}}.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
             argocd-image-updater.argoproj.io/write-back-method: "git"
             argocd-image-updater.argoproj.io/git-branch: "main"
         spec:

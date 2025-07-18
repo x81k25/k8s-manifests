@@ -34,11 +34,8 @@ spec:
           rear-diff-prod=ghcr.io/x81k25/rear-differential:main,
           dagstributor=ghcr.io/x81k25/dagstributor:main
         argocd-image-updater.argoproj.io/center-console.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/center-console.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
         argocd-image-updater.argoproj.io/rear-diff-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/rear-diff-prod.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
         argocd-image-updater.argoproj.io/dagstributor.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/dagstributor.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

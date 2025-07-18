@@ -22,7 +22,6 @@ spec:
         argocd-image-updater.argoproj.io/image-list: >-
           yes-and-backend=ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
         argocd-image-updater.argoproj.io/yes-and-backend.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/yes-and-backend.pull-secret: "pullsecret:argocd/ghcr-pull-image-secret"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

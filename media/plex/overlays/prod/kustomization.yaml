@@ -18,6 +18,10 @@ patches:
           hostNetwork: true
           containers:
           - name: plex
+            resources:
+              limits:
+                memory: 2Gi
+                cpu: 1000m
             volumeMounts:
             - name: plex-config
               mountPath: /config

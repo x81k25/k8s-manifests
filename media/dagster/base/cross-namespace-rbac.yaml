@@ -5,8 +5,8 @@ metadata:
   name: dagster-job-creator
 rules:
 - apiGroups: ["batch"]
-  resources: ["jobs"]
-  verbs: ["create", "get", "list", "watch", "delete"]
+  resources: ["jobs", "jobs/status"]
+  verbs: ["create", "get", "list", "watch", "delete", "patch", "update"]
 - apiGroups: [""]
   resources: ["pods"]
   verbs: ["get", "list", "watch"]

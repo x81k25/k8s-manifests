@@ -40,8 +40,18 @@ spec:
           mountPath: /etc/grafana/provisioning/datasources
         - name: dashboard-provider
           mountPath: /etc/grafana/provisioning/dashboards
-        - name: dashboards
-          mountPath: /var/lib/grafana/dashboards
+        - name: dashboards-k8s-resources
+          mountPath: /var/lib/grafana/dashboards/k8s-resources.json
+          subPath: k8s-resources.json
+        - name: dashboards-k8s-pod-monitoring
+          mountPath: /var/lib/grafana/dashboards/k8s-pod-monitoring.json
+          subPath: k8s-pod-monitoring.json
+        - name: dashboards-k8s-namespace-overview
+          mountPath: /var/lib/grafana/dashboards/k8s-namespace-overview.json
+          subPath: k8s-namespace-overview.json
+        - name: dashboards-k8s-node-overview
+          mountPath: /var/lib/grafana/dashboards/k8s-node-overview.json
+          subPath: k8s-node-overview.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -82,9 +92,18 @@ spec:
       - name: dashboard-provider
         configMap:
           name: grafana-dashboard-provider
-      - name: dashboards
+      - name: dashboards-k8s-resources
         configMap:
           name: grafana-dashboard-k8s-resources
+      - name: dashboards-k8s-pod-monitoring
+        configMap:
+          name: grafana-dashboard-k8s-pod-monitoring
+      - name: dashboards-k8s-namespace-overview
+        configMap:
+          name: grafana-dashboard-k8s-namespace-overview
+      - name: dashboards-k8s-node-overview
+        configMap:
+          name: grafana-dashboard-k8s-node-overview
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

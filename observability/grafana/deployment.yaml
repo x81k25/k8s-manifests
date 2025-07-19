@@ -38,6 +38,10 @@ spec:
           mountPath: /etc/grafana
         - name: datasources
           mountPath: /etc/grafana/provisioning/datasources
+        - name: dashboard-provider
+          mountPath: /etc/grafana/provisioning/dashboards
+        - name: dashboards
+          mountPath: /var/lib/grafana/dashboards
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -75,6 +79,12 @@ spec:
       - name: datasources
         configMap:
           name: grafana-datasources
+      - name: dashboard-provider
+        configMap:
+          name: grafana-dashboard-provider
+      - name: dashboards
+        configMap:
+          name: grafana-dashboard-k8s-resources
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

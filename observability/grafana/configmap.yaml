@@ -15,6 +15,12 @@ data:
       isDefault: true
       jsonData:
         maxLines: 1000
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://prometheus.observability.svc.cluster.local:9090
+      version: 1
+      isDefault: false
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -13,6 +13,10 @@ spec:
         path: observability/loki
       - name: grafana
         path: observability/grafana
+      - name: prometheus
+        path: observability/prometheus/base
+      - name: kube-state-metrics
+        path: observability/kube-state-metrics/base
   template:
     metadata:
       name: '{{name}}'

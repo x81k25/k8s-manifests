@@ -19,6 +19,11 @@ patches:
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:main
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:main
+            resources:
+              requests:
+                memory: 512Mi
+              limits:
+                memory: 2Gi
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/prod/complete

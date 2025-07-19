@@ -54,9 +54,10 @@ This repository contains Kubernetes manifests for applications deployed via Argo
   
 - **observability/observability-appset.yaml**: ApplicationSet for monitoring stack
   - `fluent-bit`: Log collector
-  - `grafana`: Metrics visualization
+  - `grafana`: Metrics visualization with Kubernetes monitoring dashboards
   - `loki`: Log aggregation
-  - `prometheus`: Metrics collection (stub)
+  - `prometheus`: Metrics collection with automatic pod discovery
+  - `kube-state-metrics`: Kubernetes cluster state metrics
   
 - **pgsql/pgsql-appset.yaml**: ApplicationSet for database applications
   - `pgsql`: PostgreSQL database instances
@@ -102,9 +103,10 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 
 #### Observability Stack (observability/)
 - **fluent-bit**: Log collector and forwarder
-- **grafana**: Metrics and log visualization
+- **grafana**: Metrics and log visualization with comprehensive Kubernetes monitoring dashboards
 - **loki**: Log aggregation system
-- **prometheus**: Metrics collection (stub)
+- **prometheus**: Metrics collection with kube-state-metrics
+- **kube-state-metrics**: Kubernetes object state metrics exporter
 
 #### Database Applications (pgsql/)
 - **pgsql**: PostgreSQL database deployment
@@ -249,6 +251,141 @@ MLFLOW_MINIO_AWS_SECRET_ACCESS_KEY: MinIO secret key
 
 ### External Access
 When accessing MLflow externally via NodePort, it generates artifact URLs using the external MinIO endpoint, ensuring artifacts are accessible from outside the cluster.
+
+## Monitoring and Observability
+
+The observability stack provides comprehensive monitoring and logging for the Kubernetes cluster and all deployed applications.
+
+### Architecture Overview
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Prometheus    │────│   Grafana       │    │   Loki          │
+│   (Metrics)     │    │   (Dashboards)  │────│   (Logs)        │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                        │                        │
+         │                        │                        │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ kube-state-     │    │   Application   │    │   Fluent-bit    │
+│ metrics         │    │   Metrics       │    │   (DaemonSet)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+### Metrics Collection (Prometheus)
+
+**Prometheus Configuration:**
+- **Automatic Service Discovery**: Discovers pods with `prometheus.io/scrape: "true"` annotations
+- **Scrape Targets**: 
+  - Kubernetes API server, nodes, pods, endpoints
+  - kube-state-metrics for cluster state information
+  - Application-specific metrics from annotated pods
+- **Retention**: Configurable retention policy for historical data
+- **Storage**: Persistent volume for metrics storage
+
+**Monitored Applications:**
+All major applications are configured with Prometheus scraping annotations:
+- **MLflow** (port 5000): ML experiment tracking metrics
+- **Dagster** (port 3000): Data pipeline orchestration metrics  
+- **ATD** (port 9091): Automatic transmission daemon metrics
+- **rear-diff** (port 8000): Custom media service metrics
+- **reel-driver** (port 8000): ML service metrics
+
+### Cluster State Metrics (kube-state-metrics)
+
+**Exposed Metrics:**
+- Pod resource requests and limits vs actual usage
+- Node allocatable resources and capacity
+- Deployment/ReplicaSet/DaemonSet states and health
+- PersistentVolume usage and availability
+- Resource quotas and limit ranges
+- Pod restart counts and failure reasons
+
+### Grafana Dashboards
+
+**Pre-configured Dashboards:**
+
+1. **Kubernetes Resource Overview** (`k8s-resources`)
+   - Cluster-wide CPU and memory usage gauges
+   - Resource usage trends by namespace
+   - High-level cluster health metrics
+
+2. **Kubernetes Pod Monitoring** (`k8s-pod-monitoring`)
+   - Pod-level CPU and memory usage by namespace
+   - Pod information table with status and metadata
+   - Pod restart counts and failure analysis
+   - Template variables for namespace and pod filtering
+
+3. **Kubernetes Namespace Overview** (`k8s-namespace-overview`)
+   - Namespace statistics: active namespaces, pod counts by status
+   - Resource usage trends by namespace
+   - Resource requests vs limits analysis
+   - Namespace-focused filtering and analysis
+
+4. **Kubernetes Node Overview** (`k8s-node-overview`)
+   - Node health statistics and capacity utilization
+   - Node-level resource usage: CPU, memory, disk
+   - Node status table with health indicators
+   - Hardware and capacity planning insights
+
+**Dashboard Features:**
+- **Template Variables**: Dynamic filtering by namespace, pod, node
+- **Auto-refresh**: 30-second intervals for real-time monitoring
+- **Prometheus Integration**: Direct queries to Prometheus datasource
+- **Threshold Alerting**: Color-coded metrics with configurable thresholds
+
+### Log Aggregation (Loki + Fluent-bit)
+
+**Fluent-bit Configuration:**
+- **DaemonSet Deployment**: Runs on every node for comprehensive log collection
+- **Log Sources**: Container logs, system logs, Kubernetes events
+- **Output**: Forwards all logs to Loki for centralized storage
+- **Filtering**: Configurable log filtering and enrichment
+
+**Loki Storage:**
+- **Centralized Logging**: All application and system logs
+- **Log Retention**: Configurable retention policies
+- **Integration**: Seamless integration with Grafana for log exploration
+
+### Monitoring Best Practices
+
+**Resource Monitoring:**
+- Monitor CPU and memory at container, pod, and node levels
+- Track resource requests vs limits vs actual usage
+- Monitor disk usage and network I/O across nodes
+
+**Application Health:**
+- Track pod restart counts and failure patterns
+- Monitor application-specific metrics via Prometheus annotations
+- Correlate metrics with logs for comprehensive troubleshooting
+
+**Alerting Strategy:**
+- Set up threshold-based alerts for resource exhaustion
+- Monitor pod restart rates and failure patterns
+- Alert on node health and capacity issues
+
+**Performance Optimization:**
+- Use recording rules in Prometheus for complex queries
+- Optimize dashboard refresh rates based on monitoring needs
+- Implement log retention policies to manage storage costs
+
+### Access and Usage
+
+**Grafana Access:**
+- **URL**: `http://<node-ip>:30303`
+- **Authentication**: Admin credentials stored in Kubernetes secrets
+- **Datasources**: Pre-configured Prometheus and Loki connections
+
+**Prometheus Access:**
+- **URL**: `http://<node-ip>:9090` (internal cluster access)
+- **Query Interface**: Built-in PromQL query interface
+- **Targets**: View all discovered scrape targets at `/targets`
+
+**Dashboard Navigation:**
+1. Access Grafana via NodePort
+2. Navigate to Dashboards → Browse
+3. Select from available Kubernetes monitoring dashboards
+4. Use template variables to filter by namespace/pod/node
+5. Correlate metrics with logs using Loki integration
 
 ## Automated Image Updates
 

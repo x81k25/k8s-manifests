@@ -11,6 +11,10 @@ spec:
     metadata:
       labels:
         app: atd
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: vpn-sidecar

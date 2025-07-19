@@ -12,6 +12,10 @@ spec:
     metadata:
       labels:
         app: rear-diff
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: rear-diff-api

@@ -108,9 +108,6 @@ spec:
       - name: dashboards-12114
         configMap:
           name: grafana-dashboard-12114
-      - name: dashboards-8588
-        configMap:
-          name: grafana-dashboard-8588
       - name: dashboards-k8s-node-status
         configMap:
           name: grafana-dashboard-k8s-node-status

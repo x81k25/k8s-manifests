@@ -44,21 +44,22 @@ data:
                   },
                   {
                     "color": "yellow",
-                    "value": 70
+                    "value": 16
                   },
                   {
                     "color": "red",
-                    "value": 85
+                    "value": 20
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "short",
+              "decimals": 2
             },
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
+            "h": 6,
+            "w": 8,
             "x": 0,
             "y": 0
           },
@@ -79,11 +80,115 @@ data:
           },
           "targets": [
             {
-              "expr": "avg(100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100))",
+              "expr": "avg(rate(container_cpu_usage_seconds_total{id=\"/\"}[5m]))",
               "refId": "A"
             }
           ],
-          "title": "Current Cluster CPU Usage",
+          "title": "Current CPU Usage (cores)",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short",
+              "decimals": 2
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 8,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
+              "refId": "A"
+            }
+          ],
+          "title": "Total CPU Requests (cores)",
+          "type": "stat"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "orange",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short",
+              "decimals": 2
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 16,
+            "y": 0
+          },
+          "id": 3,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "targets": [
+            {
+              "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"})",
+              "refId": "A"
+            }
+          ],
+          "title": "Total CPU Limits (cores)",
           "type": "stat"
         },
         {
@@ -131,21 +236,22 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 80
+                    "value": 20
                   }
                 ]
               },
-              "unit": "percent"
+              "unit": "short",
+              "decimals": 2
             },
             "overrides": []
           },
           "gridPos": {
             "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 0
+            "w": 24,
+            "x": 0,
+            "y": 6
           },
-          "id": 2,
+          "id": 4,
           "options": {
             "legend": {
               "calcs": [],
@@ -158,12 +264,12 @@ data:
           },
           "targets": [
             {
-              "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+              "expr": "rate(container_cpu_usage_seconds_total{id=\"/\"}[5m])",
               "legendFormat": "{{instance}}",
               "refId": "A"
             }
           ],
-          "title": "Node CPU Usage Over Time",
+          "title": "Node CPU Usage Over Time (cores)",
           "type": "timeseries"
         }
       ],

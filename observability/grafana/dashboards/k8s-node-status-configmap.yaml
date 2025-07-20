@@ -1098,32 +1098,32 @@ data:
           "targets": [
             {
               "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\",pod!=\"\"}[5m])) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Usage - {{namespace}}",
               "refId": "cpu_usage"
             },
             {
               "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Requests - {{namespace}}",
               "refId": "cpu_requests"
             },
             {
               "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Limits - {{namespace}}",
               "refId": "cpu_limits"
             },
             {
               "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Usage - {{namespace}}",
               "refId": "memory_usage"
             },
             {
               "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Requests - {{namespace}}",
               "refId": "memory_requests"
             },
             {
               "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "legendFormat": "Limits - {{namespace}}",
               "refId": "memory_limits"
             }
           ],
@@ -1134,13 +1134,13 @@ data:
                 "include": {
                   "names": [
                     "Time",
-                    "${resource_type}.*"
+                    "${resource_type}_.*"
                   ]
                 }
               }
             }
           ],
-          "title": "Resource Usage by Namespace - ${resource_type}",
+          "title": "${resource_type:text} Metrics by Namespace",
           "type": "timeseries"
         },
         {
@@ -1311,10 +1311,10 @@ data:
           {
             "current": {
               "selected": false,
-              "text": "CPU Usage",
-              "value": "cpu_usage"
+              "text": "CPU Metrics",
+              "value": "cpu"
             },
-            "description": "Select resource metric type",
+            "description": "Select resource type to view",
             "hide": 0,
             "includeAll": false,
             "label": "Resource Type",
@@ -1323,36 +1323,16 @@ data:
             "options": [
               {
                 "selected": true,
-                "text": "CPU Usage",
-                "value": "cpu_usage"
+                "text": "CPU Metrics",
+                "value": "cpu"
               },
               {
                 "selected": false,
-                "text": "CPU Requests",
-                "value": "cpu_requests"
-              },
-              {
-                "selected": false,
-                "text": "CPU Limits",
-                "value": "cpu_limits"
-              },
-              {
-                "selected": false,
-                "text": "Memory Usage",
-                "value": "memory_usage"
-              },
-              {
-                "selected": false,
-                "text": "Memory Requests",
-                "value": "memory_requests"
-              },
-              {
-                "selected": false,
-                "text": "Memory Limits",
-                "value": "memory_limits"
+                "text": "Memory Metrics",
+                "value": "memory"
               }
             ],
-            "query": "cpu_usage,cpu_requests,cpu_limits,memory_usage,memory_requests,memory_limits",
+            "query": "cpu,memory",
             "queryValue": "",
             "skipUrlSync": false,
             "type": "custom"

@@ -44,30 +44,6 @@ spec:
           mountPath: /etc/grafana/provisioning/datasources
         - name: dashboard-provider
           mountPath: /etc/grafana/provisioning/dashboards
-        - name: dashboards-k8s-resources
-          mountPath: /var/lib/grafana/dashboards/k8s-resources.json
-          subPath: k8s-resources.json
-        - name: dashboards-k8s-pod-monitoring
-          mountPath: /var/lib/grafana/dashboards/k8s-pod-monitoring.json
-          subPath: k8s-pod-monitoring.json
-        - name: dashboards-k8s-namespace-overview
-          mountPath: /var/lib/grafana/dashboards/k8s-namespace-overview.json
-          subPath: k8s-namespace-overview.json
-        - name: dashboards-k8s-node-overview
-          mountPath: /var/lib/grafana/dashboards/k8s-node-overview.json
-          subPath: k8s-node-overview.json
-        - name: dashboards-6417
-          mountPath: /var/lib/grafana/dashboards/dashboard-6417.json
-          subPath: dashboard-6417.json
-        - name: dashboards-315
-          mountPath: /var/lib/grafana/dashboards/dashboard-315.json
-          subPath: dashboard-315.json
-        - name: dashboards-12114
-          mountPath: /var/lib/grafana/dashboards/dashboard-12114.json
-          subPath: dashboard-12114.json
-        - name: dashboards-8588
-          mountPath: /var/lib/grafana/dashboards/dashboard-8588.json
-          subPath: dashboard-8588.json
         - name: dashboards-k8s-node-status
           mountPath: /var/lib/grafana/dashboards/k8s-node-status.json
           subPath: k8s-node-status.json

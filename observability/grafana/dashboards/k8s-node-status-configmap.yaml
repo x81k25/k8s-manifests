@@ -44,6 +44,75 @@ data:
                   },
                   {
                     "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent",
+              "decimals": 1,
+              "min": 0,
+              "max": 100
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 0,
+            "y": 0
+          },
+          "id": 8,
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "displayMode": "basic",
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "9.0.0",
+          "targets": [
+            {
+              "expr": "100 - (avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+              "refId": "A"
+            }
+          ],
+          "title": "Server CPU Usage (%)",
+          "type": "gauge"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
                     "value": 16
                   },
                   {
@@ -61,8 +130,8 @@ data:
           },
           "gridPos": {
             "h": 6,
-            "w": 8,
-            "x": 0,
+            "w": 6,
+            "x": 6,
             "y": 0
           },
           "id": 1,
@@ -130,8 +199,8 @@ data:
           },
           "gridPos": {
             "h": 6,
-            "w": 8,
-            "x": 8,
+            "w": 6,
+            "x": 12,
             "y": 0
           },
           "id": 2,
@@ -199,8 +268,8 @@ data:
           },
           "gridPos": {
             "h": 6,
-            "w": 8,
-            "x": 16,
+            "w": 6,
+            "x": 18,
             "y": 0
           },
           "id": 3,
@@ -232,6 +301,75 @@ data:
             }
           ],
           "title": "Total CPU Limits (cores)",
+          "type": "gauge"
+        },
+        {
+          "datasource": "Prometheus",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 70
+                  },
+                  {
+                    "color": "red",
+                    "value": 85
+                  }
+                ]
+              },
+              "unit": "percent",
+              "decimals": 1,
+              "min": 0,
+              "max": 100
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 12,
+            "x": 12,
+            "y": 6
+          },
+          "id": 9,
+          "options": {
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "displayMode": "basic",
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "9.0.0",
+          "targets": [
+            {
+              "expr": "100 * (1 - ((node_memory_MemAvailable_bytes) / (node_memory_MemTotal_bytes)))",
+              "refId": "A"
+            }
+          ],
+          "title": "Server CPU Usage (%)",
           "type": "gauge"
         },
         {
@@ -280,7 +418,9 @@ data:
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 24
             },
             "overrides": []
           },
@@ -288,7 +428,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 0,
-            "y": 6
+            "y": 9
           },
           "id": 5,
           "options": {
@@ -358,7 +498,9 @@ data:
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 24
             },
             "overrides": []
           },
@@ -366,7 +508,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 8,
-            "y": 6
+            "y": 9
           },
           "id": 6,
           "options": {
@@ -436,7 +578,9 @@ data:
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 48
             },
             "overrides": []
           },
@@ -444,7 +588,7 @@ data:
             "h": 8,
             "w": 8,
             "x": 16,
-            "y": 6
+            "y": 9
           },
           "id": 7,
           "options": {

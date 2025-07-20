@@ -17,6 +17,8 @@ spec:
         path: observability/prometheus/base
       - name: kube-state-metrics
         path: observability/kube-state-metrics/base
+      - name: node-exporter
+        path: observability/node-exporter/base
   template:
     metadata:
       name: '{{name}}'

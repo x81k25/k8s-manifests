@@ -53,7 +53,9 @@ data:
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 24
             },
             "overrides": []
           },
@@ -65,10 +67,6 @@ data:
           },
           "id": 1,
           "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "center",
-            "orientation": "auto",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -76,8 +74,19 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "auto"
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "displayMode": "basic",
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
           },
+          "pluginVersion": "9.0.0",
           "targets": [
             {
               "expr": "avg(rate(container_cpu_usage_seconds_total{id=\"/\"}[5m]))",
@@ -85,7 +94,7 @@ data:
             }
           ],
           "title": "Current CPU Usage (cores)",
-          "type": "stat"
+          "type": "gauge"
         },
         {
           "datasource": "Prometheus",
@@ -101,11 +110,21 @@ data:
                   {
                     "color": "blue",
                     "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 16
+                  },
+                  {
+                    "color": "red",
+                    "value": 20
                   }
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 24
             },
             "overrides": []
           },
@@ -117,10 +136,6 @@ data:
           },
           "id": 2,
           "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "center",
-            "orientation": "auto",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -128,8 +143,19 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "auto"
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "displayMode": "basic",
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
           },
+          "pluginVersion": "9.0.0",
           "targets": [
             {
               "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
@@ -137,7 +163,7 @@ data:
             }
           ],
           "title": "Total CPU Requests (cores)",
-          "type": "stat"
+          "type": "gauge"
         },
         {
           "datasource": "Prometheus",
@@ -153,11 +179,21 @@ data:
                   {
                     "color": "orange",
                     "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 32
+                  },
+                  {
+                    "color": "red",
+                    "value": 40
                   }
                 ]
               },
               "unit": "short",
-              "decimals": 2
+              "decimals": 2,
+              "min": 0,
+              "max": 48
             },
             "overrides": []
           },
@@ -169,10 +205,6 @@ data:
           },
           "id": 3,
           "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "center",
-            "orientation": "auto",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
@@ -180,8 +212,19 @@ data:
               "fields": "",
               "values": false
             },
-            "textMode": "auto"
+            "orientation": "auto",
+            "textMode": "auto",
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "displayMode": "basic",
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
           },
+          "pluginVersion": "9.0.0",
           "targets": [
             {
               "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
@@ -189,7 +232,7 @@ data:
             }
           ],
           "title": "Total CPU Limits (cores)",
-          "type": "stat"
+          "type": "gauge"
         },
         {
           "datasource": "Prometheus",

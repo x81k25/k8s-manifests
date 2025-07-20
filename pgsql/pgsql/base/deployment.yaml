@@ -17,6 +17,10 @@ spec:
     metadata:
       labels:
         app: postgres
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5432"
+        prometheus.io/path: "/metrics"
     spec:
       securityContext:
         fsGroup: 999

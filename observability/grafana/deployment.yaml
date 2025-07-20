@@ -68,6 +68,9 @@ spec:
         - name: dashboards-8588
           mountPath: /var/lib/grafana/dashboards/dashboard-8588.json
           subPath: dashboard-8588.json
+        - name: dashboards-k8s-node-status
+          mountPath: /var/lib/grafana/dashboards/k8s-node-status.json
+          subPath: k8s-node-status.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -132,6 +135,9 @@ spec:
       - name: dashboards-8588
         configMap:
           name: grafana-dashboard-8588
+      - name: dashboards-k8s-node-status
+        configMap:
+          name: grafana-dashboard-k8s-node-status
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

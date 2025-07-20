@@ -1540,12 +1540,12 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(container_fs_usage_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
+              "expr": "sum(container_fs_usage_bytes{id=\"/\",device=~\"/dev/.*\"}) by (device)",
+              "legendFormat": "{{device}}",
               "refId": "A"
             }
           ],
-          "title": "Storage Usage by Namespace (bytes)",
+          "title": "Storage Usage by Device (bytes)",
           "type": "timeseries"
         },
         {
@@ -1619,7 +1619,7 @@ data:
           },
           "targets": [
             {
-              "expr": "sum(rate(container_network_receive_bytes_total{container!=\"POD\",container!=\"\",pod!=\"\"}[5m]) + rate(container_network_transmit_bytes_total{container!=\"POD\",container!=\"\",pod!=\"\"}[5m])) by (namespace)",
+              "expr": "sum(rate(container_network_receive_bytes_total{namespace!=\"\"}[5m]) + rate(container_network_transmit_bytes_total{namespace!=\"\"}[5m])) by (namespace)",
               "legendFormat": "{{namespace}}",
               "refId": "A"
             }

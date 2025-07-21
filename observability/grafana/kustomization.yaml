@@ -5,6 +5,7 @@ namespace: observability
 
 resources:
 - configmap.yaml
+- dashboard-provider-configmap.yaml
 - deployment.yaml
 - service.yaml
 - dashboards

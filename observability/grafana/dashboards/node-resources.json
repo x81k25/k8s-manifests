@@ -104,11 +104,11 @@
               },
               {
                 "color": "yellow",
-                "value": 18
+                "value": 20
               },
               {
                 "color": "red",
-                "value": 20
+                "value": 22
               }
             ]
           },
@@ -153,7 +153,7 @@
           "refId": "A"
         }
       ],
-      "title": "Current CPU Usage (cores)",
+      "title": "Current System CPU Usage (cores)",
       "type": "gauge"
     },
     {
@@ -173,18 +173,18 @@
               },
               {
                 "color": "yellow",
-                "value": 16
+                "value": 20
               },
               {
                 "color": "red",
-                "value": 20
+                "value": 24
               }
             ]
           },
           "unit": "short",
           "decimals": 1,
           "min": 0,
-          "max": 200
+          "max": 28
         },
         "overrides": []
       },
@@ -242,18 +242,18 @@
               },
               {
                 "color": "yellow",
-                "value": 32
+                "value": 40
               },
               {
                 "color": "red",
-                "value": 40
+                "value": 48
               }
             ]
           },
           "unit": "short",
           "decimals": 1,
           "min": 0,
-          "max": 400
+          "max": 56
         },
         "overrides": []
       },
@@ -421,18 +421,18 @@
               },
               {
                 "color": "yellow",
-                "value": 22
+                "value": 28
               },
               {
                 "color": "red",
-                "value": 28
+                "value": 32
               }
             ]
           },
           "unit": "decbytes",
           "decimals": 1,
           "min": 0,
-          "max": 350
+          "max": 36
         },
         "overrides": []
       },
@@ -490,18 +490,18 @@
               },
               {
                 "color": "yellow",
-                "value": 44
+                "value": 60
               },
               {
                 "color": "red",
-                "value": 56
+                "value": 64
               }
             ]
           },
           "unit": "decbytes",
           "decimals": 1,
           "min": 0,
-          "max": 800
+          "max": 70
         },
         "overrides": []
       },

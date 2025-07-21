@@ -319,10 +319,10 @@
               }
             ]
           },
-          "unit": "percent",
+          "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 100
+          "max": 32
         },
         "overrides": []
       },
@@ -356,11 +356,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "100 * (1 - ((node_memory_MemAvailable_bytes) / (node_memory_MemTotal_bytes)))",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Server Memory Usage (%)",
+      "title": "Server Memory Usage (GiB)",
       "type": "gauge"
     },
     {
@@ -388,10 +388,10 @@
               }
             ]
           },
-          "unit": "decbytes",
+          "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 34359738368
+          "max": 32
         },
         "overrides": []
       },
@@ -425,11 +425,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"})",
+          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Current Memory Usage (GB)",
+      "title": "Current Memory Usage (GiB)",
       "type": "gauge"
     },
     {
@@ -457,10 +457,10 @@
               }
             ]
           },
-          "unit": "decbytes",
+          "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 34359738368
+          "max": 32
         },
         "overrides": []
       },
@@ -494,11 +494,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Total Memory Requests (GB)",
+      "title": "Total Memory Requests (GiB)",
       "type": "gauge"
     },
     {
@@ -526,10 +526,10 @@
               }
             ]
           },
-          "unit": "decbytes",
+          "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 68719476736
+          "max": 64
         },
         "overrides": []
       },
@@ -563,11 +563,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Total Memory Limits (GB)",
+      "title": "Total Memory Limits (GiB)",
       "type": "gauge"
     },
     {
@@ -644,11 +644,11 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "decbytes"
+                "value": "bytes"
               },
               {
                 "id": "max",
-                "value": 68719476736
+                "value": 64
               },
               {
                 "id": "decimals",
@@ -693,17 +693,17 @@
           "refId": "cpu_limits"
         },
         {
-          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) by (namespace)",
+          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) by (namespace) / 1024 / 1024 / 1024",
           "legendFormat": "{{namespace}}",
           "refId": "memory_usage"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace) / 1024 / 1024 / 1024",
           "legendFormat": "{{namespace}}",
           "refId": "memory_requests"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) by (namespace) / 1024 / 1024 / 1024",
           "legendFormat": "{{namespace}}",
           "refId": "memory_limits"
         }

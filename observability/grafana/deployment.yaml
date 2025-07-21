@@ -44,7 +44,7 @@ spec:
           mountPath: /etc/grafana/provisioning/datasources
         - name: dashboard-provider
           mountPath: /etc/grafana/provisioning/dashboards
-        - name: dashboards-k8s-node-status
+        - name: dashboards-k8s-node-resources
           mountPath: /var/lib/grafana/dashboards/k8s-node-status.json
           subPath: k8s-node-status.json
         - name: storage
@@ -90,24 +90,6 @@ spec:
       - name: dashboards-k8s-resources
         configMap:
           name: grafana-dashboard-k8s-resources
-      - name: dashboards-k8s-pod-monitoring
-        configMap:
-          name: grafana-dashboard-k8s-pod-monitoring
-      - name: dashboards-k8s-namespace-overview
-        configMap:
-          name: grafana-dashboard-k8s-namespace-overview
-      - name: dashboards-k8s-node-overview
-        configMap:
-          name: grafana-dashboard-k8s-node-overview
-      - name: dashboards-6417
-        configMap:
-          name: grafana-dashboard-6417
-      - name: dashboards-315
-        configMap:
-          name: grafana-dashboard-315
-      - name: dashboards-12114
-        configMap:
-          name: grafana-dashboard-12114
       - name: dashboards-k8s-node-status
         configMap:
           name: grafana-dashboard-k8s-node-status

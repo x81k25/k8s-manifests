@@ -80,7 +80,7 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "count(node_cpu_seconds_total{mode=\"idle\"}) - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * count(node_cpu_seconds_total{mode=\"idle\"})",
+          "expr": "avg(count(node_cpu_seconds_total{mode=\"idle\"}) by (instance) - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) by (instance) * count(node_cpu_seconds_total{mode=\"idle\"}) by (instance))",
           "refId": "A"
         }
       ],
@@ -391,17 +391,17 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "(node_memory_Active_anon_bytes + node_memory_SUnreclaim_bytes + node_memory_Mlocked_bytes) / 1024 / 1024 / 1024",
-          "legendFormat": "Active",
+          "expr": "avg((node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes) / 1024 / 1024 / 1024)",
+          "legendFormat": "Memory Used (no cache)",
           "refId": "A"
         },
         {
-          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024 / 1024", 
-          "legendFormat": "Total",
+          "expr": "avg(node_memory_MemAvailable_bytes / 1024 / 1024 / 1024)", 
+          "legendFormat": "Memory Available",
           "refId": "B"
         }
       ],
-      "title": "System Memory Usage (Gi)",
+      "title": "system memory usage (Gi)",
       "type": "gauge"
     },
     {

@@ -16,6 +16,12 @@ configMapGenerator:
   options:
     labels:
       grafana_dashboard: "1"
+- name: grafana-dashboard-node-health
+  files:
+  - node-health.json
+  options:
+    labels:
+      grafana_dashboard: "1"
 
 generatorOptions:
   disableNameSuffixHash: true

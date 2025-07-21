@@ -391,17 +391,17 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes) / 1024 / 1024 / 1024",
-          "legendFormat": "Memory Used (no cache)",
+          "expr": "(node_memory_Active_anon_bytes + node_memory_SUnreclaim_bytes + node_memory_Mlocked_bytes) / 1024 / 1024 / 1024",
+          "legendFormat": "Active",
           "refId": "A"
         },
         {
-          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / 1024 / 1024 / 1024", 
-          "legendFormat": "Memory Used",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024 / 1024", 
+          "legendFormat": "Total",
           "refId": "B"
         }
       ],
-      "title": "System Memory Status",
+      "title": "System Memory Usage (Gi)",
       "type": "gauge"
     },
     {

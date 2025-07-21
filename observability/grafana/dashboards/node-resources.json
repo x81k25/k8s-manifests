@@ -769,7 +769,7 @@
               }
             ]
           },
-          "unit": "decbytes",
+          "unit": "bytes",
           "decimals": 1,
           "min": 0
         },
@@ -795,12 +795,12 @@
       },
       "targets": [
         {
-          "expr": "sum(container_fs_usage_bytes{id=\"/\",device=~\"/dev/.*\"}) by (device)",
-          "legendFormat": "{{device}}",
+          "expr": "sum(container_fs_usage_bytes{id=\"/\",device=~\"/dev/.*\"}) by (device) / 1024 / 1024 / 1024",
+          "legendFormat": "{{ device | reReplaceAll \"/dev/mapper/datavg-\" \"\" | reReplaceAll \"/dev/\" \"\" | reReplaceAll \"--\" \"-\" }}",
           "refId": "A"
         }
       ],
-      "title": "Storage Usage by Device (bytes)",
+      "title": "Storage Usage by Device (GiB)",
       "type": "timeseries"
     },
     {

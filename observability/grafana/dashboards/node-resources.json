@@ -642,7 +642,7 @@
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -796,7 +796,7 @@
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -875,7 +875,7 @@
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "mappings": [],
@@ -944,11 +944,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "short",
-          "decimals": 3
+          "decimals": 3,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -999,11 +1012,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "short",
-          "decimals": 3
+          "decimals": 3,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 18
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1054,11 +1080,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "short",
-          "decimals": 2
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 24
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1109,11 +1148,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "short",
-          "decimals": 2
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 48
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1164,11 +1216,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "decbytes",
-          "decimals": 2
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 28000000000
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1219,11 +1284,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "decbytes",
-          "decimals": 2
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 26000000000
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1274,11 +1352,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "decbytes",
-          "decimals": 1
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 60000000000
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1329,11 +1420,24 @@
             "showPoints": "never",
             "spanNulls": true,
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "line"
             }
           },
           "unit": "decbytes",
-          "decimals": 1
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 64000000000
+              }
+            ]
+          }
         },
         "overrides": []
       },

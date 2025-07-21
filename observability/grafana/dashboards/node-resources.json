@@ -391,13 +391,13 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / 1024 / 1024 / 1024",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes) / 1024 / 1024 / 1024",
           "legendFormat": "Memory Used (no cache)",
           "refId": "A"
         },
         {
-          "expr": "node_memory_MemAvailable_bytes / 1024 / 1024 / 1024", 
-          "legendFormat": "Memory Available",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / 1024 / 1024 / 1024", 
+          "legendFormat": "Memory Used",
           "refId": "B"
         }
       ],

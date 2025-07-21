@@ -182,9 +182,9 @@
             ]
           },
           "unit": "short",
-          "decimals": 2,
+          "decimals": 1,
           "min": 0,
-          "max": 24
+          "max": 200
         },
         "overrides": []
       },
@@ -218,11 +218,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
+          "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],
-      "title": "Total CPU Requests (cores)",
+      "title": "Namespace CPU Requests (cores)",
       "type": "gauge"
     },
     {
@@ -251,9 +251,9 @@
             ]
           },
           "unit": "short",
-          "decimals": 2,
+          "decimals": 1,
           "min": 0,
-          "max": 48
+          "max": 400
         },
         "overrides": []
       },
@@ -287,11 +287,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"})",
+          "expr": "sum(kube_resourcequota{resource=\"limits.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],
-      "title": "Total CPU Limits (cores)",
+      "title": "Namespace CPU Limits (cores)",
       "type": "gauge"
     },
     {
@@ -460,7 +460,7 @@
           "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 32
+          "max": 350
         },
         "overrides": []
       },
@@ -494,11 +494,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Total Memory Requests (GiB)",
+      "title": "Namespace Memory Requests (GiB)",
       "type": "gauge"
     },
     {
@@ -529,7 +529,7 @@
           "unit": "bytes",
           "decimals": 1,
           "min": 0,
-          "max": 64
+          "max": 800
         },
         "overrides": []
       },
@@ -563,11 +563,11 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"} * on(namespace, pod) group_left() kube_pod_status_phase{phase=\"Running\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
-      "title": "Total Memory Limits (GiB)",
+      "title": "Namespace Memory Limits (GiB)",
       "type": "gauge"
     },
     {

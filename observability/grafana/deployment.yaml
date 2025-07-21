@@ -47,6 +47,9 @@ spec:
         - name: dashboards-node-resources
           mountPath: /var/lib/grafana/dashboards/node-resources.json
           subPath: node-resources.json
+        - name: dashboards-namespace-resources
+          mountPath: /var/lib/grafana/dashboards/namespace-resources.json
+          subPath: namespace-resources.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -90,6 +93,9 @@ spec:
       - name: dashboards-node-resources
         configMap:
           name: grafana-dashboard-node-resources
+      - name: dashboards-namespace-resources
+        configMap:
+          name: grafana-dashboard-namespace-resources
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

@@ -14,11 +14,11 @@ spec:
       - name: grafana
         path: observability/grafana
       - name: prometheus
-        path: observability/prometheus/base
+        path: observability/prometheus
       - name: kube-state-metrics
-        path: observability/kube-state-metrics/base
+        path: observability/kube-state-metrics
       - name: node-exporter
-        path: observability/node-exporter/base
+        path: observability/node-exporter
   template:
     metadata:
       name: '{{name}}'

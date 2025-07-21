@@ -1644,54 +1644,6 @@
     "nodes",
     "resources"
   ],
-  "templating": {
-    "list": [
-      {
-        "current": {
-          "text": "CPU Usage",
-          "value": "cpu_usage"
-        },
-        "description": "Select metric to display",
-        "includeAll": false,
-        "label": "Metric",
-        "name": "metric",
-        "options": [
-          {
-            "selected": true,
-            "text": "CPU Usage",
-            "value": "cpu_usage"
-          },
-          {
-            "selected": false,
-            "text": "CPU Requests",
-            "value": "cpu_requests"
-          },
-          {
-            "selected": false,
-            "text": "CPU Limits",
-            "value": "cpu_limits"
-          },
-          {
-            "selected": false,
-            "text": "Memory Usage",
-            "value": "memory_usage"
-          },
-          {
-            "selected": false,
-            "text": "Memory Requests",
-            "value": "memory_requests"
-          },
-          {
-            "selected": false,
-            "text": "Memory Limits",
-            "value": "memory_limits"
-          }
-        ],
-        "query": "cpu_usage,cpu_requests,cpu_limits,memory_usage,memory_requests,memory_limits",
-        "type": "custom"
-      }
-    ]
-  },
   "time": {
     "from": "now-1h",
     "to": "now"

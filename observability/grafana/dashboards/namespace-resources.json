@@ -678,7 +678,17 @@
         {
           "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (namespace)",
           "refId": "A",
-          "legendFormat": "{{namespace}}"
+          "legendFormat": "{{namespace}} usage"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
+          "refId": "B",
+          "legendFormat": "total requests (all namespaces)"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"})",
+          "refId": "C",
+          "legendFormat": "total limits (all namespaces)"
         }
       ],
       "title": "total container CPU usage by namespace",

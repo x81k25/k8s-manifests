@@ -311,7 +311,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0,
           "max": 64
@@ -380,7 +380,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0,
           "max": 64
@@ -449,7 +449,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0,
           "max": 32
@@ -518,7 +518,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0,
           "max": 350
@@ -587,7 +587,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0,
           "max": 800
@@ -830,7 +830,7 @@
               }
             ]
           },
-          "unit": "bytes",
+          "unit": "gibibytes",
           "decimals": 1,
           "min": 0
         },

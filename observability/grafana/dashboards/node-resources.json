@@ -306,21 +306,64 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "blue",
+                "color": "green",
                 "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 24
+              },
+              {
+                "color": "red",
+                "value": 28
               }
             ]
           },
-          "unit": "gibibytes",
+          "unit": "decbytes",
           "decimals": 1,
           "min": 0,
-          "max": 64
+          "max": 32
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory Available"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 4
+                    },
+                    {
+                      "color": "green",
+                      "value": 8
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 6
       },
@@ -348,149 +391,17 @@
       "pluginVersion": "9.0.0",
       "targets": [
         {
-          "expr": "node_memory_MemTotal_bytes / 1024 / 1024 / 1024",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes) / 1024 / 1024 / 1024",
+          "legendFormat": "Memory Used (no cache)",
           "refId": "A"
-        }
-      ],
-      "title": "Server Memory Total (GiB)",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 8
-              },
-              {
-                "color": "red",
-                "value": 4
-              }
-            ]
-          },
-          "unit": "gibibytes",
-          "decimals": 1,
-          "min": 0,
-          "max": 64
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 4,
-        "y": 6
-      },
-      "id": 14,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "displayMode": "basic",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "9.0.0",
-      "targets": [
         {
-          "expr": "node_memory_MemAvailable_bytes / 1024 / 1024 / 1024",
-          "refId": "A"
+          "expr": "node_memory_MemAvailable_bytes / 1024 / 1024 / 1024", 
+          "legendFormat": "Memory Available",
+          "refId": "B"
         }
       ],
-      "title": "Server Memory Available (GiB)",
-      "type": "gauge"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 22
-              },
-              {
-                "color": "red",
-                "value": 28
-              }
-            ]
-          },
-          "unit": "gibibytes",
-          "decimals": 1,
-          "min": 0,
-          "max": 32
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 8,
-        "y": 6
-      },
-      "id": 11,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "displayMode": "basic",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "9.0.0",
-      "targets": [
-        {
-          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\",pod!=\"\"}) / 1024 / 1024 / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "Current Memory Usage (GiB)",
+      "title": "System Memory Status",
       "type": "gauge"
     },
     {
@@ -518,7 +429,7 @@
               }
             ]
           },
-          "unit": "gibibytes",
+          "unit": "decbytes",
           "decimals": 1,
           "min": 0,
           "max": 350
@@ -587,7 +498,7 @@
               }
             ]
           },
-          "unit": "gibibytes",
+          "unit": "decbytes",
           "decimals": 1,
           "min": 0,
           "max": 800
@@ -830,7 +741,7 @@
               }
             ]
           },
-          "unit": "gibibytes",
+          "unit": "decbytes",
           "decimals": 1,
           "min": 0
         },

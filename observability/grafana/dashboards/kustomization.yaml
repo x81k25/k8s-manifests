@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: observability
 
 configMapGenerator:
-- name: grafana-dashboard-k8s-node-status
+- name: grafana-dashboard-node-resources
   files:
-  - k8s-node-status.json
+  - node-resources.json
   options:
     labels:
       grafana_dashboard: "1"

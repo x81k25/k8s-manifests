@@ -10,6 +10,12 @@ configMapGenerator:
   options:
     labels:
       grafana_dashboard: "1"
+- name: grafana-dashboard-namespace-resources
+  files:
+  - namespace-resources.json
+  options:
+    labels:
+      grafana_dashboard: "1"
 
 generatorOptions:
   disableNameSuffixHash: true

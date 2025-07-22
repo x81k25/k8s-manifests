@@ -19,8 +19,8 @@ spec:
         path: pgsql/pgsql/overlays/stg
       - name: pgsql-dev
         path: pgsql/pgsql/overlays/dev
-      - name: pgadmin4
-        path: pgsql/pgadmin4
+      #- name: pgadmin4
+      #  path: pgsql/pgadmin4
       - name: minio-prod
         path: pgsql/minio/overlays/prod
       - name: minio-stg

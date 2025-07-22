@@ -19,8 +19,8 @@ spec:
         path: media/center-console/overlays/prod
       - name: rear-diff-prod
         path: media/rear-diff/overlays/prod
-      - name: atd-music
-        path: media/atd/overlays/music
+      #- name: atd-music
+      #  path: media/atd/overlays/music
       - name: plex-prod
         path: media/plex/overlays/prod
       - name: dagster-prod

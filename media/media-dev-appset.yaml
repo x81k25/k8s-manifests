@@ -19,8 +19,8 @@ spec:
         path: media/center-console/overlays
       - name: rear-diff
         path: media/rear-diff/overlays
-      - name: plex
-        path: media/plex/overlays
+      #- name: plex
+      #  path: media/plex/overlays
       - name: dagster
         path: media/dagster/overlays
   template:

@@ -77,7 +77,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -152,7 +152,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -227,7 +227,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -302,7 +302,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -843,7 +843,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -927,7 +927,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -1002,7 +1002,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -1077,7 +1077,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
+        "showThresholdLabels": true,
         "showThresholdMarkers": true,
         "sizing": "auto",
         "textMode": "auto"
@@ -1886,18 +1886,6 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))",
-          "format": "table",
-          "instant": true,
-          "refId": "A"
-        },
-        {
-          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}/1024/1024/1024)",
-          "format": "table",
-          "instant": true,
-          "refId": "B"
-        },
-        {
           "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"}) by (namespace)",
           "format": "table",
           "instant": true,
@@ -1935,17 +1923,13 @@
               "Time": true
             },
             "indexByName": {
-              "Value #A": 1,
-              "Value #B": 2,
-              "Value #C": 3,
-              "Value #D": 4,
-              "Value #E": 5,
-              "Value #F": 6,
+              "Value #C": 1,
+              "Value #D": 2,
+              "Value #E": 3,
+              "Value #F": 4,
               "namespace": 0
             },
             "renameByName": {
-              "Value #A": "CPU usage (cores)",
-              "Value #B": "Memory usage (GiB)",
               "Value #C": "CPU requests (cores)",
               "Value #D": "CPU limits (cores)",
               "Value #E": "Memory requests (GiB)",

@@ -22,6 +22,12 @@ configMapGenerator:
   options:
     labels:
       grafana_dashboard: "1"
+- name: grafana-dashboard-namespace-health
+  files:
+  - namespace-health.json
+  options:
+    labels:
+      grafana_dashboard: "1"
 
 generatorOptions:
   disableNameSuffixHash: true

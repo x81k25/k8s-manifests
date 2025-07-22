@@ -590,7 +590,7 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -621,12 +621,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"}) by (container)",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
       ],
-      "title": "CPU requests by container (cores)",
+      "title": "CPU requests by container (% of quota)",
       "type": "timeseries"
     },
     {
@@ -683,7 +683,7 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -714,12 +714,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"}) by (container)",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
       ],
-      "title": "CPU limits by container (cores)",
+      "title": "CPU limits by container (% of quota)",
       "type": "timeseries"
     },
     {
@@ -1127,7 +1127,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1158,12 +1158,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024) by (container)",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
       ],
-      "title": "memory requests by container (GiB)",
+      "title": "memory requests by container (% of quota)",
       "type": "timeseries"
     },
     {
@@ -1220,7 +1220,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1251,12 +1251,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024) by (container)",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
       ],
-      "title": "memory limits by container (GiB)",
+      "title": "memory limits by container (% of quota)",
       "type": "timeseries"
     },
     {

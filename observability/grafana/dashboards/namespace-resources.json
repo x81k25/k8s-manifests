@@ -426,7 +426,7 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "percent"
         },
         "overrides": [
           {
@@ -510,7 +510,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m])) by (container)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m])) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         },
@@ -519,7 +519,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"}) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "total requests (namespace)",
           "refId": "B"
         },
@@ -528,12 +528,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "total limits (namespace)",
           "refId": "C"
         }
       ],
-      "title": "CPU usage by container (cores)",
+      "title": "CPU usage by container (% of namespace limits)",
       "type": "timeseries"
     },
     {
@@ -621,7 +621,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"}) * 100",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -714,7 +714,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1158,7 +1158,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) * 100",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1251,7 +1251,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1397,7 +1397,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}) by (container) / 1024 / 1024 / 1024",
+          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}) by (container) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
           "legendFormat": "{{container}}",
           "refId": "A"
         },
@@ -1406,7 +1406,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
           "legendFormat": "total requests (namespace)",
           "refId": "B"
         },
@@ -1415,12 +1415,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) * 100",
           "legendFormat": "total limits (namespace)",
           "refId": "C"
         }
       ],
-      "title": "memory usage by container (GiB)",
+      "title": "memory usage by container (% of namespace limits)",
       "type": "timeseries"
     },
     {

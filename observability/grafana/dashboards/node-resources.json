@@ -239,7 +239,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],
@@ -314,7 +314,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{resource=\"limits.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],
@@ -1267,7 +1267,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": [
           {
@@ -1700,7 +1700,7 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -1736,7 +1736,7 @@
           "refId": "A"
         }
       ],
-      "title": "network I/O by namespace (bytes/sec)",
+      "title": "network I/O by namespace (MB/sec)",
       "type": "timeseries"
     },
     {

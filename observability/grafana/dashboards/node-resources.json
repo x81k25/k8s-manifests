@@ -358,7 +358,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -453,7 +453,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -548,7 +548,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -643,7 +643,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -731,7 +731,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": [
           {
@@ -849,7 +849,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -924,7 +924,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -999,7 +999,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -1081,7 +1081,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -1101,7 +1101,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": [
           {
@@ -1201,7 +1201,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -1221,7 +1221,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -1296,7 +1296,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -1316,7 +1316,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -1391,7 +1391,7 @@
             "spanNulls": true,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "line"
@@ -1411,7 +1411,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -1503,7 +1503,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "gibibytes"
         },
         "overrides": []
       },
@@ -1664,7 +1664,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1752,7 +1752,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1830,7 +1830,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1908,7 +1908,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -1986,7 +1986,7 @@
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"

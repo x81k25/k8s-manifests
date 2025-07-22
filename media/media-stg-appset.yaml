@@ -1,4 +1,3 @@
-# ./app.yaml
 # patch command:
 ## kubectl apply -f ./media/media-stg-appset.yaml
 # delete appset

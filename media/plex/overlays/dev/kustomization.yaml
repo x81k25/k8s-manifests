@@ -24,6 +24,9 @@ patches:
             - name: PLEX_CLAIM
               $patch: delete
             resources:
+              requests:
+                cpu: 10m
+                memory: 26Mi
               limits:
                 memory: 1Gi
                 cpu: 500m

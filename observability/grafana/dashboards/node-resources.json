@@ -1731,12 +1731,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(rate(container_network_receive_bytes_total{namespace!=\"\"}[5m]) + rate(container_network_transmit_bytes_total{namespace!=\"\"}[5m])) by (namespace)",
+          "expr": "sum(rate(container_network_receive_bytes_total{namespace!=\"\"}[5m]) + rate(container_network_transmit_bytes_total{namespace!=\"\"}[5m])) by (namespace) / 1024 / 1024",
           "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "network I/O by namespace (MB/sec)",
+      "title": "network I/O by namespace (MiB/sec)",
       "type": "timeseries"
     },
     {

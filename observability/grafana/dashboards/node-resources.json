@@ -568,12 +568,12 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
+          "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"})",
           "legendFormat": "total requests (all namespaces)",
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"})",
+          "expr": "sum(kube_resourcequota{resource=\"limits.cpu\", type=\"hard\"})",
           "legendFormat": "total limits (all namespaces)",
           "refId": "C"
         }

@@ -43,7 +43,7 @@ patches:
                 cpu: 10m
                 memory: 26Mi
               limits:
-                memory: 1Gi
+                memory: 1.5Gi
                 cpu: 500m
           - name: dagster-daemon
             env:

@@ -1665,9 +1665,9 @@
             },
             "indexByName": {
               "Value #A": 2,
-              "Value #B": 3,
-              "Value #C": 4,
-              "Value #D": 5,
+              "Value #B": 5,
+              "Value #C": 3,
+              "Value #D": 4,
               "Value #E": 6,
               "Value #F": 7,
               "container": 1,

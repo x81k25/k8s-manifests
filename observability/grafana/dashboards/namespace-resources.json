@@ -33,6 +33,7 @@
           },
           "decimals": 3,
           "mappings": [],
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -88,11 +89,11 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m])) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"})",
           "refId": "A"
         }
       ],
-      "title": "current CPU usage (cores)",
+      "title": "current CPU usage vs limits",
       "type": "gauge"
     },
     {
@@ -705,6 +706,7 @@
           },
           "decimals": 2,
           "mappings": [],
+          "max": 1,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -714,15 +716,15 @@
               },
               {
                 "color": "yellow",
-                "value": 24
+                "value": 0.7
               },
               {
                 "color": "red",
-                "value": 28
+                "value": 0.9
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -760,11 +762,11 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}/1024/1024/1024)",
+          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}) / sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"})",
           "refId": "A"
         }
       ],
-      "title": "namespace current memory usage (GiB)",
+      "title": "current memory usage vs limits",
       "type": "gauge"
     },
     {

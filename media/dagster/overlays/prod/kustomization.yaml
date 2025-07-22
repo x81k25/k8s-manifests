@@ -39,6 +39,9 @@ patches:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-prod
             resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
               limits:
                 memory: 1.5Gi
                 cpu: 1500m
@@ -51,6 +54,9 @@ patches:
             - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
               value: "dagster-prod"
             resources:
+              requests:
+                cpu: 250m
+                memory: 256Mi
               limits:
                 memory: 1Gi
                 cpu: 500m

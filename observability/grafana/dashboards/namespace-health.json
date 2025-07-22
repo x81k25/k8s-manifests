@@ -954,7 +954,7 @@
             "value": "pgsql"
           }
         ],
-        "query": "",
+        "query": null,
         "refresh": 0,
         "regex": "",
         "skipUrlSync": false,

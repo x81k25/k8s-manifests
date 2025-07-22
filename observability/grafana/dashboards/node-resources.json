@@ -1014,7 +1014,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
@@ -1089,7 +1089,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
@@ -1886,37 +1886,37 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (namespace)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))",
           "format": "table",
           "instant": true,
           "refId": "A"
         },
         {
-          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\"}/1024/1024/1024) by (namespace)",
+          "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"})",
           "format": "table",
           "instant": true,
           "refId": "C"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"})",
           "format": "table",
           "instant": true,
           "refId": "D"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"}/1024/1024/1024) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "refId": "E"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"}/1024/1024/1024) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "refId": "F"

@@ -506,6 +506,13 @@
                   "mode": "fixed",
                   "fixedColor": "cyan"
                 }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "B",
+                  "mode": "none"
+                }
               }
             ]
           },
@@ -519,7 +526,14 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "red"
+                  "fixedColor": "dark-red"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "B",
+                  "mode": "none"
                 }
               }
             ]
@@ -1292,6 +1306,13 @@
                   "mode": "fixed",
                   "fixedColor": "cyan"
                 }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "B",
+                  "mode": "none"
+                }
               }
             ]
           },
@@ -1305,7 +1326,14 @@
                 "id": "color",
                 "value": {
                   "mode": "fixed",
-                  "fixedColor": "red"
+                  "fixedColor": "dark-red"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "B",
+                  "mode": "none"
                 }
               }
             ]

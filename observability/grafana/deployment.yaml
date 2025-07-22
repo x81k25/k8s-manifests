@@ -53,6 +53,9 @@ spec:
         - name: dashboards-node-health
           mountPath: /var/lib/grafana/dashboards/node-health.json
           subPath: node-health.json
+        - name: dashboards-namespace-health
+          mountPath: /var/lib/grafana/dashboards/namespace-health.json
+          subPath: namespace-health.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -102,6 +105,9 @@ spec:
       - name: dashboards-node-health
         configMap:
           name: grafana-dashboard-node-health
+      - name: dashboards-namespace-health
+        configMap:
+          name: grafana-dashboard-namespace-health
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

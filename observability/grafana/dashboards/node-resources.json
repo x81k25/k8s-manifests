@@ -239,7 +239,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],

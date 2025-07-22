@@ -1898,25 +1898,25 @@
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\", type=\"hard\"})",
           "format": "table",
           "instant": true,
           "refId": "C"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\", type=\"hard\"})",
           "format": "table",
           "instant": true,
           "refId": "D"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024)",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\", type=\"hard\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "refId": "E"
         },
         {
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"}/1024/1024/1024)",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\", type=\"hard\"}/1024/1024/1024)",
           "format": "table",
           "instant": true,
           "refId": "F"

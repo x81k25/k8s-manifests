@@ -818,7 +818,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -1313,7 +1313,7 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "none"
         },
         "overrides": [
           {
@@ -1529,7 +1529,7 @@
               },
               {
                 "id": "decimals",
-                "value": 1
+                "value": 3
               }
             ]
           },
@@ -1545,7 +1545,7 @@
               },
               {
                 "id": "decimals",
-                "value": 1
+                "value": 3
               }
             ]
           },

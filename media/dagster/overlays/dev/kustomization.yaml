@@ -57,7 +57,7 @@ patches:
                 cpu: 10m
                 memory: 26Mi
               limits:
-                memory: 500Mi
+                memory: 1Gi
                 cpu: 500m
           volumes:
           - name: dagster-home

@@ -889,14 +889,18 @@
   "templating": {
     "list": [
       {
-        "allValue": ".*",
-        "current": {},
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "default",
+          "value": "default"
+        },
         "datasource": "Prometheus",
         "definition": "label_values(kube_namespace_labels, namespace)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "Namespace",
-        "multi": true,
+        "multi": false,
         "name": "namespace",
         "options": [],
         "query": {

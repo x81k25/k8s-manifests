@@ -1702,8 +1702,8 @@
       {
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "media-prod",
+          "value": "media-prod"
         },
         "datasource": {
           "type": "prometheus",
@@ -1711,7 +1711,7 @@
         },
         "definition": "label_values(kube_namespace_created, namespace)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",

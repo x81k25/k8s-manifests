@@ -177,14 +177,14 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "cyan"
               },
               {
-                "color": "yellow",
+                "color": "cyan",
                 "value": 0.7
               },
               {
-                "color": "red",
+                "color": "cyan",
                 "value": 0.9
               }
             ]
@@ -252,14 +252,14 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "dark-red"
               },
               {
-                "color": "yellow",
+                "color": "dark-red",
                 "value": 0.7
               },
               {
-                "color": "red",
+                "color": "dark-red",
                 "value": 0.9
               }
             ]
@@ -878,14 +878,14 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "cyan"
               },
               {
-                "color": "yellow",
+                "color": "cyan",
                 "value": 0.7
               },
               {
-                "color": "red",
+                "color": "cyan",
                 "value": 0.9
               }
             ]
@@ -953,14 +953,14 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "dark-red"
               },
               {
-                "color": "yellow",
+                "color": "dark-red",
                 "value": 0.7
               },
               {
-                "color": "red",
+                "color": "dark-red",
                 "value": 0.9
               }
             ]

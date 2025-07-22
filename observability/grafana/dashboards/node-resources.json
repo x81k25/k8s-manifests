@@ -383,7 +383,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 6,
         "x": 0,
         "y": 6
@@ -417,10 +417,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -440,6 +437,7 @@
             "hideFrom": {
               "legend": false,
               "tooltip": false,
+              "vis": false,
               "viz": false
             },
             "insertNulls": false,
@@ -450,13 +448,13 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
           "decimals": 3,
@@ -466,10 +464,6 @@
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 18
               }
             ]
           },
@@ -478,12 +472,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 6,
         "x": 6,
         "y": 6
       },
-      "id": 102,
+      "id": 30,
       "options": {
         "legend": {
           "calcs": [],
@@ -500,22 +494,26 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "avg(rate(container_cpu_usage_seconds_total{id=\"/\"}[5m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (namespace)",
+          "legendFormat": "{{namespace}} usage",
           "refId": "A"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
+          "legendFormat": "total requests (all namespaces)",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"})",
+          "legendFormat": "total limits (all namespaces)",
+          "refId": "C"
         }
       ],
-      "title": "total container CPU usage (cores)",
+      "title": "total container CPU usage by namespace (cores)",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -535,6 +533,7 @@
             "hideFrom": {
               "legend": false,
               "tooltip": false,
+              "vis": false,
               "viz": false
             },
             "insertNulls": false,
@@ -545,13 +544,13 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
           "decimals": 2,
@@ -561,10 +560,6 @@
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 24
               }
             ]
           },
@@ -573,12 +568,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 6,
         "x": 12,
         "y": 6
       },
-      "id": 103,
+      "id": 31,
       "options": {
         "legend": {
           "calcs": [],
@@ -595,22 +590,16 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_resourcequota{resource=\"requests.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"}) by (namespace)",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "total namespace CPU requests (cores)",
+      "title": "total CPU requests by namespace (cores)",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -630,6 +619,7 @@
             "hideFrom": {
               "legend": false,
               "tooltip": false,
+              "vis": false,
               "viz": false
             },
             "insertNulls": false,
@@ -640,13 +630,13 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
           "decimals": 2,
@@ -656,10 +646,6 @@
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 48
               }
             ]
           },
@@ -668,12 +654,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 6,
         "x": 18,
         "y": 6
       },
-      "id": 104,
+      "id": 32,
       "options": {
         "legend": {
           "calcs": [],
@@ -690,15 +676,108 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_resourcequota{resource=\"limits.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"}) by (namespace)",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "total namespace CPU limits (cores)",
+      "title": "total CPU limits by namespace (cores)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "vis": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "gibibytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 33,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "expr": "sum(container_memory_working_set_bytes{container!=\"POD\",container!=\"\"}) by (namespace) / 1024 / 1024 / 1024",
+          "legendFormat": "{{namespace}} usage",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"}) / 1024 / 1024 / 1024",
+          "legendFormat": "total requests (all namespaces)",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"}) / 1024 / 1024 / 1024",
+          "legendFormat": "total limits (all namespaces)",
+          "refId": "C"
+        }
+      ],
+      "title": "total container memory usage by namespace (GiB)",
       "type": "timeseries"
     },
     {
@@ -731,7 +810,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": [
           {
@@ -773,7 +852,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 12
+        "y": 14
       },
       "id": 10,
       "options": {
@@ -849,7 +928,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -857,7 +936,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 12
+        "y": 14
       },
       "id": 11,
       "options": {
@@ -924,7 +1003,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -932,7 +1011,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 12
+        "y": 14
       },
       "id": 12,
       "options": {
@@ -999,7 +1078,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -1007,7 +1086,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 12
+        "y": 14
       },
       "id": 13,
       "options": {
@@ -1101,7 +1180,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": [
           {
@@ -1131,10 +1210,10 @@
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 9,
         "w": 6,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 105,
       "options": {
@@ -1165,10 +1244,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1188,6 +1264,7 @@
             "hideFrom": {
               "legend": false,
               "tooltip": false,
+              "vis": false,
               "viz": false
             },
             "insertNulls": false,
@@ -1198,108 +1275,13 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
-            }
-          },
-          "decimals": 2,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 26000000000
-              }
-            ]
-          },
-          "unit": "gibibytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 18
-      },
-      "id": 106,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "12.0.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "avg(container_memory_working_set_bytes{id=\"/\"}) / 1024 / 1024 / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "total container memory usage (GiB)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
           "decimals": 1,
@@ -1309,24 +1291,20 @@
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 60000000000
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 9,
         "w": 6,
         "x": 12,
-        "y": 18
+        "y": 20
       },
-      "id": 107,
+      "id": 33,
       "options": {
         "legend": {
           "calcs": [],
@@ -1343,22 +1321,16 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_resourcequota{resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"}/1024/1024/1024) by (namespace)",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "total namespace memory requests (GiB)",
+      "title": "total memory requests by namespace (GiB)",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1378,6 +1350,7 @@
             "hideFrom": {
               "legend": false,
               "tooltip": false,
+              "vis": false,
               "viz": false
             },
             "insertNulls": false,
@@ -1388,13 +1361,13 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "normal"
             },
             "thresholdsStyle": {
-              "mode": "line"
+              "mode": "off"
             }
           },
           "decimals": 1,
@@ -1404,24 +1377,20 @@
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 64000000000
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 9,
         "w": 6,
         "x": 18,
-        "y": 18
+        "y": 20
       },
-      "id": 108,
+      "id": 34,
       "options": {
         "legend": {
           "calcs": [],
@@ -1438,15 +1407,12 @@
       "pluginVersion": "12.0.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_resourcequota{resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"}/1024/1024/1024) by (namespace)",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "total namespace memory limits (GiB)",
+      "title": "total memory limits by namespace (GiB)",
       "type": "timeseries"
     },
     {
@@ -1503,7 +1469,7 @@
               }
             ]
           },
-          "unit": "gibibytes"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -1511,7 +1477,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 29
       },
       "id": 23,
       "options": {
@@ -1604,7 +1570,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 29
       },
       "id": 24,
       "options": {
@@ -1632,407 +1598,7 @@
           "refId": "A"
         }
       ],
-      "title": "network I/O by mamespace (bytes/sec)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short",
-          "decimals": 3
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 44
-      },
-      "id": 30,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (namespace)",
-          "refId": "A",
-          "legendFormat": "{{namespace}} usage"
-        },
-        {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
-          "refId": "B",
-          "legendFormat": "total requests (all namespaces)"
-        },
-        {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"})",
-          "refId": "C",
-          "legendFormat": "total limits (all namespaces)"
-        }
-      ],
-      "title": "total container CPU usage by namespace",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short",
-          "decimals": 2
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 44
-      },
-      "id": 31,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\"}) by (namespace)",
-          "refId": "A",
-          "legendFormat": "{{namespace}}"
-        }
-      ],
-      "title": "total namespace CPU requests by namespace",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short",
-          "decimals": 2
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 52
-      },
-      "id": 32,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"cpu\"}) by (namespace)",
-          "refId": "A",
-          "legendFormat": "{{namespace}}"
-        }
-      ],
-      "title": "total namespace CPU limits by namespace",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none",
-          "decimals": 1
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 52
-      },
-      "id": 33,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\"}) by (namespace)",
-          "refId": "A",
-          "legendFormat": "{{namespace}}"
-        }
-      ],
-      "title": "total namespace memory requests by namespace",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none",
-          "decimals": 1
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 60
-      },
-      "id": 34,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"memory\"}) by (namespace)",
-          "refId": "A",
-          "legendFormat": "{{namespace}}"
-        }
-      ],
-      "title": "total namespace memory limits by namespace",
+      "title": "network I/O by namespace (bytes/sec)",
       "type": "timeseries"
     },
     {
@@ -2049,18 +1615,17 @@
             },
             "inspect": false
           },
+          "decimals": 2,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
-          "unit": "short",
-          "decimals": 2
+          "unit": "short"
         },
         "overrides": [
           {
@@ -2165,7 +1730,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 68
+        "y": 37
       },
       "id": 35,
       "options": {
@@ -2180,7 +1745,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\",container!=\"\"}[5m])) by (namespace)",
@@ -2232,13 +1797,13 @@
               "Time": true
             },
             "indexByName": {
-              "namespace": 0,
               "Value #A": 1,
               "Value #B": 2,
               "Value #C": 3,
               "Value #D": 4,
               "Value #E": 5,
-              "Value #F": 6
+              "Value #F": 6,
+              "namespace": 0
             },
             "renameByName": {
               "Value #A": "CPU usage (cores)",
@@ -2263,6 +1828,9 @@
     "nodes",
     "resources"
   ],
+  "templating": {
+    "list": []
+  },
   "time": {
     "from": "now-1h",
     "to": "now"
@@ -2271,5 +1839,5 @@
   "timezone": "",
   "title": "node-resources",
   "uid": "node-resources",
-  "version": 65
+  "version": 100
 }

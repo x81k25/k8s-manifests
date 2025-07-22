@@ -93,7 +93,7 @@
           "refId": "A"
         }
       ],
-      "title": "current CPU usage vs limits",
+      "title": "current CPU usage vs limits (%)",
       "type": "gauge"
     },
     {
@@ -231,7 +231,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU Requests Usage vs Quota",
+      "title": "CPU requests usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -306,7 +306,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU Limits Usage vs Quota",
+      "title": "CPU limits usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -794,7 +794,7 @@
           "refId": "A"
         }
       ],
-      "title": "current memory usage vs limits",
+      "title": "current memory usage vs limits (%)",
       "type": "gauge"
     },
     {
@@ -932,7 +932,7 @@
           "refId": "A"
         }
       ],
-      "title": "Memory Requests Usage vs Quota",
+      "title": "memory requests usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -1007,7 +1007,7 @@
           "refId": "A"
         }
       ],
-      "title": "Memory Limits Usage vs Quota",
+      "title": "memory limits usage vs quota (%)",
       "type": "gauge"
     },
     {

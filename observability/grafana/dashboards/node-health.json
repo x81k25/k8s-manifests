@@ -569,6 +569,176 @@
       ],
       "title": "pending pods by namespace",
       "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failed"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Pending"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Running"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Succeeded"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 9,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "namespace"
+          }
+        ]
+      },
+      "targets": [
+        {
+          "expr": "count(kube_pod_status_phase{phase=\"Running\"} == 1) by (namespace)",
+          "refId": "A",
+          "legendFormat": "Running",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "expr": "count(kube_pod_status_phase{phase=\"Succeeded\"} == 1) by (namespace)",
+          "refId": "B",
+          "legendFormat": "Succeeded",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "expr": "count(kube_pod_status_phase{phase=\"Failed\"} == 1) by (namespace)",
+          "refId": "C",
+          "legendFormat": "Failed",
+          "instant": true,
+          "format": "table"
+        },
+        {
+          "expr": "count(kube_pod_status_phase{phase=\"Pending\"} == 1) by (namespace)",
+          "refId": "D",
+          "legendFormat": "Pending",
+          "instant": true,
+          "format": "table"
+        }
+      ],
+      "title": "pod counts by namespace",
+      "type": "table",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "instance": true,
+              "job": true,
+              "phase": true
+            },
+            "indexByName": {
+              "namespace": 0,
+              "Value #A": 1,
+              "Value #B": 2,
+              "Value #C": 3,
+              "Value #D": 4
+            },
+            "renameByName": {
+              "Value #A": "Running",
+              "Value #B": "Succeeded", 
+              "Value #C": "Failed",
+              "Value #D": "Pending",
+              "namespace": "Namespace"
+            }
+          }
+        }
+      ]
     }
   ],
   "refresh": "30s",

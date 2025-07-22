@@ -491,7 +491,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.cpu\",type=\"hard\"})",
           "legendFormat": "total requests (namespace)",
           "refId": "B"
         },
@@ -500,7 +500,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"cpu\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"})",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\",type=\"hard\"})",
           "legendFormat": "total limits (namespace)",
           "refId": "C"
         }
@@ -1350,7 +1350,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\",type=\"hard\"}) / 1024 / 1024 / 1024",
           "legendFormat": "total requests (namespace)",
           "refId": "B"
         },
@@ -1359,7 +1359,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{namespace=\"$namespace\",resource=\"memory\"} * on(namespace,pod) group_left() kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\",type=\"hard\"}) / 1024 / 1024 / 1024",
           "legendFormat": "total limits (namespace)",
           "refId": "C"
         }

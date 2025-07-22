@@ -314,7 +314,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.cpu\", type=\"hard\"})",
+          "expr": "sum(kube_resourcequota{resource=\"limits.cpu\", type=\"hard\"})",
           "refId": "A"
         }
       ],
@@ -1014,7 +1014,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{resource=\"requests.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],
@@ -1089,7 +1089,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_resourcequota{namespace=\"$namespace\",resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
+          "expr": "sum(kube_resourcequota{resource=\"limits.memory\", type=\"hard\"}) / 1024 / 1024 / 1024",
           "refId": "A"
         }
       ],

@@ -183,7 +183,7 @@
         {
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"$container_name\" | line_format \"{{.log}}\"${search_query:+ |~ \"(?i)$search_query\"}",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"$container_name\" | line_format \"{{.log}}\" |~ \"(?i)${search_query:.*}\"",
           "queryType": "range",
           "refId": "A"
         }

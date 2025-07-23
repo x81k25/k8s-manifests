@@ -183,7 +183,7 @@
         {
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"$container_name\" | line_format \"{{.log}}\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"$container_name\" | line_format \"{{.log}}\"${search_query:+ |~ \"(?i)$search_query\"}",
           "queryType": "range",
           "refId": "A"
         }
@@ -255,6 +255,20 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "hide": 0,
+        "label": "Search Query",
+        "name": "search_query",
+        "options": [],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
@@ -264,7 +278,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "k8s job history",
+  "title": "k8s-job-history",
   "uid": "k8s-job-history",
   "version": 8
 }

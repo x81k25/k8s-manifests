@@ -183,7 +183,7 @@
         {
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=\"at-01-rss-ingest\" | line_format \"{{.log}}\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"$container_name\" | line_format \"{{.log}}\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -221,6 +221,33 @@
         "options": [],
         "query": {
           "query": "label_values(kube_namespace_created, namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "loki",
+          "uid": "P8E80F9AEF21F6940"
+        },
+        "definition": "label_values({namespace=~\"$namespace\"}, kubernetes_container_name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Container Name",
+        "multi": false,
+        "name": "container_name",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=~\"$namespace\"}, kubernetes_container_name)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,

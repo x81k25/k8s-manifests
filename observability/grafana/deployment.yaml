@@ -56,6 +56,9 @@ spec:
         - name: dashboards-namespace-health
           mountPath: /var/lib/grafana/dashboards/namespace-health.json
           subPath: namespace-health.json
+        - name: dashboards-k8s-job-history
+          mountPath: /var/lib/grafana/dashboards/k8s-job-history.json
+          subPath: k8s-job-history.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -108,6 +111,9 @@ spec:
       - name: dashboards-namespace-health
         configMap:
           name: grafana-dashboard-namespace-health
+      - name: dashboards-k8s-job-history
+        configMap:
+          name: grafana-dashboard-k8s-job-history
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

@@ -25,7 +25,7 @@ patches:
                 memory: 512Mi
               limits:
                 cpu: 500m
-                memory: 2Gi
+                memory: 3Gi
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/prod/complete

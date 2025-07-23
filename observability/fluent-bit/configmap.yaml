@@ -35,6 +35,11 @@ data:
         K8S-Logging.Parser  On
         K8S-Logging.Exclude On
         
+    [FILTER]
+        Name                grep
+        Match               kube.*
+        Exclude             kubernetes_pod_phase Succeeded
+        
     [OUTPUT]
         Name                loki
         Match               *

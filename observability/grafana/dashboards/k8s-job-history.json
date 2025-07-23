@@ -83,7 +83,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "count((kube_pod_status_phase{phase=\"Running\"} * on(pod,namespace) group_left(created_by_kind) kube_pod_info{created_by_kind=\"Job\", namespace=~\"media-dev|media-stg|media-prod|ai-ml\"}) == 1)",
+          "expr": "count((kube_pod_status_phase{phase=\"Running\"} * on(pod,namespace) group_left(created_by_kind) kube_pod_info{created_by_kind=\"Job\", namespace=~\"$namespace\"}) == 1)",
           "refId": "A"
         }
       ],
@@ -144,7 +144,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "count((kube_pod_status_phase{phase=\"Succeeded\"} * on(pod,namespace) group_left(created_by_kind) kube_pod_info{created_by_kind=\"Job\", namespace=~\"media-dev|media-stg|media-prod|ai-ml\"}) == 1)",
+          "expr": "count((kube_pod_status_phase{phase=\"Succeeded\"} * on(pod,namespace) group_left(created_by_kind) kube_pod_info{created_by_kind=\"Job\", namespace=~\"$namespace\"}) == 1)",
           "refId": "A"
         }
       ],
@@ -183,7 +183,7 @@
         {
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=\"media-dev\" | kubernetes_container_name=\"at-01-rss-ingest\" | line_format \"{{.log}}\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=\"at-01-rss-ingest\" | line_format \"{{.log}}\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -201,7 +201,35 @@
     "dagster"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "definition": "label_values(kube_namespace_created, namespace)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Namespace",
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_namespace_created, namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-24h",

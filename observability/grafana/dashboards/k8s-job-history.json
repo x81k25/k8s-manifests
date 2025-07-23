@@ -236,10 +236,10 @@
           "value": "$__all"
         },
         "datasource": {
-          "type": "loki",
-          "uid": "P8E80F9AEF21F6940"
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
         },
-        "definition": "label_values({namespace=~\"$namespace\"}, kubernetes_container_name)",
+        "definition": "label_values(kube_pod_container_info{namespace=~\"$namespace\"}, container)",
         "hide": 0,
         "includeAll": true,
         "label": "Container Name",
@@ -247,7 +247,7 @@
         "name": "container_name",
         "options": [],
         "query": {
-          "query": "label_values({namespace=~\"$namespace\"}, kubernetes_container_name)",
+          "query": "label_values(kube_pod_container_info{namespace=~\"$namespace\"}, container)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,

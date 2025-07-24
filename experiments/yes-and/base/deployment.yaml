@@ -29,5 +29,12 @@ spec:
           value: "0.0.0.0"
         - name: API_PORT
           value: "8000"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
       imagePullSecrets:
       - name: ng-github-registry

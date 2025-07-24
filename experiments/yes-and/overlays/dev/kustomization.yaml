@@ -28,6 +28,11 @@ patches:
           containers:
           - name: yes-and-ollama
             image: ghcr.io/nathanguevara/yes-and/yes-and-ollama:dev
+          volumes:
+          - name: ollama-models
+            hostPath:
+              path: /d/k8s/volumes/ollama/dev
+              type: Directory
 - target:
     version: v1
     kind: Service

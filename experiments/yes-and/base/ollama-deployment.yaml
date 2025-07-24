@@ -32,8 +32,9 @@ spec:
             nvidia.com/gpu: 1
       volumes:
       - name: ollama-models
-        persistentVolumeClaim:
-          claimName: ollama-models-pvc
+        hostPath:
+          path: /d/k8s/volumes/ollama/prod
+          type: Directory
       imagePullSecrets:
       - name: ng-github-registry
       nodeSelector:

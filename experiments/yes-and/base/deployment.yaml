@@ -31,6 +31,8 @@ spec:
           value: "8000"
         - name: OLLAMA_HOST
           value: "yes-and-ollama:11434"
+        - name: MODEL_NAME
+          value: "llama3.2:1b"
         resources:
           requests:
             memory: "256Mi"

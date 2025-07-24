@@ -17,6 +17,9 @@ patches:
           containers:
           - name: yes-and-backend-api
             image: ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
+            env:
+            - name: OLLAMA_HOST
+              value: "yes-and-ollama-dev:11434"
 - patch: |-
     apiVersion: apps/v1
     kind: Deployment

@@ -17,6 +17,17 @@ patches:
           containers:
           - name: yes-and-backend-api
             image: ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: yes-and-ollama
+    spec:
+      template:
+        spec:
+          containers:
+          - name: yes-and-ollama
+            image: ghcr.io/nathanguevara/yes-and/yes-and-ollama:dev
 - target:
     version: v1
     kind: Service

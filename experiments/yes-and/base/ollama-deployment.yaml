@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yes-and-ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yes-and-ollama
+  template:
+    metadata:
+      labels:
+        app: yes-and-ollama
+    spec:
+      containers:
+      - name: yes-and-ollama
+        image: ghcr.io/nathanguevara/yes-and/yes-and-ollama:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 11434
+        volumeMounts:
+        - name: ollama-models
+          mountPath: /root/.ollama
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+            nvidia.com/gpu: 1
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
+            nvidia.com/gpu: 1
+      volumes:
+      - name: ollama-models
+        persistentVolumeClaim:
+          claimName: ollama-models-pvc
+      imagePullSecrets:
+      - name: ng-github-registry
+      nodeSelector:
+        accelerator: nvidia-tesla-gpu
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule

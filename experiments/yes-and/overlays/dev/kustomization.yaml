@@ -44,3 +44,14 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 31102
+- target:
+    version: v1
+    kind: Service
+    name: yes-and-ollama
+  patch: |-
+    - op: replace
+      path: /spec/type
+      value: NodePort
+    - op: add
+      path: /spec/ports/0/nodePort
+      value: 31104

@@ -18,6 +18,13 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 11434
+        env:
+        - name: OLLAMA_NUM_PARALLEL
+          value: "1"
+        - name: OLLAMA_MAX_LOADED_MODELS
+          value: "1"
+        - name: OLLAMA_HOST
+          value: "0.0.0.0:11434"
         volumeMounts:
         - name: ollama-models
           mountPath: /root/.ollama

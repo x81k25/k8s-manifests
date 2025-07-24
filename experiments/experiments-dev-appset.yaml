@@ -13,15 +13,17 @@ spec:
   generators:
   - list:
       elements:
-      - name: yes-and-backend
-        path: experiments/yes-and-backend/overlays
+      - name: yes-and
+        path: experiments/yes-and/overlays
   template:
     metadata:
       name: '{{name}}-dev'
       annotations:
         argocd-image-updater.argoproj.io/image-list: >-
-          yes-and-backend=ghcr.io/nathanguevara/yes-and/yes-and-backend:dev
+          yes-and-backend=ghcr.io/nathanguevara/yes-and/yes-and-backend:dev,
+          yes-and-ollama=ghcr.io/nathanguevara/yes-and/yes-and-ollama:dev
         argocd-image-updater.argoproj.io/yes-and-backend.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/yes-and-ollama.update-strategy: "digest"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

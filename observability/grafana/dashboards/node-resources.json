@@ -185,7 +185,7 @@
           },
           "decimals": 1,
           "mappings": [],
-          "max": 19,
+          "max": 21,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -196,7 +196,7 @@
               },
               {
                 "color": "red",
-                "value": 17
+                "value": 19.1
               }
             ]
           },
@@ -257,7 +257,7 @@
           },
           "decimals": 1,
           "mappings": [],
-          "max": 76,
+          "max": 80,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -268,7 +268,7 @@
               },
               {
                 "color": "red",
-                "value": 72
+                "value": 76.1
               }
             ]
           },
@@ -1956,5 +1956,5 @@
   "timezone": "",
   "title": "node-resources",
   "uid": "node-resources",
-  "version": 146
+  "version": 153
 }

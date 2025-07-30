@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/x81k25/center-console@sha256:02acfe2ee7d0f3ac84773fcaecbe211b05b2f033845df8dc1bf5282832c3369a
+  - ghcr.io/x81k25/center-console@sha256:83157b7be902339a16bb369ec0857f376b480e72832ea2c4da0735ba54b8bdb7

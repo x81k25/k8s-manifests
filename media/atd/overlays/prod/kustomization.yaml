@@ -22,7 +22,7 @@ patches:
                 command:
                 - sh
                 - -c
-                - curl -s --fail --connect-timeout 10 ifconfig.me || exit 1
+                - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
               initialDelaySeconds: 120
               periodSeconds: 120
               timeoutSeconds: 30
@@ -34,7 +34,7 @@ patches:
                 command:
                 - sh
                 - -c
-                - curl -s --fail --connect-timeout 10 ifconfig.me || exit 1
+                - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
               initialDelaySeconds: 180
               periodSeconds: 120
               timeoutSeconds: 30

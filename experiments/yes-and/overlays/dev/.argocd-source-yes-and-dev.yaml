@@ -1,4 +1,4 @@
 kustomize:
   images:
-  - ghcr.io/nathanguevara/yes-and/yes-and-backend@sha256:ab53e2974b9e0f3c1b3c4496286f12f23da2ea811d675e1202fb6a87d9c168a8
+  - ghcr.io/nathanguevara/yes-and/yes-and-backend@sha256:6a48b93ba024206f28dfc3a3073dd01687ede24e22d05b9ea4fd5ce75fb9425e
   - ghcr.io/nathanguevara/yes-and/yes-and-ollama@sha256:55a93beb75fe3592415f9d9c3b71de2f1d4e3dd0babd59832e33a4cc1ba0acad

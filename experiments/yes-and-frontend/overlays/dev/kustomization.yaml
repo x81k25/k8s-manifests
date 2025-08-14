@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: experiments
+nameSuffix: -dev
+images:
+- name: ghcr.io/nathanguevara/yes-and/yes-and-frontend
+  newTag: dev-902c0df
+resources:
+- ../../base
+patches:
+- target:
+    kind: Deployment
+    name: yes-and-frontend
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/containers/0/env/0/value
+      value: "http://yes-and-backend-dev:8000"

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yes-and-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yes-and-frontend
+  template:
+    metadata:
+      labels:
+        app: yes-and-frontend
+    spec:
+      containers:
+      - name: yes-and-frontend-streamlit
+        image: ghcr.io/nathanguevara/yes-and/yes-and-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8501
+        env:
+        - name: BACKEND_URL
+          value: "http://yes-and-backend:8000"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: ng-github-registry

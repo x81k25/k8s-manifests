@@ -17,7 +17,7 @@ spec:
         image: ghcr.io/nathanguevara/yes-and/yes-and-frontend:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8501
+        - containerPort: 80
         env:
         - name: BACKEND_URL
           value: "http://yes-and-backend:8000"

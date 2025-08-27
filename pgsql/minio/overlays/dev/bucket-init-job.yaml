@@ -1,0 +1,47 @@
+# MinIO Bucket Initialization Job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-bucket-init-dev
+  labels:
+    app: minio-bucket-init
+    environment: dev
+spec:
+  ttlSecondsAfterFinished: 300  # Clean up job after 5 minutes
+  template:
+    metadata:
+      labels:
+        app: minio-bucket-init
+        environment: dev
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: create-bucket
+        image: minio/mc:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          # Wait for MinIO to be ready
+          until mc alias set myminio http://minio-dev.pgsql.svc.cluster.local:9000 ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY}; do
+            echo "Waiting for MinIO to be ready..."
+            sleep 5
+          done
+          
+          # Create the dev bucket if it doesn't exist
+          mc mb myminio/dev --ignore-existing
+          
+          # Optionally set bucket policy (public read, for example)
+          # mc anonymous set download myminio/dev
+          
+          echo "Bucket 'dev' created successfully"
+        env:
+        - name: MINIO_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets-dev
+              key: MINIO_ACCESS_KEY
+        - name: MINIO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: minio-secrets-dev
+              key: MINIO_SECRET_KEY

@@ -13,8 +13,6 @@ spec:
         args:
           - |
             cd /workspace
-            # Set the data path to the absolute path that docker-compose can access
-            export OSRM_DATA_PATH="/workspace/data/processed"
             docker-compose -f docker-compose.server.yml up -d
             echo "OSRM server started via docker-compose"
             # Keep the job running to maintain the container
@@ -25,6 +23,9 @@ spec:
         envFrom:
         - configMapRef:
             name: osrm-env
+        env:
+        - name: OSRM_DATA_PATH
+          value: "/workspace/data/processed"
         volumeMounts:
         - name: workspace
           mountPath: /workspace

@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: osrm-server-job
+  namespace: experiments
+spec:
+  template:
+    spec:
+      containers:
+      - name: docker-compose-runner
+        image: docker/compose:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            cd /workspace
+            # Set the data path to the absolute path that docker-compose can access
+            export OSRM_DATA_PATH="/workspace/data/processed"
+            docker-compose -f docker-compose.server.yml up -d
+            echo "OSRM server started via docker-compose"
+            # Keep the job running to maintain the container
+            while true; do
+              sleep 3600
+              echo "Job still running to maintain docker-compose services..."
+            done
+        envFrom:
+        - configMapRef:
+            name: osrm-env
+        volumeMounts:
+        - name: workspace
+          mountPath: /workspace
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        resources:
+          requests:
+            cpu: "1"
+            memory: "2Gi"
+          limits:
+            cpu: "5"
+            memory: "25Gi"
+      volumes:
+      - name: workspace
+        hostPath:
+          path: /infra/k8s-manifests/experiments/osrm
+          type: Directory
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket
+      restartPolicy: OnFailure

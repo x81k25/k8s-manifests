@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  osrm-extract:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    user: "${DOCKER_USER}"
+    volumes:
+      - ./data:/data
+    working_dir: /data
+    env_file:
+      - .env
+    command: >
+      sh -c "
+      mkdir -p /data/intermediate &&
+      echo 'Starting OSRM extract step...' &&
+      echo 'Copying raw file to intermediate directory...' &&
+      cp /data/raw/${OSM_FILENAME} /data/intermediate/ &&
+      echo 'Input: /data/intermediate/${OSM_FILENAME}' &&
+      echo 'Profile: ${OSRM_PROFILE}' &&
+      echo 'Region: ${OSRM_REGION}' &&
+      cd /data/intermediate &&
+      osrm-extract -p /opt/${OSRM_PROFILE}.lua ${OSM_FILENAME} &&
+      echo 'Removing copied OSM file from intermediate...' &&
+      rm -f ${OSM_FILENAME} &&
+      echo 'OSRM extract complete!' &&
+      echo 'Extracted files:' &&
+      ls -la /data/intermediate/
+      "

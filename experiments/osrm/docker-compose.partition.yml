@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  osrm-partition:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    user: "${DOCKER_USER}"
+    volumes:
+      - ./data:/data
+    working_dir: /data
+    env_file:
+      - .env
+    command: >
+      sh -c "
+      echo 'Starting OSRM partition step...' &&
+      echo 'Input: /data/intermediate/${OSRM_REGION}.osrm' &&
+      echo 'Profile: ${OSRM_PROFILE}' &&
+      echo 'Region: ${OSRM_REGION}' &&
+      osrm-partition /data/intermediate/${OSRM_REGION}.osrm &&
+      echo 'OSRM partition complete!' &&
+      echo 'Partitioned files:' &&
+      ls -la /data/intermediate/
+      "

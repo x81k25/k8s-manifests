@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  osrm-customize:
+    image: ghcr.io/project-osrm/osrm-backend:latest
+    user: "${DOCKER_USER}"
+    volumes:
+      - ./data:/data
+    working_dir: /data
+    env_file:
+      - .env
+    command: >
+      sh -c "
+      mkdir -p /data/processed &&
+      echo 'Starting OSRM customize step...' &&
+      echo 'Input: /data/intermediate/${OSRM_REGION}.osrm' &&
+      echo 'Profile: ${OSRM_PROFILE}' &&
+      echo 'Region: ${OSRM_REGION}' &&
+      osrm-customize /data/intermediate/${OSRM_REGION}.osrm &&
+      echo 'Moving server-ready files to processed directory...' &&
+      cp /data/intermediate/${OSRM_REGION}.osrm* /data/processed/ &&
+      echo 'OSRM customize complete!' &&
+      echo 'Server-ready files:' &&
+      ls -la /data/processed/
+      "

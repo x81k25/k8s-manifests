@@ -13,8 +13,23 @@ spec:
         args:
           - |
             cd /workspace
+            
+            # Check if data exists
+            echo "Checking data availability..."
+            ls -la /workspace/data/processed/ | head -5
+            
+            # Create a temporary directory accessible to both containers
+            mkdir -p /tmp/osrm-data
+            cp -r /workspace/data/processed/* /tmp/osrm-data/
+            echo "Data copied to /tmp/osrm-data/"
+            ls -la /tmp/osrm-data/ | head -5
+            
+            # Override the data path to point to the copied data
+            export OSRM_DATA_PATH="/tmp/osrm-data"
+            
             docker-compose -f docker-compose.server.yml up -d
             echo "OSRM server started via docker-compose"
+            
             # Keep the job running to maintain the container
             while true; do
               sleep 3600
@@ -25,7 +40,7 @@ spec:
             name: osrm-env
         env:
         - name: OSRM_DATA_PATH
-          value: "/workspace/data/processed"
+          value: "/tmp/osrm-data"
         volumeMounts:
         - name: workspace
           mountPath: /workspace

@@ -3,7 +3,7 @@
 # OSRM Server API Endpoints Test Suite
 # Tests all available OSRM HTTP API endpoints
 
-set -e
+set +e
 
 # Configuration
 OSRM_HOST="localhost"

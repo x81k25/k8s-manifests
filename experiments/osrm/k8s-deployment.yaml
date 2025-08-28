@@ -1,65 +1,66 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: osrm-server-job
+  name: osrm-server
   namespace: experiments
+  labels:
+    app: osrm-server
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: osrm-server
   template:
+    metadata:
+      labels:
+        app: osrm-server
     spec:
       containers:
-      - name: docker-compose-runner
-        image: docker/compose:latest
-        command: ["/bin/sh", "-c"]
+      - name: osrm-server
+        image: osrm/osrm-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        command: ["osrm-routed"]
         args:
-          - |
-            cd /workspace
-            
-            # Check if data exists
-            echo "Checking data availability..."
-            ls -la /workspace/data/processed/ | head -5
-            
-            # Create a temporary directory accessible to both containers
-            mkdir -p /tmp/osrm-data
-            cp -r /workspace/data/processed/* /tmp/osrm-data/
-            echo "Data copied to /tmp/osrm-data/"
-            ls -la /tmp/osrm-data/ | head -5
-            
-            # Override the data path to point to the copied data
-            export OSRM_DATA_PATH="/tmp/osrm-data"
-            
-            docker-compose -f docker-compose.server.yml up -d
-            echo "OSRM server started via docker-compose"
-            
-            # Keep the job running to maintain the container
-            while true; do
-              sleep 3600
-              echo "Job still running to maintain docker-compose services..."
-            done
+          - "--algorithm"
+          - "mld"
+          - "/data/california-latest.osrm"
         envFrom:
         - configMapRef:
             name: osrm-env
-        env:
-        - name: OSRM_DATA_PATH
-          value: "/tmp/osrm-data"
         volumeMounts:
-        - name: workspace
-          mountPath: /workspace
-        - name: docker-sock
-          mountPath: /var/run/docker.sock
+        - name: osrm-data
+          mountPath: /data
+          readOnly: true
         resources:
           requests:
-            cpu: "1"
             memory: "2Gi"
+            cpu: "1"
           limits:
-            cpu: "5"
             memory: "25Gi"
+            cpu: "5"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
       volumes:
-      - name: workspace
+      - name: osrm-data
         hostPath:
-          path: /infra/k8s-manifests/experiments/osrm
+          path: /infra/k8s-manifests/experiments/osrm/data/processed
           type: Directory
-      - name: docker-sock
-        hostPath:
-          path: /var/run/docker.sock
-          type: Socket
-      restartPolicy: OnFailure

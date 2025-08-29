@@ -303,10 +303,35 @@ The pipeline is designed for easy portability to AWS EC2 or other containerized 
 
 After preprocessing, the OSRM routing server can be deployed using either Docker Compose (local development) or Kubernetes (production).
 
-### Kubernetes Deployment (Recommended)
+### ArgoCD Deployment (Recommended)
+
+Deploy OSRM using GitOps with ArgoCD for better visibility and management:
 
 ```bash
-# Deploy OSRM server to Kubernetes
+# Deploy via ArgoCD ApplicationSet
+kubectl apply -f osrm-appset.yaml
+
+# Check ArgoCD application status
+kubectl get application osrm-server -n argocd
+kubectl get applicationset osrm-appset -n argocd
+
+# View application in ArgoCD UI for container status and health
+# ArgoCD provides real-time pod status, sync state, and deployment history
+
+# Delete ArgoCD deployment
+kubectl delete applicationset osrm-appset -n argocd
+```
+
+**ArgoCD Features:**
+- **GitOps Workflow**: Automatic sync from git repository changes
+- **Container Visibility**: Real-time pod status and health monitoring in ArgoCD UI
+- **Image Updates**: Automatic image digest updates via ArgoCD Image Updater
+- **Self-Healing**: Automatic correction of configuration drift
+
+### Direct Kubernetes Deployment (Alternative)
+
+```bash
+# Direct kubectl deployment (without ArgoCD)
 kubectl apply -f k8s-deployment.yaml
 kubectl apply -f service.yaml
 
@@ -367,60 +392,89 @@ http://localhost:5000
 #### Available Services
 
 **1. Route Service - `/route/v1/driving/{coordinates}`**
+
+The route service calculates the fastest route between coordinates with detailed navigation information.
+
 ```bash
-# Basic route between two points
-curl "http://localhost:5000/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044"
+# Basic route between two points (SF to Oakland)
+curl "http://192.168.50.2:32050/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044"
+# Returns: Route geometry, duration (1174.2s ≈ 19.6min), distance (18.1km)
 
-# Route with turn-by-turn steps
-curl "http://localhost:5000/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044?steps=true"
+# Route with turn-by-turn navigation steps
+curl "http://192.168.50.2:32050/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044?steps=true"
+# Returns: Detailed turn-by-turn instructions with intersections and maneuvers
 
-# Route with alternatives
-curl "http://localhost:5000/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044?alternatives=true"
+# Route with alternative paths
+curl "http://192.168.50.2:32050/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044?alternatives=true"
+# Returns: Multiple route options with different paths
 
-# Multi-waypoint route
-curl "http://localhost:5000/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382"
+# Route without geometry overview (faster response)
+curl "http://192.168.50.2:32050/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044?overview=false"
+# Returns: Route info without detailed geometry polyline
+
+# Multi-waypoint route (SF → Oakland → San Jose)
+curl "http://192.168.50.2:32050/route/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382"
+# Returns: Route through multiple waypoints with leg-by-leg breakdown
 ```
 
 **2. Nearest Service - `/nearest/v1/driving/{coordinates}`**
-```bash
-# Find nearest road point
-curl "http://localhost:5000/nearest/v1/driving/-122.4194,37.7749"
 
-# Find multiple nearest points
-curl "http://localhost:5000/nearest/v1/driving/-122.4194,37.7749?number=3"
+Finds the nearest road network point to given coordinates.
+
+```bash
+# Find nearest road point to SF coordinates
+curl "http://192.168.50.2:32050/nearest/v1/driving/-122.4194,37.7749"
+# Returns: Nearest routable point with node IDs and distance offset
+
+# Find 3 nearest road points
+curl "http://192.168.50.2:32050/nearest/v1/driving/-122.4194,37.7749?number=3"
+# Returns: Array of 3 closest routable points
 ```
 
-**3. Table Service - `/table/v1/driving/{coordinates}`**
-```bash
-# Distance/duration matrix between multiple points
-curl "http://localhost:5000/table/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382"
+**3. Table Service - `/table/v1/driving/{coordinates}` (Origin-Destination Matrix)**
 
-# Table with specific annotations
-curl "http://localhost:5000/table/v1/driving/-122.4194,37.7749;-122.2711,37.8044?annotations=distance,duration"
+Computes distance and duration matrices between multiple points. This service generates **origin-destination matrices** that show travel times and distances from every origin to every destination - perfect for logistics, route optimization, fleet management, and delivery planning.
+
+```bash
+# Distance/duration matrix for 3 points (SF, Oakland, San Jose)
+curl "http://192.168.50.2:32050/table/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382"
+# Returns: Full 3x3 origin-destination matrix of distances and durations between all point pairs
+
+# Matrix with specific source (from SF to all destinations)
+curl "http://192.168.50.2:32050/table/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382?sources=0"
+# Returns: 1x3 matrix from SF to all other points
+
+# Matrix with distance and duration annotations
+curl "http://192.168.50.2:32050/table/v1/driving/-122.4194,37.7749;-122.2711,37.8044?annotations=distance,duration"
+# Returns: Separate distance and duration arrays for analysis
 ```
 
-**4. Match Service - `/match/v1/driving/{coordinates}`**
-```bash
-# GPS trace matching (map matching)
-curl "http://localhost:5000/match/v1/driving/-122.4194,37.7749;-122.4190,37.7750;-122.4185,37.7751;-122.2711,37.8044"
+**4. Match Service - `/match/v1/driving/{coordinates}` (GPS Trace Matching)**
 
-# Match with full overview and steps
-curl "http://localhost:5000/match/v1/driving/-122.4194,37.7749;-122.4190,37.7750;-122.4185,37.7751;-122.2711,37.8044?overview=full&steps=true"
+Matches GPS traces to road network - essential for cleaning noisy GPS data.
+
+```bash
+# GPS trace matching with noisy coordinates
+curl "http://192.168.50.2:32050/match/v1/driving/-122.4194,37.7749;-122.4190,37.7750;-122.4185,37.7751;-122.2711,37.8044"
+# Returns: Cleaned route snapped to road network with confidence scores
+
+# Match with full overview and turn-by-turn steps
+curl "http://192.168.50.2:32050/match/v1/driving/-122.4194,37.7749;-122.4190,37.7750;-122.4185,37.7751;-122.2711,37.8044?overview=full&steps=true"
+# Returns: Full route geometry and detailed navigation instructions
 ```
 
-**5. Trip Service - `/trip/v1/driving/{coordinates}`**
-```bash
-# Traveling Salesman Problem optimization
-curl "http://localhost:5000/trip/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382;-122.2585,37.8716"
+**5. Trip Service - `/trip/v1/driving/{coordinates}` (Traveling Salesman Optimization)**
 
-# Trip with fixed start and end
-curl "http://localhost:5000/trip/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382?source=first&destination=last"
-```
+Solves traveling salesman problem to find optimal visit order for multiple locations.
 
-**6. Tile Service - `/tile/v1/driving/{z}/{x}/{y}.mvt`**
 ```bash
-# Vector tiles for mapping applications
-curl "http://localhost:5000/tile/v1/driving/10/163/395.mvt"
+# Trip optimization for 4 cities (finds optimal order)
+curl "http://192.168.50.2:32050/trip/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382;-122.2585,37.8716"
+# Returns: Optimized route visiting all points with minimal total distance
+
+# Trip with fixed start and end points
+curl "http://192.168.50.2:32050/trip/v1/driving/-122.4194,37.7749;-122.2711,37.8044;-121.8863,37.3382?source=first&destination=last"
+# Returns: Optimized route starting at first point, ending at last point
 ```
 
 #### Common Parameters

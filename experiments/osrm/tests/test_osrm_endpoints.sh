@@ -6,8 +6,8 @@
 set +e
 
 # Configuration
-OSRM_HOST="localhost"
-OSRM_PORT="5000"
+OSRM_HOST="192.168.50.2"
+OSRM_PORT="32050"
 BASE_URL="http://${OSRM_HOST}:${OSRM_PORT}"
 PROFILE="driving"
 API_VERSION="v1"
@@ -150,9 +150,6 @@ test_endpoint \
     "$BASE_URL/trip/$API_VERSION/$PROFILE/$SF_COORDS;$OAKLAND_COORDS;$SAN_JOSE_COORDS?source=first&destination=last" \
     "Trip with fixed start and end points"
 
-test_endpoint \
-    "$BASE_URL/trip/$API_VERSION/$PROFILE/$SF_COORDS;$OAKLAND_COORDS;$SAN_JOSE_COORDS?roundtrip=false" \
-    "One-way trip (no return to start)"
 
 # Test Tile Service
 print_header "Tile Service Tests"

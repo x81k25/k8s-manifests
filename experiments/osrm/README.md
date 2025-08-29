@@ -301,9 +301,31 @@ The pipeline is designed for easy portability to AWS EC2 or other containerized 
 
 ## OSRM Server Deployment
 
-After preprocessing, the OSRM routing server can be deployed using the provided Docker Compose configuration.
+After preprocessing, the OSRM routing server can be deployed using either Docker Compose (local development) or Kubernetes (production).
 
-### Starting the Server
+### Kubernetes Deployment (Recommended)
+
+```bash
+# Deploy OSRM server to Kubernetes
+kubectl apply -f k8s-deployment.yaml
+kubectl apply -f service.yaml
+
+# Check deployment status
+kubectl get pods -n experiments -l app=osrm-server
+kubectl get service osrm-server-nodeport -n experiments
+
+# View server logs
+kubectl logs -l app=osrm-server -n experiments
+
+# Delete deployment
+kubectl delete -f k8s-deployment.yaml -f service.yaml
+```
+
+**Access URLs:**
+- **External**: `http://192.168.50.2:32050` (NodePort for client access)
+- **Internal**: `osrm-server.experiments.svc.cluster.local:5000` (ClusterIP for internal services)
+
+### Docker Compose Deployment (Development)
 
 ```bash
 # Start OSRM server with docker-compose
@@ -333,8 +355,12 @@ OSRM_ALGORITHM=mld                # Routing algorithm (Multi-Level Dijkstra)
 
 The OSRM server provides a comprehensive HTTP API for routing and navigation services:
 
-#### Base URL
-```
+#### Base URLs
+```bash
+# Kubernetes (external access)
+http://192.168.50.2:32050
+
+# Docker Compose (local development) 
 http://localhost:5000
 ```
 
@@ -421,8 +447,12 @@ All endpoints return JSON responses with this structure:
 Run the comprehensive test suite to verify all endpoints:
 
 ```bash
-# Run all endpoint tests
-./tests/test_osrm_endpoints.sh
+# Run all endpoint tests (Kubernetes)
+bash tests/test_osrm_endpoints.sh
+
+# Run all endpoint tests (Docker Compose - update script port first)
+# Edit tests/test_osrm_endpoints.sh: change OSRM_PORT="32050" to OSRM_PORT="5000"
+bash tests/test_osrm_endpoints.sh
 
 # The test covers:
 # Route service (basic, alternatives, steps, multi-waypoint)

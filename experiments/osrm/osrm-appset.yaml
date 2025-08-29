@@ -1,0 +1,39 @@
+# osrm-appset.yaml
+# apply:
+# kubectl apply -f ./experiments/osrm/osrm-appset.yaml
+# delete:
+# kubectl delete applicationset osrm-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: osrm-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: osrm-server
+        path: experiments/osrm
+  template:
+    metadata:
+      name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: >-
+          osrm-backend=ghcr.io/project-osrm/osrm-backend:latest
+        argocd-image-updater.argoproj.io/osrm-backend.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/write-back-method: "git"
+        argocd-image-updater.argoproj.io/git-branch: "main"
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "experiments"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

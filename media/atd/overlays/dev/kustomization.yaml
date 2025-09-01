@@ -17,8 +17,18 @@ patches:
           containers:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev
+            resources:
+              requests:
+                memory: "64Mi"
+              limits:
+                memory: "1Gi"
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:dev
+            resources:
+              requests:
+                memory: "128Mi"
+              limits:
+                memory: "3Gi"
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/dev/complete

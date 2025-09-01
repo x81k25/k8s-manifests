@@ -20,6 +20,11 @@ spec:
       - name: vpn-sidecar
         image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:latest
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+          limits:
+            memory: "1Gi"
         securityContext:
           privileged: true
           capabilities:
@@ -57,6 +62,11 @@ spec:
       - name: automatic-transmission-daemon
         image: ghcr.io/x81k25/automatic-transmission-daemon-atd:latest
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+          limits:
+            memory: "3Gi"
         securityContext:
           runAsUser: 1005
           runAsGroup: 1001

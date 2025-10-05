@@ -29,6 +29,9 @@ spec:
         image: postgres:latest
         ports:
         - containerPort: 5432
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/18/data
         securityContext:
           runAsUser: 999
           runAsNonRoot: true

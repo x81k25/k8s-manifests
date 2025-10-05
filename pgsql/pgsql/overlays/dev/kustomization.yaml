@@ -40,7 +40,6 @@ patches:
           - name: postgres-data
             hostPath:
               path: /d/postgres/dev
-              type: DirectoryOrCreate
   target:
     kind: StatefulSet
     name: postgres

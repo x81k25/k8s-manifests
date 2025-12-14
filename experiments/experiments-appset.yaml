@@ -1,0 +1,44 @@
+# experiments-appset.yaml
+# Consolidated ApplicationSet for all experiments namespace applications
+# apply:
+# kubectl apply -f ./experiments/experiments-appset.yaml
+# delete:
+# kubectl delete applicationset experiments-appset -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: experiments-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      # Active applications
+      - name: ollama
+        path: experiments/ollama/base
+      # Commented out applications (resource constraints)
+      # - name: osrm-server
+      #   path: experiments/osrm
+      # - name: yes-and
+      #   path: experiments/yes-and/overlays/dev
+      # - name: yes-and-frontend
+      #   path: experiments/yes-and-frontend/overlays/dev
+      # - name: yes-and-backend
+      #   path: experiments/yes-and/overlays/prod
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:x81k25/k8s-manifests.git
+        targetRevision: HEAD
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: experiments
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

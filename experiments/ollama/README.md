@@ -13,8 +13,9 @@ Stateless Ollama REST API service running Phi-3 Mini (3.8B parameters, Q4_0 quan
 
 | Property | Value |
 |----------|-------|
-| Service | `ollama.experiments.svc.cluster.local` |
-| Port | `11434` |
+| Internal Service | `ollama.experiments.svc.cluster.local:11434` |
+| External Access | `<node-ip>:31435` |
+| Service Type | NodePort |
 | Model | `phi3:latest` (2.2GB) |
 | GPU | NVIDIA GeForce GTX 960 |
 
@@ -113,6 +114,18 @@ curl -X POST http://ollama.experiments:11434/api/chat \
       "top_p": 0.9
     }
   }'
+```
+
+## External Access
+
+```bash
+# List models
+curl http://<node-ip>:31435/api/tags
+
+# Chat
+curl -X POST http://<node-ip>:31435/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{"model":"phi3","messages":[{"role":"user","content":"Hello"}],"stream":false}'
 ```
 
 ## Testing from Within Cluster

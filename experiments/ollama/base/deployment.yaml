@@ -12,6 +12,7 @@ spec:
       labels:
         app: ollama
     spec:
+      runtimeClassName: nvidia
       initContainers:
       - name: pull-model
         image: ollama/ollama:latest

@@ -25,6 +25,8 @@ spec:
         path: observability/kube-state-metrics
       - name: node-exporter
         path: observability/node-exporter
+      - name: dcgm-exporter
+        path: observability/dcgm-exporter
   template:
     metadata:
       name: '{{name}}'

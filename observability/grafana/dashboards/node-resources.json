@@ -894,7 +894,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(DCGM_FI_DEV_FB_USED) / 1024 / 1024 / 1024",
+          "expr": "sum(DCGM_FI_DEV_FB_USED) / 1024",
           "refId": "A"
         }
       ],
@@ -1228,7 +1228,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED / 1024 / 1024 / 1024",
+          "expr": "DCGM_FI_DEV_FB_USED / 1024",
           "legendFormat": "GPU {{gpu}}",
           "refId": "A"
         }

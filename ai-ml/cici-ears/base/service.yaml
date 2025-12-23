@@ -1,0 +1,15 @@
+# cici-ears/base/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cici-ears
+  labels:
+    app: cici-ears
+spec:
+  type: NodePort
+  ports:
+  - port: 8766
+    targetPort: 8766
+    nodePort: 30202
+  selector:
+    app: cici-ears

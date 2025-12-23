@@ -1,0 +1,15 @@
+# cici-mind/base/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cici-mind
+  labels:
+    app: cici-mind
+spec:
+  type: NodePort
+  ports:
+  - port: 8765
+    targetPort: 8765
+    nodePort: 30201
+  selector:
+    app: cici-mind

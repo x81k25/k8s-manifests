@@ -1,0 +1,36 @@
+# cici-mind/overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namespace: ai-ml
+nameSuffix: -dev
+commonLabels:
+  variant: dev
+
+images:
+- name: ghcr.io/x81k25/cici-mind
+  newTag: dev
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cici-mind
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cici-mind
+            env:
+            - name: LOG_LEVEL
+              value: "DEBUG"
+- target:
+    version: v1
+    kind: Service
+    name: cici-mind
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30211

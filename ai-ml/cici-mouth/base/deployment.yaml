@@ -1,0 +1,40 @@
+# cici-mouth/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cici-mouth
+  labels:
+    app: cici-mouth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cici-mouth
+  template:
+    metadata:
+      labels:
+        app: cici-mouth
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8001"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: cici-mouth
+        image: ghcr.io/x81k25/cici-mouth:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8001
+        env:
+        - name: MOUTH_HOST
+          value: "0.0.0.0"
+        - name: MOUTH_PORT
+          value: "8001"
+        - name: PIPER_VOICE
+          value: "en_GB-jenny_dioco-medium"
+        - name: PIPER_SAMPLE_RATE
+          value: "22050"
+        - name: LOG_LEVEL
+          value: "INFO"
+      imagePullSecrets:
+      - name: ghcr-pull-image-secret

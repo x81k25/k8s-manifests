@@ -17,13 +17,29 @@ spec:
         path: ai-ml/reel-driver/overlays
       - name: mlflow
         path: ai-ml/mlflow/overlays
+      - name: cici-face
+        path: ai-ml/cici-face/overlays
+      - name: cici-mind
+        path: ai-ml/cici-mind/overlays
+      - name: cici-ears
+        path: ai-ml/cici-ears/overlays
+      - name: cici-mouth
+        path: ai-ml/cici-mouth/overlays
   template:
     metadata:
       name: '{{name}}-dev'
       annotations:
         argocd-image-updater.argoproj.io/image-list: >-
-          reel-driver=ghcr.io/x81k25/reel-driver-api:dev
+          reel-driver=ghcr.io/x81k25/reel-driver-api:dev,
+          cici-face=ghcr.io/x81k25/cici-face:dev,
+          cici-mind=ghcr.io/x81k25/cici-mind:dev,
+          cici-ears=ghcr.io/x81k25/cici-ears:dev,
+          cici-mouth=ghcr.io/x81k25/cici-mouth:dev
         argocd-image-updater.argoproj.io/reel-driver.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/cici-face.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/cici-mind.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/cici-ears.update-strategy: "digest"
+        argocd-image-updater.argoproj.io/cici-mouth.update-strategy: "digest"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

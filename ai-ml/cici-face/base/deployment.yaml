@@ -1,0 +1,40 @@
+# cici-face/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cici-face
+  labels:
+    app: cici-face
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cici-face
+  template:
+    metadata:
+      labels:
+        app: cici-face
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8501"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: cici-face
+        image: ghcr.io/x81k25/cici-face:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8501
+        env:
+        - name: MIND_HOST
+          value: "cici-mind-prod"
+        - name: MIND_PORT
+          value: "8765"
+        - name: EARS_HOST
+          value: "cici-ears-prod"
+        - name: EARS_PORT
+          value: "8766"
+        - name: LOG_LEVEL
+          value: "INFO"
+      imagePullSecrets:
+      - name: ghcr-pull-image-secret

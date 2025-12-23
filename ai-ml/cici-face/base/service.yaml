@@ -1,0 +1,15 @@
+# cici-face/base/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cici-face
+  labels:
+    app: cici-face
+spec:
+  type: NodePort
+  ports:
+  - port: 8501
+    targetPort: 8501
+    nodePort: 30200
+  selector:
+    app: cici-face

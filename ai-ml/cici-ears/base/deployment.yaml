@@ -1,0 +1,42 @@
+# cici-ears/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cici-ears
+  labels:
+    app: cici-ears
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cici-ears
+  template:
+    metadata:
+      labels:
+        app: cici-ears
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8766"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: cici-ears
+        image: ghcr.io/x81k25/cici-ears:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8766
+        env:
+        - name: EARS_HOST
+          value: "0.0.0.0"
+        - name: EARS_PORT
+          value: "8766"
+        - name: SAMPLE_RATE
+          value: "16000"
+        - name: EARS_SILENCE_DURATION_MS
+          value: "1000"
+        - name: EARS_DEBUG
+          value: "false"
+        - name: LOG_LEVEL
+          value: "INFO"
+      imagePullSecrets:
+      - name: ghcr-pull-image-secret

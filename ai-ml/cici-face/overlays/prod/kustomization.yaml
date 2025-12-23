@@ -1,0 +1,40 @@
+# cici-face/overlays/prod/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+namespace: ai-ml
+nameSuffix: -prod
+commonLabels:
+  variant: prod
+
+images:
+- name: ghcr.io/x81k25/cici-face
+  newTag: main
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: cici-face
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cici-face
+            env:
+            - name: MIND_HOST
+              value: "cici-mind-prod"
+            - name: EARS_HOST
+              value: "cici-ears-prod"
+            - name: LOG_LEVEL
+              value: "INFO"
+- target:
+    version: v1
+    kind: Service
+    name: cici-face
+  patch: |-
+    - op: replace
+      path: /spec/ports/0/nodePort
+      value: 30200

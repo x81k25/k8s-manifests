@@ -1,0 +1,40 @@
+# cici-mind/base/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cici-mind
+  labels:
+    app: cici-mind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cici-mind
+  template:
+    metadata:
+      labels:
+        app: cici-mind
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8765"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: cici-mind
+        image: ghcr.io/x81k25/cici-mind:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8765
+        env:
+        - name: MIND_HOST
+          value: "0.0.0.0"
+        - name: MIND_PORT
+          value: "8765"
+        - name: OLLAMA_HOST
+          value: "http://ollama-prod:11434"
+        - name: OLLAMA_MODEL
+          value: "phi3"
+        - name: LOG_LEVEL
+          value: "INFO"
+      imagePullSecrets:
+      - name: ghcr-pull-image-secret

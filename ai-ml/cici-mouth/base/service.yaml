@@ -1,0 +1,15 @@
+# cici-mouth/base/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cici-mouth
+  labels:
+    app: cici-mouth
+spec:
+  type: NodePort
+  ports:
+  - port: 8001
+    targetPort: 8001
+    nodePort: 30203
+  selector:
+    app: cici-mouth

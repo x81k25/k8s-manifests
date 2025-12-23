@@ -818,7 +818,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "avg(DCGM_FI_DEV_GPU_UTIL)",
+          "expr": "avg(DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"})",
           "refId": "A"
         }
       ],
@@ -894,11 +894,11 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "avg(DCGM_FI_DEV_MEM_COPY_UTIL)",
+          "expr": "sum(DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"})",
           "refId": "A"
         }
       ],
-      "title": "GPU memory copy utilization (%)",
+      "title": "total container GPU utilization (%)",
       "type": "gauge"
     },
     {
@@ -970,7 +970,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(DCGM_FI_DEV_FB_USED) / 1024",
+          "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"}) / 1024",
           "refId": "A"
         }
       ],
@@ -1046,47 +1046,17 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) / 1024",
+          "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"}) / 1024",
           "refId": "A"
         }
       ],
-      "title": "VRAM total (GiB)",
+      "title": "total container VRAM usage (GiB)",
       "type": "gauge"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
+        "type": "datasource",
+        "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 6,
@@ -1096,69 +1066,22 @@
       },
       "id": 49,
       "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
+        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">—</div>",
+        "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(DCGM_FI_DEV_FB_USED) / sum(DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) * 100",
-          "refId": "A"
-        }
-      ],
-      "title": "VRAM usage (%)",
-      "type": "gauge"
+      "title": "total namespace VRAM requests (N/A)",
+      "type": "text"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 4,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-red",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 0.5
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
+        "type": "datasource",
+        "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 6,
@@ -1168,38 +1091,17 @@
       },
       "id": 50,
       "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
+        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">—</div>",
+        "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(DCGM_FI_DEV_FB_FREE) / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "VRAM free (GiB)",
-      "type": "gauge"
+      "title": "total namespace VRAM limits (N/A)",
+      "type": "text"
     },
     {
       "datasource": {
@@ -1433,7 +1335,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL",
+          "expr": "DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"}",
           "legendFormat": "GPU {{gpu}}",
           "refId": "A"
         }
@@ -1529,12 +1431,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_MEM_COPY_UTIL",
-          "legendFormat": "GPU {{gpu}}",
+          "expr": "sum(DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"}) by (namespace)",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "GPU memory copy utilization (%)",
+      "title": "total container GPU utilization by namespace (%)",
       "type": "timeseries"
     },
     {
@@ -1624,7 +1526,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED / 1024",
+          "expr": "DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"} / 1024",
           "legendFormat": "GPU {{gpu}}",
           "refId": "A"
         }
@@ -1719,73 +1621,18 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "(DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) / 1024",
-          "legendFormat": "GPU {{gpu}}",
+          "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"}) by (namespace) / 1024",
+          "legendFormat": "{{namespace}}",
           "refId": "A"
         }
       ],
-      "title": "VRAM total by GPU (GiB)",
+      "title": "total container VRAM usage by namespace (GiB)",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 100,
-            "axisSoftMin": 0,
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
+        "type": "datasource",
+        "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 8,
@@ -1795,92 +1642,22 @@
       },
       "id": 52,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
         },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">—</div>",
+        "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "DCGM_FI_DEV_FB_USED / (DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE) * 100",
-          "legendFormat": "GPU {{gpu}}",
-          "refId": "A"
-        }
-      ],
-      "title": "VRAM usage by GPU (%)",
-      "type": "timeseries"
+      "title": "VRAM requests by namespace (N/A)",
+      "type": "text"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 4,
-            "axisSoftMin": 0,
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
+        "type": "datasource",
+        "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 8,
@@ -1890,32 +1667,17 @@
       },
       "id": 53,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
         },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">—</div>",
+        "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "DCGM_FI_DEV_FB_FREE / 1024",
-          "legendFormat": "GPU {{gpu}}",
-          "refId": "A"
-        }
-      ],
-      "title": "VRAM free by GPU (GiB)",
-      "type": "timeseries"
+      "title": "VRAM limits by namespace (N/A)",
+      "type": "text"
     },
     {
       "datasource": "Prometheus",

@@ -913,7 +913,7 @@
           },
           "decimals": 1,
           "mappings": [],
-          "max": 24,
+          "max": 3.93,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -924,11 +924,11 @@
               },
               {
                 "color": "yellow",
-                "value": 18
+                "value": 2.95
               },
               {
                 "color": "red",
-                "value": 22
+                "value": 3.73
               }
             ]
           },
@@ -989,7 +989,7 @@
           },
           "decimals": 1,
           "mappings": [],
-          "max": 4,
+          "max": 3.93,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -1000,11 +1000,11 @@
               },
               {
                 "color": "yellow",
-                "value": 3
+                "value": 2.95
               },
               {
                 "color": "red",
-                "value": 3.8
+                "value": 3.73
               }
             ]
           },
@@ -1168,7 +1168,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia.com/gpu\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"})",
           "refId": "A"
         }
       ],
@@ -1240,7 +1240,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia.com/gpu\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia_com_gpu\"})",
           "refId": "A"
         }
       ],
@@ -1455,7 +1455,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMax": 24,
+            "axisSoftMax": 3.93,
             "axisSoftMin": 0,
             "barAlignment": 0,
             "barWidthFactor": 0.6,
@@ -1760,7 +1760,7 @@
       "pluginVersion": "12.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia.com/gpu\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"}) by (namespace)",
           "legendFormat": "{{namespace}}",
           "refId": "A"
         }
@@ -1849,7 +1849,7 @@
       "pluginVersion": "12.1.0",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia.com/gpu\"}) by (namespace)",
+          "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia_com_gpu\"}) by (namespace)",
           "legendFormat": "{{namespace}}",
           "refId": "A"
         }

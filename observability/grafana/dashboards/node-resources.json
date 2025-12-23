@@ -1075,7 +1075,7 @@
         "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "title": "total namespace VRAM requests (N/A)",
+      "title": "",
       "type": "text"
     },
     {
@@ -1100,7 +1100,7 @@
         "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "title": "total namespace VRAM limits (N/A)",
+      "title": "",
       "type": "text"
     },
     {
@@ -1651,7 +1651,7 @@
         "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "title": "VRAM requests by namespace (N/A)",
+      "title": "",
       "type": "text"
     },
     {
@@ -1676,7 +1676,7 @@
         "mode": "html"
       },
       "pluginVersion": "12.1.0",
-      "title": "VRAM limits by namespace (N/A)",
+      "title": "",
       "type": "text"
     },
     {

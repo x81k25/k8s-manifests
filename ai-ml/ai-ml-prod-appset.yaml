@@ -17,6 +17,8 @@ spec:
         path: ai-ml/reel-driver/overlays/prod
       - name: mlflow-prod
         path: ai-ml/mlflow/overlays/prod
+      - name: ollama-prod
+        path: ai-ml/ollama/overlays/prod
   template:
     metadata:
       name: '{{name}}'

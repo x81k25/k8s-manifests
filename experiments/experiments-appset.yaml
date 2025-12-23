@@ -14,10 +14,9 @@ spec:
   generators:
   - list:
       elements:
-      # Active applications
-      - name: ollama
-        path: experiments/ollama/base
       # Commented out applications (resource constraints)
+      # - name: ollama  # Moved to ai-ml namespace
+      #   path: experiments/ollama/base
       # - name: osrm-server
       #   path: experiments/osrm
       # - name: yes-and

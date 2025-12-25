@@ -19,29 +19,25 @@ spec:
         path: ai-ml/mlflow/overlays/prod
       - name: ollama-prod
         path: ai-ml/ollama/overlays/prod
-      - name: cici-face-prod
-        path: ai-ml/cici-face/overlays/prod
-      - name: cici-mind-prod
-        path: ai-ml/cici-mind/overlays/prod
-      - name: cici-ears-prod
-        path: ai-ml/cici-ears/overlays/prod
-      - name: cici-mouth-prod
-        path: ai-ml/cici-mouth/overlays/prod
+      # - name: cici-face-prod
+      #   path: ai-ml/cici-face/overlays/prod
+      # - name: cici-mind-prod
+      #   path: ai-ml/cici-mind/overlays/prod
+      # - name: cici-ears-prod
+      #   path: ai-ml/cici-ears/overlays/prod
+      # - name: cici-mouth-prod
+      #   path: ai-ml/cici-mouth/overlays/prod
   template:
     metadata:
       name: '{{name}}'
       annotations:
         argocd-image-updater.argoproj.io/image-list: >-
-          reel-driver-prod=ghcr.io/x81k25/reel-driver-api:main,
-          cici-face-prod=ghcr.io/x81k25/cici-face:main,
-          cici-mind-prod=ghcr.io/x81k25/cici-mind:main,
-          cici-ears-prod=ghcr.io/x81k25/cici-ears:main,
-          cici-mouth-prod=ghcr.io/x81k25/cici-mouth:main
+          reel-driver-prod=ghcr.io/x81k25/reel-driver-api:main
         argocd-image-updater.argoproj.io/reel-driver-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/cici-face-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/cici-mind-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/cici-ears-prod.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/cici-mouth-prod.update-strategy: "digest"
+        # argocd-image-updater.argoproj.io/cici-face-prod.update-strategy: "digest"
+        # argocd-image-updater.argoproj.io/cici-mind-prod.update-strategy: "digest"
+        # argocd-image-updater.argoproj.io/cici-ears-prod.update-strategy: "digest"
+        # argocd-image-updater.argoproj.io/cici-mouth-prod.update-strategy: "digest"
         argocd-image-updater.argoproj.io/write-back-method: "git"
         argocd-image-updater.argoproj.io/git-branch: "main"
     spec:

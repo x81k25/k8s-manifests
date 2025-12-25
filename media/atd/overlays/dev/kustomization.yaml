@@ -14,10 +14,6 @@ patches:
     spec:
       template:
         spec:
-          securityContext:
-            sysctls:
-            - name: net.ipv4.conf.all.src_valid_mark
-              value: "1"
           containers:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev

@@ -14,6 +14,10 @@ patches:
     spec:
       template:
         spec:
+          securityContext:
+            sysctls:
+            - name: net.ipv4.conf.all.src_valid_mark
+              value: "1"
           containers:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev
@@ -22,6 +26,11 @@ patches:
                 memory: "64Mi"
               limits:
                 memory: "1Gi"
+            env: []
+            envFrom:
+            - secretRef:
+                name: wireguard-secrets
+            volumeMounts: []
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:dev
             resources:

@@ -1670,7 +1670,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
           "refId": "A"
         }
       ],
@@ -1746,7 +1746,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
           "refId": "A"
         }
       ],
@@ -1822,7 +1822,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
           "refId": "A"
         }
       ],
@@ -1898,7 +1898,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
           "refId": "A"
         }
       ],
@@ -2150,7 +2150,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL) by (gpu)",
           "legendFormat": "GPU {{gpu}}",
           "refId": "A"
         }
@@ -2514,7 +2514,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED{gpu=\"0\"} / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
           "refId": "A"
         }
       ],
@@ -2590,7 +2590,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED{gpu=\"1\"} / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
           "refId": "A"
         }
       ],
@@ -2666,7 +2666,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED{gpu=\"0\"} / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
           "refId": "A"
         }
       ],
@@ -2742,7 +2742,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED{gpu=\"1\"} / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
           "refId": "A"
         }
       ],
@@ -2899,7 +2899,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"} / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED) by (gpu) / 1024",
           "legendFormat": "GPU {{gpu}}",
           "refId": "A"
         }

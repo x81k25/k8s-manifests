@@ -164,6 +164,14 @@ patches:
             run_k8s_config:
               job_spec_config:
                 ttl_seconds_after_finished: 300
+              container_config:
+                resources:
+                  requests:
+                    cpu: "100m"
+                    memory: "512Mi"
+                  limits:
+                    cpu: "1000m"
+                    memory: "2Gi"
 
         run_monitoring:
           enabled: true

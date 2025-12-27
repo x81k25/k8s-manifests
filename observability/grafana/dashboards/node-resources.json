@@ -1968,7 +1968,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 40
+        "y": 47
       },
       "id": 109,
       "panels": [
@@ -2013,7 +2013,7 @@
                   "mode": "none"
                 },
                 "thresholdsStyle": {
-                  "mode": "line"
+                  "mode": "off"
                 }
               },
               "decimals": 0,
@@ -2065,7 +2065,7 @@
               "refId": "A"
             }
           ],
-          "title": "GPU utilization (%)",
+          "title": "GPU system",
           "type": "timeseries"
         },
         {
@@ -2140,7 +2140,7 @@
             "legend": {
               "calcs": [],
               "displayMode": "list",
-              "placement": "right",
+              "placement": "bottom",
               "showLegend": true
             },
             "tooltip": {
@@ -2161,23 +2161,9 @@
               "refId": "A"
             }
           ],
-          "title": "total container GPU utilization by namespace (%)",
+          "title": "GPU cluster",
           "type": "timeseries"
-        }
-      ]
-    },
-    {
-      "type": "row",
-      "title": "VRAM over time",
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 56
-      },
-      "id": 107,
-      "panels": [
+        },
         {
           "datasource": {
             "type": "prometheus",
@@ -2194,12 +2180,12 @@
                 "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 12,
+                "axisSoftMax": 16,
                 "axisSoftMin": 0,
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 10,
+                "fillOpacity": 30,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -2217,14 +2203,15 @@
                 "spanNulls": false,
                 "stacking": {
                   "group": "A",
-                  "mode": "none"
+                  "mode": "normal"
                 },
                 "thresholdsStyle": {
                   "mode": "off"
                 }
               },
-              "decimals": 2,
+              "decimals": 1,
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2241,7 +2228,7 @@
           "gridPos": {
             "h": 8,
             "w": 6,
-            "x": 0,
+            "x": 12,
             "y": 0
           },
           "id": 45,
@@ -2249,7 +2236,7 @@
             "legend": {
               "calcs": [],
               "displayMode": "list",
-              "placement": "right",
+              "placement": "bottom",
               "showLegend": true
             },
             "tooltip": {
@@ -2270,7 +2257,7 @@
               "refId": "A"
             }
           ],
-          "title": "VRAM usage by GPU (GiB)",
+          "title": "VRAM system",
           "type": "timeseries"
         },
         {
@@ -2289,12 +2276,12 @@
                 "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
-                "axisSoftMax": 12,
+                "axisSoftMax": 16,
                 "axisSoftMin": 0,
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 10,
+                "fillOpacity": 30,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -2312,14 +2299,15 @@
                 "spanNulls": false,
                 "stacking": {
                   "group": "A",
-                  "mode": "none"
+                  "mode": "normal"
                 },
                 "thresholdsStyle": {
                   "mode": "off"
                 }
               },
-              "decimals": 2,
+              "decimals": 1,
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2336,7 +2324,7 @@
           "gridPos": {
             "h": 8,
             "w": 6,
-            "x": 6,
+            "x": 18,
             "y": 0
           },
           "id": 51,
@@ -2344,7 +2332,7 @@
             "legend": {
               "calcs": [],
               "displayMode": "list",
-              "placement": "right",
+              "placement": "bottom",
               "showLegend": true
             },
             "tooltip": {
@@ -2365,60 +2353,23 @@
               "refId": "A"
             }
           ],
-          "title": "total container VRAM usage by namespace (GiB)",
+          "title": "VRAM cluster",
           "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "datasource",
-            "uid": "-- Dashboard --"
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 12,
-            "y": 0
-          },
-          "id": 52,
-          "options": {
-            "code": {
-              "language": "plaintext",
-              "showLineNumbers": false,
-              "showMiniMap": false
-            },
-            "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">\u2014</div>",
-            "mode": "html"
-          },
-          "pluginVersion": "12.1.0",
-          "title": "",
-          "type": "text"
-        },
-        {
-          "datasource": {
-            "type": "datasource",
-            "uid": "-- Dashboard --"
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 18,
-            "y": 0
-          },
-          "id": 53,
-          "options": {
-            "code": {
-              "language": "plaintext",
-              "showLineNumbers": false,
-              "showMiniMap": false
-            },
-            "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">\u2014</div>",
-            "mode": "html"
-          },
-          "pluginVersion": "12.1.0",
-          "title": "",
-          "type": "text"
         }
       ]
+    },
+    {
+      "type": "row",
+      "title": "additional metrics",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "id": 115,
+      "panels": []
     },
     {
       "datasource": {
@@ -2483,7 +2434,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 65
+        "y": 49
       },
       "id": 23,
       "options": {
@@ -2580,7 +2531,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 65
+        "y": 49
       },
       "id": 24,
       "options": {
@@ -2741,7 +2692,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 57
       },
       "id": 35,
       "options": {

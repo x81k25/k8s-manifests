@@ -17,8 +17,8 @@ spec:
         path: ai-ml/reel-driver/overlays/prod
       - name: mlflow-prod
         path: ai-ml/mlflow/overlays/prod
-      - name: ollama-prod
-        path: ai-ml/ollama/overlays/prod
+      - name: local-llm
+        path: ai-ml/local-llm/overlays/prod
       # - name: cici-face-prod
       #   path: ai-ml/cici-face/overlays/prod
       # - name: cici-mind-prod

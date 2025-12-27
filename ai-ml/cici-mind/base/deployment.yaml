@@ -31,7 +31,7 @@ spec:
         - name: MIND_PORT
           value: "8765"
         - name: OLLAMA_HOST
-          value: "http://ollama-prod:11434"
+          value: "http://local-llm:11434"
         - name: OLLAMA_MODEL
           value: "hermes3"
         - name: LOG_LEVEL

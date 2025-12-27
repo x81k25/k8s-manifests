@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ollama
+  name: local-llm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ollama
+      app: local-llm
   template:
     metadata:
       labels:
-        app: ollama
+        app: local-llm
     spec:
       runtimeClassName: nvidia
       initContainers:

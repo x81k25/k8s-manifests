@@ -22,6 +22,11 @@ patches:
                 memory: "64Mi"
               limits:
                 memory: "1Gi"
+            env: []
+            envFrom:
+            - secretRef:
+                name: wireguard-secrets
+            volumeMounts: []
           - name: automatic-transmission-daemon
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:stg
             resources:

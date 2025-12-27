@@ -16,6 +16,12 @@ spec:
       initContainers:
       - name: pull-model
         image: ollama/ollama:latest
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          valueFrom:
+            configMapKeyRef:
+              name: gpu-devices
+              key: RTX3060_UUID
         command:
           - /bin/sh
           - -c
@@ -49,6 +55,11 @@ spec:
         ports:
         - containerPort: 11434
         env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          valueFrom:
+            configMapKeyRef:
+              name: gpu-devices
+              key: RTX3060_UUID
         - name: OLLAMA_NUM_PARALLEL
           value: "1"
         - name: OLLAMA_MAX_LOADED_MODELS

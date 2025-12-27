@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpu-devices
+data:
+  GTX960_UUID: "GPU-667bf786-7b0e-d911-5717-f681af20072a"
+  RTX3060_UUID: "GPU-cfbe0295-2bfb-12c9-1bc9-b3b4833f2e18"

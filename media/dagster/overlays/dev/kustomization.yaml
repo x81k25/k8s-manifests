@@ -137,6 +137,7 @@ patches:
           module: dagster_k8s
           class: K8sRunLauncher
           config:
+            job_image: ghcr.io/x81k25/dagstributor:dev
             service_account_name:
               env: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
             job_namespace:

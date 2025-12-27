@@ -145,6 +145,7 @@ patches:
             image_pull_secrets:
             - name: ghcr-pull-image-secret
             env_config_maps:
+            - environment
             - dagster-config
             - wst-config
             - rear-diff-config

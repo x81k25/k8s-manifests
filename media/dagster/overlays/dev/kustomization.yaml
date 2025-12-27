@@ -138,14 +138,11 @@ patches:
           class: K8sRunLauncher
           config:
             job_image: ghcr.io/x81k25/dagstributor:dev
-            service_account_name:
-              env: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
-            job_namespace:
-              env: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
+            service_account_name: dagster-dev
+            job_namespace: media-dev
             instance_config_map: dagster-instance-dev
             image_pull_secrets:
-            - name:
-                env: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
+            - name: ghcr-pull-image-secret
             env_config_maps:
             - dagster-config
             - wst-config

@@ -92,71 +92,15 @@ spec:
         - -c
         - |
           mkdir -p $DAGSTER_HOME
-          cat > $DAGSTER_HOME/dagster.yaml << EOL
-          run_storage:
-            module: dagster_postgres.run_storage
-            class: PostgresRunStorage
-            config:
-              postgres_db:
-                username: ${DAGSTER_PG_USERNAME}
-                password: ${DAGSTER_PG_PASSWORD}
-                hostname: ${DAGSTER_PG_HOST}
-                port: ${DAGSTER_PG_PORT}
-                db_name: ${DAGSTER_PG_DB}
-                
-          schedule_storage:
-            module: dagster_postgres.schedule_storage
-            class: PostgresScheduleStorage
-            config:
-              postgres_db:
-                username: ${DAGSTER_PG_USERNAME}
-                password: ${DAGSTER_PG_PASSWORD}
-                hostname: ${DAGSTER_PG_HOST}
-                port: ${DAGSTER_PG_PORT}
-                db_name: ${DAGSTER_PG_DB}
-                
-          event_log_storage:
-            module: dagster_postgres.event_log
-            class: PostgresEventLogStorage
-            config:
-              postgres_db:
-                username: ${DAGSTER_PG_USERNAME}
-                password: ${DAGSTER_PG_PASSWORD}
-                hostname: ${DAGSTER_PG_HOST}
-                port: ${DAGSTER_PG_PORT}
-                db_name: ${DAGSTER_PG_DB}
-                
-          run_coordinator:
-            module: dagster.core.run_coordinator
-            class: DefaultRunCoordinator
-              
-          run_launcher:
-            module: dagster_k8s
-            class: K8sRunLauncher
-            config:
-              service_account_name:
-                env: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
-              job_namespace:
-                env: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
-              image_pull_secrets:
-              - name:
-                  env: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
-              run_k8s_config:
-                job_spec_config:
-                  ttl_seconds_after_finished: 300
-            
-          run_monitoring:
-            enabled: true
-            max_runtime_seconds: ${DAGSTER_RUN_TIMEOUT:-3600}
-            poll_interval_seconds: 30
-          EOL
-          
+          cp /etc/dagster-instance/dagster.yaml $DAGSTER_HOME/dagster.yaml
           dagster-webserver -h 0.0.0.0 -p 3000 -w /opt/dagster/app/dagstributor/workspace.yaml
         volumeMounts:
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
+        - name: dagster-instance-config
+          mountPath: /etc/dagster-instance
       - name: dagster-daemon
         image: ghcr.io/x81k25/dagstributor:latest
         imagePullPolicy: Always
@@ -204,17 +148,16 @@ spec:
         - bash
         - -c
         - |
-          # Wait until the shared config file is created by dagit
-          until [ -f $DAGSTER_HOME/dagster.yaml ]; do
-            echo "Waiting for dagster.yaml to be created..."
-            sleep 5
-          done
+          mkdir -p $DAGSTER_HOME
+          cp /etc/dagster-instance/dagster.yaml $DAGSTER_HOME/dagster.yaml
           dagster-daemon run -w /opt/dagster/app/dagstributor/workspace.yaml
         volumeMounts:
         - name: dagster-home
           mountPath: /opt/dagster/dagster_home
         - name: dagster-workspace
           mountPath: /opt/dagster/dagster_workspace
+        - name: dagster-instance-config
+          mountPath: /etc/dagster-instance
       volumes:
       - name: dagster-home
         hostPath:
@@ -224,3 +167,6 @@ spec:
         hostPath:
           path: /d/k8s/volumes/dagster/ENV/workspace
           type: DirectoryOrCreate
+      - name: dagster-instance-config
+        configMap:
+          name: dagster-instance

@@ -1640,7 +1640,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
+        "w": 6,
         "x": 0,
         "y": 34
       },
@@ -1716,8 +1716,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 3,
+        "w": 6,
+        "x": 6,
         "y": 34
       },
       "id": 56,
@@ -1792,8 +1792,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 6,
+        "w": 6,
+        "x": 12,
         "y": 34
       },
       "id": 54,
@@ -1868,8 +1868,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 9,
+        "w": 6,
+        "x": 18,
         "y": 34
       },
       "id": 57,
@@ -1905,150 +1905,6 @@
         }
       ],
       "title": "GPU 1 container utilization (%)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "cyan",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 34
-      },
-      "id": 42,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"})",
-          "refId": "A"
-        }
-      ],
-      "title": "total namespace GPU requests (GPUs)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-red",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 34
-      },
-      "id": 43,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia_com_gpu\"})",
-          "refId": "A"
-        }
-      ],
-      "title": "total namespace GPU limits (GPUs)",
       "type": "gauge"
     },
     {
@@ -2254,184 +2110,6 @@
           ],
           "title": "total container GPU utilization by namespace (%)",
           "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "axisSoftMin": 0,
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "vis": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "normal"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 12,
-            "y": 0
-          },
-          "id": 46,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
-              "refId": "A"
-            }
-          ],
-          "title": "total GPU requests by namespace (GPUs)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 10,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "vis": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "normal"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 18,
-            "y": 0
-          },
-          "id": 47,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "hideZeros": false,
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "12.1.0",
-          "targets": [
-            {
-              "expr": "sum(kube_pod_container_resource_limits{resource=\"nvidia_com_gpu\"}) by (namespace)",
-              "legendFormat": "{{namespace}}",
-              "refId": "A"
-            }
-          ],
-          "title": "total GPU limits by namespace (GPUs)",
-          "type": "timeseries"
         }
       ]
     },
@@ -2485,7 +2163,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
+        "w": 6,
         "x": 0,
         "y": 50
       },
@@ -2561,8 +2239,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 3,
+        "w": 6,
+        "x": 6,
         "y": 50
       },
       "id": 58,
@@ -2637,8 +2315,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 6,
+        "w": 6,
+        "x": 12,
         "y": 50
       },
       "id": 48,
@@ -2713,8 +2391,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 3,
-        "x": 9,
+        "w": 6,
+        "x": 18,
         "y": 50
       },
       "id": 59,
@@ -2751,56 +2429,6 @@
       ],
       "title": "GPU 1 container VRAM (GiB)",
       "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "datasource",
-        "uid": "-- Dashboard --"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 50
-      },
-      "id": 49,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">\u2014</div>",
-        "mode": "html"
-      },
-      "pluginVersion": "12.1.0",
-      "title": "",
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "datasource",
-        "uid": "-- Dashboard --"
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 50
-      },
-      "id": 50,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<div style=\"display: flex; justify-content: center; align-items: center; height: 100%; color: #888;\">\u2014</div>",
-        "mode": "html"
-      },
-      "pluginVersion": "12.1.0",
-      "title": "",
-      "type": "text"
     },
     {
       "type": "row",

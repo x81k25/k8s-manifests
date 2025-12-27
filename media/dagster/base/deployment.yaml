@@ -131,8 +131,19 @@ spec:
             class: DefaultRunCoordinator
               
           run_launcher:
-            module: dagster.core.launcher
-            class: DefaultRunLauncher
+            module: dagster_k8s
+            class: K8sRunLauncher
+            config:
+              service_account_name:
+                env: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
+              job_namespace:
+                env: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
+              image_pull_secrets:
+              - name:
+                  env: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
+              job_pod_config:
+                spec_config:
+                  ttl_seconds_after_finished: 300
             
           run_monitoring:
             enabled: true

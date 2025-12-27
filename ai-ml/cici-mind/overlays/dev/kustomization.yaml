@@ -9,7 +9,7 @@ commonLabels:
   variant: dev
 
 images:
-- name: ghcr.io/x81k25/cici-mind
+- name: ghcr.io/x81k25/cici/mind
   newTag: dev
 
 patches:

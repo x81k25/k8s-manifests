@@ -9,7 +9,7 @@ commonLabels:
   variant: dev
 
 images:
-- name: ghcr.io/x81k25/cici-mouth
+- name: ghcr.io/x81k25/cici/mouth
   newTag: dev
 
 patches:

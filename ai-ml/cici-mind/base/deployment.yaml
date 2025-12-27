@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cici-mind
-        image: ghcr.io/x81k25/cici-mind:latest
+        image: ghcr.io/x81k25/cici/mind:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8765
@@ -33,7 +33,7 @@ spec:
         - name: OLLAMA_HOST
           value: "http://ollama-prod:11434"
         - name: OLLAMA_MODEL
-          value: "phi3"
+          value: "hermes3"
         - name: LOG_LEVEL
           value: "INFO"
       imagePullSecrets:

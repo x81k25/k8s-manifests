@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cici-face
-        image: ghcr.io/x81k25/cici-face:latest
+        image: ghcr.io/x81k25/cici/face:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8501

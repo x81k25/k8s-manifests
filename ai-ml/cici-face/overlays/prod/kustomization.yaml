@@ -9,7 +9,7 @@ commonLabels:
   variant: prod
 
 images:
-- name: ghcr.io/x81k25/cici-face
+- name: ghcr.io/x81k25/cici/face
   newTag: main
 
 patches:

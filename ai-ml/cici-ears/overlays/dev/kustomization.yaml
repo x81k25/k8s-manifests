@@ -9,7 +9,7 @@ commonLabels:
   variant: dev
 
 images:
-- name: ghcr.io/x81k25/cici-ears
+- name: ghcr.io/x81k25/cici/ears
   newTag: dev
 
 patches:

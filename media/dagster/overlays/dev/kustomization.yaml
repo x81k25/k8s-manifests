@@ -73,6 +73,102 @@ patches:
               path: /d/k8s/volumes/dagster/dev/workspace
               type: DirectoryOrCreate
 
+# Dagster Instance ConfigMap Patch
+- patch: |-
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: dagster-instance
+    data:
+      dagster.yaml: |
+        run_storage:
+          module: dagster_postgres.run_storage
+          class: PostgresRunStorage
+          config:
+            postgres_db:
+              username:
+                env: DAGSTER_PG_USERNAME
+              password:
+                env: DAGSTER_PG_PASSWORD
+              hostname:
+                env: DAGSTER_PG_HOST
+              port:
+                env: DAGSTER_PG_PORT
+              db_name:
+                env: DAGSTER_PG_DB
+
+        schedule_storage:
+          module: dagster_postgres.schedule_storage
+          class: PostgresScheduleStorage
+          config:
+            postgres_db:
+              username:
+                env: DAGSTER_PG_USERNAME
+              password:
+                env: DAGSTER_PG_PASSWORD
+              hostname:
+                env: DAGSTER_PG_HOST
+              port:
+                env: DAGSTER_PG_PORT
+              db_name:
+                env: DAGSTER_PG_DB
+
+        event_log_storage:
+          module: dagster_postgres.event_log
+          class: PostgresEventLogStorage
+          config:
+            postgres_db:
+              username:
+                env: DAGSTER_PG_USERNAME
+              password:
+                env: DAGSTER_PG_PASSWORD
+              hostname:
+                env: DAGSTER_PG_HOST
+              port:
+                env: DAGSTER_PG_PORT
+              db_name:
+                env: DAGSTER_PG_DB
+
+        run_coordinator:
+          module: dagster.core.run_coordinator
+          class: DefaultRunCoordinator
+
+        run_launcher:
+          module: dagster_k8s
+          class: K8sRunLauncher
+          config:
+            service_account_name:
+              env: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
+            job_namespace:
+              env: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
+            instance_config_map: dagster-instance-dev
+            image_pull_secrets:
+            - name:
+                env: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
+            env_config_maps:
+            - dagster-config
+            - wst-config
+            - rear-diff-config
+            - reel-driver-config
+            - at-config
+            - transmission-config
+            - dagster-timeout-config
+            env_secrets:
+            - dagster-secrets
+            - wst-secrets
+            - rear-diff-secrets
+            - reel-driver-secrets
+            - at-secrets
+            - transmission-secrets
+            run_k8s_config:
+              job_spec_config:
+                ttl_seconds_after_finished: 300
+
+        run_monitoring:
+          enabled: true
+          max_runtime_seconds: 3600
+          poll_interval_seconds: 30
+
 # Dagster Service Patch
 - target:
     version: v1

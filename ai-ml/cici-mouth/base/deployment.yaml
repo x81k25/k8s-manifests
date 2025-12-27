@@ -31,10 +31,19 @@ spec:
         - name: MOUTH_PORT
           value: "8001"
         - name: PIPER_VOICE
-          value: "en_GB-jenny_dioco-medium"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MOUTH_PIPER_VOICE
         - name: PIPER_SAMPLE_RATE
-          value: "22050"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MOUTH_PIPER_SAMPLE_RATE
         - name: LOG_LEVEL
-          value: "INFO"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_LOG_LEVEL
       imagePullSecrets:
       - name: ghcr-pull-image-secret

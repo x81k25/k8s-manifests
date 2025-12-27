@@ -31,10 +31,24 @@ spec:
         - name: MIND_PORT
           value: "8765"
         - name: OLLAMA_HOST
-          value: "http://local-llm:11434"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_OLLAMA_HOST
+        - name: OLLAMA_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_OLLAMA_PORT
         - name: OLLAMA_MODEL
-          value: "hermes3"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_OLLAMA_MODEL
         - name: LOG_LEVEL
-          value: "INFO"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_LOG_LEVEL
       imagePullSecrets:
       - name: ghcr-pull-image-secret

@@ -13,19 +13,6 @@ images:
   newTag: dev
 
 patches:
-- patch: |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: cici-mind
-    spec:
-      template:
-        spec:
-          containers:
-          - name: cici-mind
-            env:
-            - name: LOG_LEVEL
-              value: "DEBUG"
 - target:
     version: v1
     kind: Service

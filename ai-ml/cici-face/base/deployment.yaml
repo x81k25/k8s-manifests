@@ -27,14 +27,29 @@ spec:
         - containerPort: 8501
         env:
         - name: MIND_HOST
-          value: "cici-mind-prod"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MIND_HOST_INTERNAL
         - name: MIND_PORT
-          value: "8765"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MIND_PORT_INTERNAL
         - name: EARS_HOST
-          value: "cici-ears-prod"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_EARS_HOST_INTERNAL
         - name: EARS_PORT
-          value: "8766"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_EARS_PORT_INTERNAL
         - name: LOG_LEVEL
-          value: "INFO"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_LOG_LEVEL
       imagePullSecrets:
       - name: ghcr-pull-image-secret

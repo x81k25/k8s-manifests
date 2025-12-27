@@ -24,10 +24,26 @@ patches:
           containers:
           - name: cici-ears
             env:
-            - name: LOG_LEVEL
-              value: "INFO"
+            - name: SAMPLE_RATE
+              valueFrom:
+                configMapKeyRef:
+                  name: cici-config-prod
+                  key: CICI_SAMPLE_RATE
+            - name: EARS_SILENCE_DURATION_MS
+              valueFrom:
+                configMapKeyRef:
+                  name: cici-config-prod
+                  key: CICI_EARS_SILENCE_MS
             - name: EARS_DEBUG
-              value: "false"
+              valueFrom:
+                configMapKeyRef:
+                  name: cici-config-prod
+                  key: CICI_EARS_DEBUG
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: cici-config-prod
+                  key: CICI_LOG_LEVEL
 - target:
     version: v1
     kind: Service

@@ -22,6 +22,11 @@ spec:
             configMapKeyRef:
               name: gpu-devices
               key: RTX3060_UUID
+        - name: OLLAMA_MODEL
+          valueFrom:
+            configMapKeyRef:
+              name: local-llm-config
+              key: OLLAMA_MODEL
         command:
           - /bin/sh
           - -c
@@ -30,11 +35,11 @@ spec:
             ollama serve &
             sleep 5
             # Check if model already exists
-            if ! ollama list | grep -q hermes3; then
-              echo "Pulling Hermes 3 8B model..."
-              ollama pull hermes3
+            if ! ollama list | grep -q "$OLLAMA_MODEL"; then
+              echo "Pulling $OLLAMA_MODEL model..."
+              ollama pull "$OLLAMA_MODEL"
             else
-              echo "Hermes 3 8B model already exists"
+              echo "$OLLAMA_MODEL model already exists"
             fi
         volumeMounts:
         - name: ollama-models

@@ -31,12 +31,24 @@ spec:
         - name: EARS_PORT
           value: "8766"
         - name: SAMPLE_RATE
-          value: "16000"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_SAMPLE_RATE
         - name: EARS_SILENCE_DURATION_MS
-          value: "1000"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_EARS_SILENCE_MS
         - name: EARS_DEBUG
-          value: "false"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_EARS_DEBUG
         - name: LOG_LEVEL
-          value: "INFO"
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_LOG_LEVEL
       imagePullSecrets:
       - name: ghcr-pull-image-secret

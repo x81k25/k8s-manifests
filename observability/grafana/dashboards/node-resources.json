@@ -23,7 +23,7 @@
   "panels": [
     {
       "type": "row",
-      "title": "CPU",
+      "title": "CPU (cores)",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -107,7 +107,7 @@
           "refId": "A"
         }
       ],
-      "title": "server CPU usage (cores)",
+      "title": "system",
       "type": "gauge"
     },
     {
@@ -183,7 +183,7 @@
           "refId": "A"
         }
       ],
-      "title": "total container cpu usage (cores)",
+      "title": "cluster",
       "type": "gauge"
     },
     {
@@ -255,7 +255,7 @@
           "refId": "A"
         }
       ],
-      "title": "total namespace cpu requets (cores)",
+      "title": "cluster requests",
       "type": "gauge"
     },
     {
@@ -327,7 +327,7 @@
           "refId": "A"
         }
       ],
-      "title": "total namespace cpu lmits (cores)",
+      "title": "cluster limits",
       "type": "gauge"
     },
     {
@@ -778,7 +778,7 @@
     },
     {
       "type": "row",
-      "title": "RAM",
+      "title": "RAM (GiB)",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -891,7 +891,7 @@
           "refId": "B"
         }
       ],
-      "title": "system memory usage (GiB)",
+      "title": "system",
       "type": "gauge"
     },
     {
@@ -967,7 +967,7 @@
           "refId": "A"
         }
       ],
-      "title": "total container memory usage (GiB)",
+      "title": "cluster",
       "type": "gauge"
     },
     {
@@ -1039,7 +1039,7 @@
           "refId": "A"
         }
       ],
-      "title": "total namespace memory requests (GiB)",
+      "title": "cluster requests",
       "type": "gauge"
     },
     {
@@ -1111,7 +1111,7 @@
           "refId": "A"
         }
       ],
-      "title": "total namespace Memory limits (GiB)",
+      "title": "cluster limits",
       "type": "gauge"
     },
     {
@@ -1592,7 +1592,7 @@
     },
     {
       "type": "row",
-      "title": "GPU",
+      "title": "GPU 0 (GTX 960)",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1640,7 +1640,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 34
       },
@@ -1673,11 +1673,120 @@
             "uid": "PBFA97CFB590B2093"
           },
           "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
+          "legendFormat": "system",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
+          "legendFormat": "container",
+          "refId": "B"
         }
       ],
-      "title": "GPU 0 utilization (%)",
+      "title": "utilization (%)",
       "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 3.93,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 2.95
+              },
+              {
+                "color": "red",
+                "value": 3.73
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "id": 41,
+      "options": {
+        "colorMode": "value",
+        "displayMode": "basic",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
+          "legendFormat": "system",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
+          "legendFormat": "container",
+          "refId": "B"
+        }
+      ],
+      "title": "VRAM (GiB)",
+      "type": "gauge"
+    },
+    {
+      "type": "row",
+      "title": "GPU 1 (RTX 3060)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 108,
+      "panels": []
     },
     {
       "datasource": {
@@ -1716,9 +1825,9 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 34
+        "w": 12,
+        "x": 0,
+        "y": 41
       },
       "id": 56,
       "options": {
@@ -1749,162 +1858,106 @@
             "uid": "PBFA97CFB590B2093"
           },
           "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
+          "legendFormat": "system",
           "refId": "A"
-        }
-      ],
-      "title": "GPU 1 utilization (%)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 34
-      },
-      "id": 54,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
-          "refId": "A"
-        }
-      ],
-      "title": "GPU 0 container utilization (%)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 70
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 34
-      },
-      "id": 57,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
           "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
-          "refId": "A"
+          "legendFormat": "container",
+          "refId": "B"
         }
       ],
-      "title": "GPU 1 container utilization (%)",
+      "title": "utilization (%)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 11.64,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 8.73
+              },
+              {
+                "color": "red",
+                "value": 11.06
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 41
+      },
+      "id": 58,
+      "options": {
+        "colorMode": "value",
+        "displayMode": "basic",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
+          "legendFormat": "system",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
+          "legendFormat": "container",
+          "refId": "B"
+        }
+      ],
+      "title": "VRAM (GiB)",
       "type": "gauge"
     },
     {
@@ -2112,323 +2165,6 @@
           "type": "timeseries"
         }
       ]
-    },
-    {
-      "type": "row",
-      "title": "VRAM",
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 49
-      },
-      "id": 108,
-      "panels": []
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 3.93,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 2.95
-              },
-              {
-                "color": "red",
-                "value": 3.73
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 0,
-        "y": 50
-      },
-      "id": 41,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "GPU 0 VRAM (GiB)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 11.64,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 8.73
-              },
-              {
-                "color": "red",
-                "value": 11.06
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 6,
-        "y": 50
-      },
-      "id": 58,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "GPU 1 VRAM (GiB)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 3.93,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 2.95
-              },
-              {
-                "color": "red",
-                "value": 3.73
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 12,
-        "y": 50
-      },
-      "id": 48,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "GPU 0 container VRAM (GiB)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 11.64,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "yellow",
-                "value": 8.73
-              },
-              {
-                "color": "red",
-                "value": 11.06
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 6,
-        "x": 18,
-        "y": 50
-      },
-      "id": 59,
-      "options": {
-        "colorMode": "value",
-        "displayMode": "basic",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto",
-        "textMode": "auto"
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
-          "refId": "A"
-        }
-      ],
-      "title": "GPU 1 container VRAM (GiB)",
-      "type": "gauge"
     },
     {
       "type": "row",

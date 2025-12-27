@@ -30,11 +30,11 @@ spec:
             ollama serve &
             sleep 5
             # Check if model already exists
-            if ! ollama list | grep -q phi3; then
-              echo "Pulling Phi-3 model..."
-              ollama pull phi3
+            if ! ollama list | grep -q hermes3; then
+              echo "Pulling Hermes 3 8B model..."
+              ollama pull hermes3
             else
-              echo "Phi-3 model already exists"
+              echo "Hermes 3 8B model already exists"
             fi
         volumeMounts:
         - name: ollama-models

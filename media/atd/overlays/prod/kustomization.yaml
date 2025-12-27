@@ -17,6 +17,9 @@ patches:
           containers:
           - name: vpn-sidecar
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:main
+            envFrom:
+            - secretRef:
+                name: wireguard-secrets
             livenessProbe:
               exec:
                 command:

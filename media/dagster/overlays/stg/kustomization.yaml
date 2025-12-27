@@ -151,7 +151,7 @@ patches:
             - reel-driver-config
             - at-config
             - transmission-config
-            - dagster-timeout-config
+            - dagster-timeout-config-stg
             env_secrets:
             - dagster-secrets
             - wst-secrets

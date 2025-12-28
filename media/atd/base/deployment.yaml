@@ -30,6 +30,9 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
+        volumeMounts:
+        - name: tun-device
+          mountPath: /dev/net/tun
         ports:
         - containerPort: 9091
         livenessProbe:
@@ -115,6 +118,10 @@ spec:
         hostPath:
           path: /d/media-cache/ENV/incomplete
           type: DirectoryOrCreate
+      - name: tun-device
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice
       dnsPolicy: "None"
       dnsConfig:
         nameservers:

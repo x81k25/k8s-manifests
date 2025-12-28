@@ -17,7 +17,7 @@ spec:
         prometheus.io/path: "/metrics"
     spec:
       containers:
-      - name: vpn-sidecar
+      - name: gluetun
         image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:latest
         imagePullPolicy: Always
         resources:
@@ -30,30 +30,6 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
-        livenessProbe:
-          exec:
-            command:
-            - sh
-            - -c
-            - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
-          initialDelaySeconds: 30
-          periodSeconds: 60
-          timeoutSeconds: 15
-          failureThreshold: 3
-        envFrom:
-        - secretRef:
-            name: wireguard-secrets
-      - name: automatic-transmission-daemon
-        image: ghcr.io/x81k25/automatic-transmission-daemon-atd:latest
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "128Mi"
-          limits:
-            memory: "3Gi"
-        securityContext:
-          runAsUser: 1005
-          runAsGroup: 1001
         ports:
         - containerPort: 9091
         livenessProbe:
@@ -61,16 +37,70 @@ spec:
             command:
             - sh
             - -c
-            - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
+            - wget -q -O- https://ipinfo.io/ip || exit 1
           initialDelaySeconds: 60
-          periodSeconds: 60
-          timeoutSeconds: 15
+          periodSeconds: 30
+          timeoutSeconds: 10
           failureThreshold: 3
+        env:
+        # gluetun static config
+        - name: VPN_SERVICE_PROVIDER
+          value: "custom"
+        - name: VPN_TYPE
+          value: "wireguard"
+        - name: WIREGUARD_IMPLEMENTATION
+          value: "userspace"
+        - name: DOT
+          value: "off"
+        # wireguard interface (from secret)
+        - name: WIREGUARD_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_PRIVATE_KEY
+        - name: WIREGUARD_ADDRESSES
+          value: "10.65.56.151/32"  # TODO: move to secret WIREGUARD_ADDRESS_IPV4
+        - name: WIREGUARD_MTU
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_MTU
+        # wireguard peer (from secret)
+        - name: WIREGUARD_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_PUBLIC_KEY
+        - name: WIREGUARD_ENDPOINT_IP
+          value: "206.217.206.107"  # TODO: move to secret
+        - name: WIREGUARD_ENDPOINT_PORT
+          value: "51820"  # TODO: move to secret
+        # dns config
+        - name: DNS_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_DNS
+      - name: transmission
+        image: ghcr.io/x81k25/automatic-transmission-daemon-atd:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "128Mi"
+          limits:
+            memory: "3Gi"
+        readinessProbe:
+          tcpSocket:
+            port: 9091
+          initialDelaySeconds: 10
+          periodSeconds: 10
         env:
         - name: PUID
           value: "1005"
         - name: PGID
           value: "1001"
+        - name: TZ
+          value: "America/Los_Angeles"
         volumeMounts:
         - name: complete-volume
           mountPath: /media-cache/complete

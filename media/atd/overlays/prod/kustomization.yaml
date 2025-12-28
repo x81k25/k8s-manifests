@@ -15,45 +15,20 @@ patches:
       template:
         spec:
           containers:
-          - name: vpn-sidecar
+          - name: gluetun
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:main
-            envFrom:
-            - secretRef:
-                name: wireguard-secrets
-            livenessProbe:
-              exec:
-                command:
-                - sh
-                - -c
-                - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
-              initialDelaySeconds: 120
-              periodSeconds: 120
-              timeoutSeconds: 30
-              failureThreshold: 5
-          - name: automatic-transmission-daemon
+            env:
+            - name: WIREGUARD_ADDRESSES
+              value: "10.65.182.17/32"  # prod-specific (us-dal-wg-505)
+            - name: WIREGUARD_ENDPOINT_IP
+              value: "206.217.206.107"  # prod-specific (us-dal-wg-505)
+          - name: transmission
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:main
-            livenessProbe:
-              exec:
-                command:
-                - sh
-                - -c
-                - curl -s --fail --connect-timeout 10 https://api.ipify.org || exit 1
-              initialDelaySeconds: 180
-              periodSeconds: 120
-              timeoutSeconds: 30
-              failureThreshold: 5
-            resources:
-              requests:
-                cpu: 250m
-                memory: 512Mi
-              limits:
-                cpu: 500m
-                memory: 3Gi
             volumeMounts:
             - name: complete-volume
-              mountPath: /media-cache/prod/complete
+              mountPath: /downloads/complete
             - name: incomplete-volume
-              mountPath: /media-cache/prod/incomplete
+              mountPath: /downloads/incomplete
           volumes:
           - name: complete-volume
             hostPath:

@@ -77,7 +77,7 @@ spec:
               name: wireguard-secrets
               key: WIREGUARD_PUBLIC_KEY
         - name: WIREGUARD_ENDPOINT_IP
-          value: "206.217.206.107"  # TODO: move to secret
+          value: "206.217.206.67"  # TODO: move to secret
         - name: WIREGUARD_ENDPOINT_PORT
           value: "51820"  # TODO: move to secret
         - name: WIREGUARD_ALLOWED_IPS

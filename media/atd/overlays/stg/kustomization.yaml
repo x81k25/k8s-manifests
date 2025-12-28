@@ -15,28 +15,20 @@ patches:
       template:
         spec:
           containers:
-          - name: vpn-sidecar
+          - name: gluetun
             image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:stg
-            resources:
-              requests:
-                memory: "64Mi"
-              limits:
-                memory: "1Gi"
-            envFrom:
-            - secretRef:
-                name: wireguard-secrets
-          - name: automatic-transmission-daemon
+            env:
+            - name: WIREGUARD_ADDRESSES
+              value: "10.73.247.105/32"  # stg-specific
+            - name: WIREGUARD_ENDPOINT_IP
+              value: "206.217.206.107"  # stg-specific
+          - name: transmission
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:stg
-            resources:
-              requests:
-                memory: "128Mi"
-              limits:
-                memory: "3Gi"
             volumeMounts:
             - name: complete-volume
-              mountPath: /media-cache/stg/complete
+              mountPath: /downloads/complete
             - name: incomplete-volume
-              mountPath: /media-cache/stg/incomplete
+              mountPath: /downloads/incomplete
           volumes:
           - name: complete-volume
             hostPath:

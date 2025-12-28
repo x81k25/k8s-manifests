@@ -80,6 +80,8 @@ spec:
           value: "206.217.206.107"  # TODO: move to secret
         - name: WIREGUARD_ENDPOINT_PORT
           value: "51820"  # TODO: move to secret
+        - name: WIREGUARD_ALLOWED_IPS
+          value: "0.0.0.0/0"  # IPv4 only, no IPv6
         # dns config
         - name: DNS_ADDRESS
           valueFrom:

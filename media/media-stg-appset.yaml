@@ -12,8 +12,8 @@ spec:
   generators:
   - list:
       elements:
-      - name: atd
-        path: media/atd/overlays
+      #- name: atd
+      #  path: media/atd/overlays
       - name: center-console
         path: media/center-console/overlays
       - name: rear-diff
@@ -25,13 +25,9 @@ spec:
       name: '{{name}}-stg'
       annotations:
         argocd-image-updater.argoproj.io/image-list: >-
-          atd-vpn=ghcr.io/x81k25/automatic-transmission-daemon-vpn:stg,
-          atd-main=ghcr.io/x81k25/automatic-transmission-daemon-atd:stg,
           center-console=ghcr.io/x81k25/center-console:stg,
           rear-diff=ghcr.io/x81k25/rear-differential:stg,
           dagstributor=ghcr.io/x81k25/dagstributor:stg
-        argocd-image-updater.argoproj.io/atd-vpn.update-strategy: "digest"
-        argocd-image-updater.argoproj.io/atd-main.update-strategy: "digest"
         argocd-image-updater.argoproj.io/center-console.update-strategy: "digest"
         argocd-image-updater.argoproj.io/rear-diff.update-strategy: "digest"
         argocd-image-updater.argoproj.io/dagstributor.update-strategy: "digest"

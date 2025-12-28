@@ -13,8 +13,8 @@ spec:
   generators:
   - list:
       elements:
-      - name: atd-prod
-        path: media/atd/overlays/prod
+      #- name: atd-prod
+      #  path: media/atd/overlays/prod
       - name: center-console-prod
         path: media/center-console/overlays/prod
       - name: rear-diff-prod

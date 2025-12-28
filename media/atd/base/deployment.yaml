@@ -52,7 +52,7 @@ spec:
         - name: VPN_TYPE
           value: "wireguard"
         - name: WIREGUARD_IMPLEMENTATION
-          value: "userspace"
+          value: "kernelspace"
         - name: DOT
           value: "off"
         - name: VPN_IPV6

@@ -21,7 +21,7 @@ patches:
             - name: WIREGUARD_ADDRESSES
               value: "10.73.247.105/32"  # stg-specific
             - name: WIREGUARD_ENDPOINT_IP
-              value: "206.217.206.107"  # stg-specific
+              value: "206.217.206.87"  # stg-specific (us-dal-wg-504)
           - name: transmission
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:stg
             volumeMounts:

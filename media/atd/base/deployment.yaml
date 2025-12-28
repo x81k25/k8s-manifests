@@ -55,6 +55,8 @@ spec:
           value: "userspace"
         - name: DOT
           value: "off"
+        - name: VPN_IPV6
+          value: "off"
         # wireguard interface (from secret)
         - name: WIREGUARD_PRIVATE_KEY
           valueFrom:

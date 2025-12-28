@@ -114,5 +114,5 @@ data:
         skip_empty_files: true
         endpoint_url:
           env: DAGSTER_MINIO_ENDPOINT
-        region_name: "us-east-1"
+        region: "us-east-1"
         use_ssl: false

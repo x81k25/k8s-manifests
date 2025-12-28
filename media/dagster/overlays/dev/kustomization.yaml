@@ -176,6 +176,19 @@ patches:
           max_runtime_seconds: 3600
           poll_interval_seconds: 30
 
+        compute_logs:
+          module: dagster_aws.s3.compute_log_manager
+          class: S3ComputeLogManager
+          config:
+            bucket: "dagster-compute-logs"
+            prefix: "compute-logs"
+            local_dir: "/tmp/dagster-logs"
+            skip_empty_files: true
+            endpoint_url:
+              env: DAGSTER_MINIO_ENDPOINT
+            region_name: "us-east-1"
+            use_ssl: false
+
 # Dagster Service Patch
 - target:
     version: v1

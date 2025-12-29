@@ -80,18 +80,6 @@ spec:
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
-        # AWS credentials for S3ComputeLogManager (MinIO)
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: dagster-secrets
-              key: DAGSTER_MINIO_ACCESS_KEY
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: dagster-secrets
-              key: DAGSTER_MINIO_SECRET_KEY
-        # Additional Dagster config
         - name: DAGIT_PORT
           value: "3000"
         - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
@@ -155,17 +143,6 @@ spec:
         env:
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
-        # AWS credentials for S3ComputeLogManager (MinIO)
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: dagster-secrets
-              key: DAGSTER_MINIO_ACCESS_KEY
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: dagster-secrets
-              key: DAGSTER_MINIO_SECRET_KEY
         - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
           value: "media-dev"
         - name: DAGSTER_K8S_PIPELINE_RUN_ENV_CONFIGMAP

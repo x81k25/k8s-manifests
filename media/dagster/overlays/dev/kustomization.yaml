@@ -170,35 +170,11 @@ patches:
                   limits:
                     cpu: "1000m"
                     memory: "2Gi"
-                env:
-                - name: AWS_ACCESS_KEY_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: dagster-secrets
-                      key: DAGSTER_MINIO_ACCESS_KEY
-                - name: AWS_SECRET_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: dagster-secrets
-                      key: DAGSTER_MINIO_SECRET_KEY
 
         run_monitoring:
           enabled: true
           max_runtime_seconds: 3600
           poll_interval_seconds: 30
-
-        compute_logs:
-          module: dagster_aws.s3.compute_log_manager
-          class: S3ComputeLogManager
-          config:
-            bucket: "dagster-compute-logs"
-            prefix: "compute-logs"
-            local_dir: "/tmp/dagster-logs"
-            skip_empty_files: true
-            endpoint_url:
-              env: DAGSTER_MINIO_ENDPOINT
-            region: "us-east-1"
-            use_ssl: false
 
 # Dagster Service Patch
 - target:

@@ -217,7 +217,7 @@ patches:
             local_dir: "/tmp/dagster-logs"
             endpoint_url:
               env: DAGSTER_MINIO_ENDPOINT
-            region_name: "us-east-1"
+            region: "us-east-1"
 
         run_monitoring:
           enabled: true

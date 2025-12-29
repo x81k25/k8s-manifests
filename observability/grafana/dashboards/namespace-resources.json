@@ -109,7 +109,7 @@
           "refId": "A"
         }
       ],
-      "title": "current CPU vs limits (%)",
+      "title": "current usage vs limits (%)",
       "type": "gauge"
     },
     {
@@ -173,7 +173,7 @@
           "refId": "A"
         }
       ],
-      "title": "namespace CPU requests quota (cores)",
+      "title": "namespace requests quota (cores)",
       "type": "stat"
     },
     {
@@ -249,7 +249,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU requests usage vs quota (%)",
+      "title": "requests usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -325,7 +325,7 @@
           "refId": "A"
         }
       ],
-      "title": "CPU limits usage vs quota (%)",
+      "title": "limits usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -389,7 +389,7 @@
           "refId": "A"
         }
       ],
-      "title": "namespace CPU limits quota (cores)",
+      "title": "namespace limits quota (cores)",
       "type": "stat"
     },
     {
@@ -571,7 +571,7 @@
               "refId": "C"
             }
           ],
-          "title": "CPU usage by container (cores)",
+          "title": "usage by container (cores)",
           "type": "timeseries"
         },
         {
@@ -668,7 +668,7 @@
               "refId": "A"
             }
           ],
-          "title": "CPU requests by container (% of quota)",
+          "title": "requests by container (% of quota)",
           "type": "timeseries"
         },
         {
@@ -765,7 +765,7 @@
               "refId": "A"
             }
           ],
-          "title": "CPU limits by container (% of quota)",
+          "title": "limits by container (% of quota)",
           "type": "timeseries"
         }
       ]
@@ -856,7 +856,7 @@
           "refId": "A"
         }
       ],
-      "title": "current memory usage vs limits (%)",
+      "title": "current usage vs limits (%)",
       "type": "gauge"
     },
     {
@@ -920,7 +920,7 @@
           "refId": "A"
         }
       ],
-      "title": "namespace memory requests quota (GiB)",
+      "title": "namespace requests quota (GiB)",
       "type": "stat"
     },
     {
@@ -996,7 +996,7 @@
           "refId": "A"
         }
       ],
-      "title": "memory requests usage vs quota (%)",
+      "title": "requests usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -1072,7 +1072,7 @@
           "refId": "A"
         }
       ],
-      "title": "memory limits usage vs quota (%)",
+      "title": "limits usage vs quota (%)",
       "type": "gauge"
     },
     {
@@ -1136,7 +1136,7 @@
           "refId": "A"
         }
       ],
-      "title": "namespace memory limits quota (GiB)",
+      "title": "namespace limits quota (GiB)",
       "type": "stat"
     },
     {
@@ -1319,7 +1319,7 @@
               "refId": "C"
             }
           ],
-          "title": "memory usage by container (GiB)",
+          "title": "usage by container (GiB)",
           "type": "timeseries"
         },
         {
@@ -1416,7 +1416,7 @@
               "refId": "A"
             }
           ],
-          "title": "memory requests by container (% of quota)",
+          "title": "requests by container (% of quota)",
           "type": "timeseries"
         },
         {
@@ -1513,7 +1513,7 @@
               "refId": "A"
             }
           ],
-          "title": "memory limits by container (% of quota)",
+          "title": "limits by container (% of quota)",
           "type": "timeseries"
         }
       ]

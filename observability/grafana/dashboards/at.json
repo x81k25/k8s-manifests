@@ -44,7 +44,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 20,
         "w": 24,
         "x": 0,
         "y": 1
@@ -70,56 +70,12 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" |~ \"(?i)${log_level}\"",
           "queryType": "range",
           "refId": "A"
         }
       ],
-      "title": "all logs",
-      "type": "logs"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "P8E80F9AEF21F6940"
-      },
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 13
-      },
-      "id": 3,
-      "options": {
-        "dedupStrategy": "none",
-        "enableInfiniteScrolling": true,
-        "enableLogDetails": true,
-        "prettifyLogMessage": false,
-        "showCommonLabels": false,
-        "showLabels": false,
-        "showTime": true,
-        "sortOrder": "Descending",
-        "wrapLogMessage": true
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "direction": "backward",
-          "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" |~ \"(?i)(error|warning)\"",
-          "queryType": "range",
-          "refId": "A"
-        }
-      ],
-      "title": "error and warning logs",
+      "title": "logs",
       "type": "logs"
     }
   ],
@@ -155,6 +111,47 @@
         "regex": "media-.*",
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": ".*"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Log Level",
+        "name": "log_level",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": ".*"
+          },
+          {
+            "selected": false,
+            "text": "ERROR",
+            "value": "ERROR"
+          },
+          {
+            "selected": false,
+            "text": "WARNING",
+            "value": "WARNING"
+          },
+          {
+            "selected": false,
+            "text": "INFO",
+            "value": "INFO"
+          },
+          {
+            "selected": false,
+            "text": "SUCCESS",
+            "value": "SUCCESS"
+          }
+        ],
+        "query": "All : .*, ERROR : ERROR, WARNING : WARNING, INFO : INFO, SUCCESS : SUCCESS",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -166,5 +163,5 @@
   "timezone": "",
   "title": "at",
   "uid": "at",
-  "version": 1
+  "version": 2
 }

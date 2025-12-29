@@ -34,6 +34,12 @@ configMapGenerator:
   options:
     labels:
       grafana_dashboard: "1"
+- name: grafana-dashboard-at
+  files:
+  - at.json
+  options:
+    labels:
+      grafana_dashboard: "1"
 
 generatorOptions:
   disableNameSuffixHash: true

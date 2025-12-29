@@ -28,12 +28,6 @@ configMapGenerator:
   options:
     labels:
       grafana_dashboard: "1"
-- name: grafana-dashboard-k8s-job-history
-  files:
-  - k8s-job-history.json
-  options:
-    labels:
-      grafana_dashboard: "1"
 - name: grafana-dashboard-at
   files:
   - at.json

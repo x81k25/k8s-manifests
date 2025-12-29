@@ -57,9 +57,6 @@ spec:
         - name: dashboards-namespace-health
           mountPath: /var/lib/grafana/dashboards/namespace-health.json
           subPath: namespace-health.json
-        - name: dashboards-k8s-job-history
-          mountPath: /var/lib/grafana/dashboards/k8s-job-history.json
-          subPath: k8s-job-history.json
         - name: dashboards-at
           mountPath: /var/lib/grafana/dashboards/at.json
           subPath: at.json
@@ -115,9 +112,6 @@ spec:
       - name: dashboards-namespace-health
         configMap:
           name: grafana-dashboard-namespace-health
-      - name: dashboards-k8s-job-history
-        configMap:
-          name: grafana-dashboard-k8s-job-history
       - name: dashboards-at
         configMap:
           name: grafana-dashboard-at

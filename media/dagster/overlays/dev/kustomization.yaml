@@ -212,8 +212,8 @@ patches:
           module: dagster_aws.s3.compute_log_manager
           class: S3ComputeLogManager
           config:
-            bucket: "dagster-compute-logs"
-            prefix: "media/dagster/"
+            bucket: "media"
+            prefix: "dagster/"
             local_dir: "/tmp/dagster-logs"
             endpoint_url:
               env: DAGSTER_MINIO_ENDPOINT

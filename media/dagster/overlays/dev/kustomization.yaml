@@ -41,6 +41,18 @@ patches:
               value: "ghcr-pull-image-secret"
             - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
               value: "dagster-dev"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: dagster-secrets
+                  key: DAGSTER_MINIO_ACCESS_KEY
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dagster-secrets
+                  key: DAGSTER_MINIO_SECRET_KEY
+            - name: DAGSTER_MINIO_ENDPOINT
+              value: "http://minio-dev.pgsql:9000"
             resources:
               requests:
                 cpu: 10m
@@ -56,6 +68,18 @@ patches:
               value: "ghcr-pull-image-secret"
             - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
               value: "dagster-dev"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: dagster-secrets
+                  key: DAGSTER_MINIO_ACCESS_KEY
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: dagster-secrets
+                  key: DAGSTER_MINIO_SECRET_KEY
+            - name: DAGSTER_MINIO_ENDPOINT
+              value: "http://minio-dev.pgsql:9000"
             resources:
               requests:
                 cpu: 10m
@@ -170,6 +194,30 @@ patches:
                   limits:
                     cpu: "1000m"
                     memory: "2Gi"
+                env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: dagster-secrets
+                      key: DAGSTER_MINIO_ACCESS_KEY
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: dagster-secrets
+                      key: DAGSTER_MINIO_SECRET_KEY
+                - name: DAGSTER_MINIO_ENDPOINT
+                  value: "http://minio-dev.pgsql:9000"
+
+        compute_logs:
+          module: dagster_aws.s3.compute_log_manager
+          class: S3ComputeLogManager
+          config:
+            bucket: "dagster-compute-logs"
+            prefix: "media/dagster/"
+            local_dir: "/tmp/dagster-logs"
+            endpoint_url:
+              env: DAGSTER_MINIO_ENDPOINT
+            region_name: "us-east-1"
 
         run_monitoring:
           enabled: true

@@ -60,6 +60,9 @@ spec:
         - name: dashboards-k8s-job-history
           mountPath: /var/lib/grafana/dashboards/k8s-job-history.json
           subPath: k8s-job-history.json
+        - name: dashboards-at
+          mountPath: /var/lib/grafana/dashboards/at.json
+          subPath: at.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -115,6 +118,9 @@ spec:
       - name: dashboards-k8s-job-history
         configMap:
           name: grafana-dashboard-k8s-job-history
+      - name: dashboards-at
+        configMap:
+          name: grafana-dashboard-at
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

@@ -70,7 +70,7 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" |~ \"(?i)${log_level}\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" |~ \"(?i)${log_level}\" |~ \"$hash\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -152,6 +152,20 @@
         "query": "All : .*, ERROR : ERROR, WARNING : WARNING, INFO : INFO, SUCCESS : SUCCESS",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "hide": 0,
+        "label": "Hash",
+        "name": "hash",
+        "options": [],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },

@@ -12,7 +12,7 @@ metadata:
   name: dagster
 rules:
 - apiGroups: [""]
-  resources: ["pods", "pods/log"]
+  resources: ["pods", "pods/log", "events"]
   verbs: ["get", "list", "watch", "create", "delete"]
 - apiGroups: [""]
   resources: ["configmaps"]

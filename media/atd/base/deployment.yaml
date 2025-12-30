@@ -101,6 +101,9 @@ spec:
             port: 9091
           initialDelaySeconds: 10
           periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: transmission-settings
         env:
         - name: PUID
           value: "1005"

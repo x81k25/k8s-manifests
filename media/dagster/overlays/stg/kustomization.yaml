@@ -197,8 +197,6 @@ patches:
                     cpu: "1000m"
                     memory: "2Gi"
                 env:
-                - name: PYTHONWARNINGS
-                  value: "ignore::dagster.BetaWarning"
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:

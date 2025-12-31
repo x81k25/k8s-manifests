@@ -24,7 +24,7 @@ patches:
                 memory: 256Mi
               limits:
                 memory: 2Gi
-                cpu: 1000m
+                cpu: 2000m
             volumeMounts:
             - name: plex-config
               mountPath: /config

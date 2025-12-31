@@ -309,8 +309,8 @@
     },
     {
       "datasource": {
-        "type": "loki",
-        "uid": "P8E80F9AEF21F6940"
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -318,21 +318,33 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "red"
               },
               {
-                "color": "yellow",
-                "value": 10
-              },
-              {
-                "color": "red",
-                "value": 50
+                "color": "green",
+                "value": 1
               }
             ]
           },
@@ -346,15 +358,15 @@
         "x": 16,
         "y": 1
       },
-      "id": 15,
+      "id": 16,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "background",
+        "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "sum"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -367,14 +379,14 @@
       "targets": [
         {
           "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)ERROR\" [$__range]))",
+          "expr": "min(kube_pod_container_status_ready{namespace=~\"$namespace\", container=~\"gluetun|transmission\"}) or vector(0)",
           "refId": "A"
         }
       ],
-      "title": "error logs",
+      "title": "atd status",
       "type": "stat"
     },
     {
@@ -428,7 +440,7 @@
         "x": 20,
         "y": 1
       },
-      "id": 16,
+      "id": 19,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -452,11 +464,11 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "min(kube_pod_container_status_ready{namespace=~\"$namespace\", container=~\"gluetun|transmission\"}) or vector(0)",
+          "expr": "min(kube_pod_container_status_ready{namespace=~\"$namespace\", container=~\"dagster-dagit|dagster-daemon\"}) or vector(0)",
           "refId": "A"
         }
       ],
-      "title": "atd status",
+      "title": "dagster status",
       "type": "stat"
     },
     {
@@ -565,7 +577,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 12,
+        "w": 24,
         "x": 0,
         "y": 5
       },
@@ -614,211 +626,6 @@
         }
       ],
       "title": "pipeline jobs over time",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "loki",
-        "uid": "P8E80F9AEF21F6940"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 30,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "vis": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "error"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "warning"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "info"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "blue",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "debug"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "success"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "green",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 5
-      },
-      "id": 18,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "pluginVersion": "12.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)ERROR\" [1m]))",
-          "legendFormat": "error",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)WARNING\" [1m]))",
-          "legendFormat": "warning",
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)INFO\" [1m]))",
-          "legendFormat": "info",
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)DEBUG\" [1m]))",
-          "legendFormat": "debug",
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "P8E80F9AEF21F6940"
-          },
-          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)SUCCESS\" [1m]))",
-          "legendFormat": "success",
-          "refId": "E"
-        }
-      ],
-      "title": "log volume by level (per min)",
       "type": "timeseries"
     },
     {
@@ -982,5 +789,5 @@
   "timezone": "",
   "title": "at",
   "uid": "at",
-  "version": 4
+  "version": 5
 }

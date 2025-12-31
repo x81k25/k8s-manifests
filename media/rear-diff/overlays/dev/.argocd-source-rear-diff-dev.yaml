@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/x81k25/rear-differential@sha256:f35b387be9f23e6b7402d5a1678195727f30b62d8e9e4dd91398e83dacaee3e3
+  - ghcr.io/x81k25/rear-differential@sha256:c21fbfbd10fa0f11f91e38422e4f64d46c0f1520237208d2387736fb8f7cda27

@@ -24,6 +24,11 @@ patches:
               value: "206.217.206.107"  # prod-specific (us-dal-wg-505)
           - name: transmission
             image: ghcr.io/x81k25/automatic-transmission-daemon-atd:main
+            resources:
+              requests:
+                memory: "2Gi"
+              limits:
+                memory: "6Gi"
             volumeMounts:
             - name: complete-volume
               mountPath: /downloads/complete

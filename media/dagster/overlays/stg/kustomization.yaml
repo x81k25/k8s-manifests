@@ -188,6 +188,7 @@ patches:
               job_spec_config:
                 ttl_seconds_after_finished: 300
               container_config:
+                imagePullPolicy: Always
                 resources:
                   requests:
                     cpu: "100m"
@@ -196,6 +197,8 @@ patches:
                     cpu: "1000m"
                     memory: "2Gi"
                 env:
+                - name: PYTHONWARNINGS
+                  value: "ignore::dagster.BetaWarning"
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:

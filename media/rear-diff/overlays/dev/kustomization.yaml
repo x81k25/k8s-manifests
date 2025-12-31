@@ -26,6 +26,10 @@ patches:
             env:
             - name: LOG_LEVEL
               value: "DEBUG"
+            - name: REAR_DIFF_FILE_DELETION_ENABLED
+              value: "true"
+            - name: REAR_DIFF_DB_PATH_PREFIX
+              value: "/d/media-cache/dev/transfer"
 - target:
     version: v1
     kind: Service

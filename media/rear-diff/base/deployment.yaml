@@ -17,6 +17,10 @@ spec:
         prometheus.io/port: "8000"
         prometheus.io/path: "/metrics"
     spec:
+      securityContext:
+        runAsUser: 1005
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
       - name: rear-diff-api
         image: ghcr.io/x81k25/rear-differential:latest
@@ -35,5 +39,13 @@ spec:
             name: rear-diff-config
         - secretRef:
             name: rear-diff-secrets
+        volumeMounts:
+        - name: library-volume
+          mountPath: /library
+      volumes:
+      - name: library-volume
+        hostPath:
+          path: /k/media/video
+          type: Directory
       imagePullSecrets:
       - name: ghcr-pull-image-secret

@@ -304,13 +304,13 @@
           "refId": "A"
         }
       ],
-      "title": "success rate",
+      "title": "job success rate",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
       },
       "fieldConfig": {
         "defaults": {
@@ -328,11 +328,11 @@
               },
               {
                 "color": "yellow",
-                "value": 3
+                "value": 10
               },
               {
                 "color": "red",
-                "value": 10
+                "value": 50
               }
             ]
           },
@@ -354,7 +354,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
           "fields": "",
           "values": false
@@ -367,14 +367,14 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(kube_pod_container_status_restarts_total{namespace=~\"$namespace\", container=~\"atd|gluetun|transmission|dagster-dagit|dagster-daemon\"}) or vector(0)",
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)ERROR\" [$__range]))",
           "refId": "A"
         }
       ],
-      "title": "container restarts",
+      "title": "error logs",
       "type": "stat"
     },
     {
@@ -618,8 +618,8 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
+        "type": "loki",
+        "uid": "P8E80F9AEF21F6940"
       },
       "fieldConfig": {
         "defaults": {
@@ -672,7 +672,83 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "error"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "debug"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "success"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -698,15 +774,51 @@
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(rate(kube_pod_container_status_restarts_total{namespace=~\"$namespace\", container=~\"atd|gluetun|transmission|dagster-dagit|dagster-daemon\"}[5m]) * 300) by (container)",
-          "legendFormat": "{{container}}",
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)ERROR\" [1m]))",
+          "legendFormat": "error",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)WARNING\" [1m]))",
+          "legendFormat": "warning",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)INFO\" [1m]))",
+          "legendFormat": "info",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)DEBUG\" [1m]))",
+          "legendFormat": "debug",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "P8E80F9AEF21F6940"
+          },
+          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)SUCCESS\" [1m]))",
+          "legendFormat": "success",
+          "refId": "E"
         }
       ],
-      "title": "container restarts (5m rate)",
+      "title": "log volume by level (per min)",
       "type": "timeseries"
     },
     {
@@ -870,5 +982,5 @@
   "timezone": "",
   "title": "at",
   "uid": "at",
-  "version": 3
+  "version": 4
 }

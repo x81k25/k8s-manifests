@@ -370,7 +370,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)ERROR\" [$__range]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)ERROR\" [$__range]))",
           "refId": "A"
         }
       ],
@@ -777,7 +777,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)ERROR\" [1m]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)ERROR\" [1m]))",
           "legendFormat": "error",
           "refId": "A"
         },
@@ -786,7 +786,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)WARNING\" [1m]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)WARNING\" [1m]))",
           "legendFormat": "warning",
           "refId": "B"
         },
@@ -795,7 +795,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)INFO\" [1m]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)INFO\" [1m]))",
           "legendFormat": "info",
           "refId": "C"
         },
@@ -804,7 +804,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)DEBUG\" [1m]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)DEBUG\" [1m]))",
           "legendFormat": "debug",
           "refId": "D"
         },
@@ -813,7 +813,7 @@
             "type": "loki",
             "uid": "P8E80F9AEF21F6940"
           },
-          "expr": "sum(count_over_time({kubernetes_namespace_name=~\"$namespace\", kubernetes_container_name=~\"at-.*\"} |~ \"(?i)SUCCESS\" [1m]))",
+          "expr": "sum(count_over_time({job=\"fluentbit\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" |~ \"(?i)SUCCESS\" [1m]))",
           "legendFormat": "success",
           "refId": "E"
         }

@@ -70,7 +70,7 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" |~ \"(?i)${log_level}\" |~ \"$hash\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" | label_format level=`{{ if .log | contains \"ERROR\" }}error{{ else if .log | contains \"WARNING\" }}warning{{ else if .log | contains \"DEBUG\" }}debug{{ else if .log | contains \"SUCCESS\" }}info{{ else }}info{{ end }}` |~ \"(?i)${log_level}\" |~ \"$hash\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -145,11 +145,16 @@
           },
           {
             "selected": false,
+            "text": "DEBUG",
+            "value": "DEBUG"
+          },
+          {
+            "selected": false,
             "text": "SUCCESS",
             "value": "SUCCESS"
           }
         ],
-        "query": "All : .*, ERROR : ERROR, WARNING : WARNING, INFO : INFO, SUCCESS : SUCCESS",
+        "query": "All : .*, ERROR : ERROR, WARNING : WARNING, INFO : INFO, DEBUG : DEBUG, SUCCESS : SUCCESS",
         "skipUrlSync": false,
         "type": "custom"
       },

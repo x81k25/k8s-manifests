@@ -70,7 +70,7 @@
           },
           "direction": "backward",
           "editorMode": "code",
-          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" | drop stream | label_format level=`{{ if .log | contains \"ERROR\" }}error{{ else if .log | contains \"WARNING\" }}warning{{ else if .log | contains \"DEBUG\" }}debug{{ else if .log | contains \"SUCCESS\" }}info{{ else }}info{{ end }}` |~ \"(?i)${log_level}\" |~ \"$hash\"",
+          "expr": "{job=~\".+\"} | json | kubernetes_namespace_name=~\"$namespace\" | kubernetes_container_name=~\"at-.*\" | line_format \"{{.log}}\" | label_format stream=\"stdout\", level=`{{ if .log | contains \"ERROR\" }}error{{ else if .log | contains \"WARNING\" }}warning{{ else if .log | contains \"DEBUG\" }}debug{{ else if .log | contains \"SUCCESS\" }}info{{ else }}info{{ end }}` |~ \"(?i)${log_level}\" |~ \"$hash\"",
           "queryType": "range",
           "refId": "A"
         }

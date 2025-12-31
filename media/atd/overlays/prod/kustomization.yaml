@@ -28,7 +28,7 @@ patches:
               requests:
                 memory: "2Gi"
               limits:
-                memory: "6Gi"
+                memory: "10Gi"
             volumeMounts:
             - name: complete-volume
               mountPath: /downloads/complete

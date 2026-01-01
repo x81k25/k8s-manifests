@@ -23,9 +23,20 @@ patches:
         spec:
           containers:
           - name: rear-diff-api
-            env:
-            - name: LOG_LEVEL
-              value: "INFO"
+            volumeMounts:
+            - name: media-cache
+              mountPath: /d/media-cache/prod
+            - name: media-library
+              mountPath: /k/media/video
+          volumes:
+          - name: media-cache
+            hostPath:
+              path: /d/media-cache/prod
+              type: Directory
+          - name: media-library
+            hostPath:
+              path: /k/media/video
+              type: Directory
 - target:
     version: v1
     kind: Service

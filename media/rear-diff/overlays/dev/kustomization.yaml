@@ -23,13 +23,14 @@ patches:
         spec:
           containers:
           - name: rear-diff-api
-            env:
-            - name: LOG_LEVEL
-              value: "DEBUG"
-            - name: REAR_DIFF_FILE_DELETION_ENABLED
-              value: "true"
-            - name: REAR_DIFF_DB_PATH_PREFIX
-              value: "/d/media-cache/dev/transfer"
+            volumeMounts:
+            - name: media-cache
+              mountPath: /d/media-cache/dev
+          volumes:
+          - name: media-cache
+            hostPath:
+              path: /d/media-cache/dev
+              type: Directory
 - target:
     version: v1
     kind: Service

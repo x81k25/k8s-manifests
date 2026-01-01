@@ -39,13 +39,7 @@ spec:
             name: rear-diff-config
         - secretRef:
             name: rear-diff-secrets
-        volumeMounts:
-        - name: library-volume
-          mountPath: /library
-      volumes:
-      - name: library-volume
-        hostPath:
-          path: /k/media/video
-          type: Directory
+        volumeMounts: []
+      volumes: []
       imagePullSecrets:
       - name: ghcr-pull-image-secret

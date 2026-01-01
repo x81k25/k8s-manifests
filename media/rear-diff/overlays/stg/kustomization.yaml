@@ -23,9 +23,14 @@ patches:
         spec:
           containers:
           - name: rear-diff-api
-            env:
-            - name: LOG_LEVEL
-              value: "DEBUG"
+            volumeMounts:
+            - name: media-cache
+              mountPath: /d/media-cache/stg
+          volumes:
+          - name: media-cache
+            hostPath:
+              path: /d/media-cache/stg
+              type: Directory
 - target:
     version: v1
     kind: Service

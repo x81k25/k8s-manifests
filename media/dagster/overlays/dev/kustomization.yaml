@@ -167,22 +167,6 @@ patches:
             instance_config_map: dagster-instance-dev
             image_pull_secrets:
             - name: ghcr-pull-image-secret
-            env_config_maps:
-            - environment
-            - dagster-config
-            - wst-config
-            - rear-diff-config
-            - reel-driver-config
-            - at-config
-            - transmission-config
-            - dagster-timeout-config-dev
-            env_secrets:
-            - dagster-secrets
-            - wst-secrets
-            - rear-diff-secrets
-            - reel-driver-secrets
-            - at-secrets
-            - transmission-secrets
             run_k8s_config:
               job_spec_config:
                 ttl_seconds_after_finished: 300

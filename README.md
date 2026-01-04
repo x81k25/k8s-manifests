@@ -412,10 +412,10 @@ All applications use ArgoCD Image Updater for automated image updates:
 - default k8s nodeport-range: `30000`-`32767`
 
 - **ATD (Transmission)**:
-  - Dev:  `http://<node-ip>:30093`
-  - Stg:  `http://<node-ip>:30092`
-  - Prod: `http://<node-ip>:30091`
-  - Music: `http://<node-ip>:30094`
+  - Prod: `http://<node-ip>:30090`
+  - Stg:  `http://<node-ip>:30091`
+  - Dev:  `http://<node-ip>:30092`
+  - Music: `http://<node-ip>:30093`
 
 - **Center Console**:
   - Dev:  `http://<node-ip>:30852`

@@ -41,4 +41,4 @@ patches:
       value: 9094
     - op: replace
       path: /spec/ports/0/nodePort
-      value: 30094
+      value: 30093

@@ -4,7 +4,7 @@ kind: ServiceAccount
 metadata:
   name: dagster
 imagePullSecrets:
-- name: ghcr-pull-image-secret
+- name: gitlab-registry
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

@@ -20,7 +20,7 @@ spec:
         prometheus.io/path: "/metrics"
     spec:
       imagePullSecrets:
-      - name: ghcr-pull-image-secret 
+      - name: gitlab-registry
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

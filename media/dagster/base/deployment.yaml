@@ -21,7 +21,7 @@ spec:
     spec:
       serviceAccountName: dagster  # Correctly placed at the pod spec level
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry
       securityContext:
         fsGroup: 1000
         runAsUser: 1000

@@ -27,7 +27,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: gitlab-runner-config
-              key: gitlab-url
+              key: gitlab_url
         - name: RUNNER_TOKEN
           valueFrom:
             secretKeyRef:

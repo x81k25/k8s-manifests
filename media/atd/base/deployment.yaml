@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: gluetun
-        image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:latest
+        image: 192.168.50.2:5050/media/atd/vpn:dev
         imagePullPolicy: Always
         resources:
           requests:
@@ -89,7 +89,7 @@ spec:
               name: wireguard-secrets
               key: WIREGUARD_DNS
       - name: transmission
-        image: ghcr.io/x81k25/automatic-transmission-daemon-atd:latest
+        image: 192.168.50.2:5050/media/atd/atd:dev
         imagePullPolicy: Always
         resources:
           requests:
@@ -135,4 +135,4 @@ spec:
         - 8.8.8.8
         - 8.8.4.4
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

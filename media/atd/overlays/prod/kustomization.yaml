@@ -16,14 +16,14 @@ patches:
         spec:
           containers:
           - name: gluetun
-            image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:main
+            image: 192.168.50.2:5050/media/atd/vpn:main
             env:
             - name: WIREGUARD_ADDRESSES
               value: "10.65.182.17/32"  # prod-specific (us-dal-wg-505)
             - name: WIREGUARD_ENDPOINT_IP
               value: "206.217.206.107"  # prod-specific (us-dal-wg-505)
           - name: transmission
-            image: ghcr.io/x81k25/automatic-transmission-daemon-atd:main
+            image: 192.168.50.2:5050/media/atd/atd:main
             resources:
               requests:
                 memory: "2Gi"

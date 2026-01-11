@@ -1,0 +1,36 @@
+# gitlab-runner/base/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-runner-scripts
+  namespace: gitlab
+data:
+  entrypoint.sh: |
+    #!/bin/bash
+    set -e
+
+    # Register runner if not already registered
+    if [ ! -f /etc/gitlab-runner/.runner_registered ]; then
+      echo "Registering runner with GitLab..."
+      gitlab-runner register \
+        --non-interactive \
+        --url "${GITLAB_URL}" \
+        --token "${RUNNER_TOKEN}" \
+        --executor "kubernetes" \
+        --kubernetes-namespace "gitlab" \
+        --kubernetes-image "alpine:latest" \
+        --kubernetes-privileged=false \
+        --kubernetes-cpu-request="100m" \
+        --kubernetes-memory-request="128Mi" \
+        --kubernetes-service-account="gitlab-runner" \
+        --kubernetes-pull-policy="if-not-present" \
+        --description "k8s-runner"
+
+      touch /etc/gitlab-runner/.runner_registered
+      echo "Runner registered successfully"
+    else
+      echo "Runner already registered"
+    fi
+
+    # Start the runner
+    exec gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner

@@ -16,9 +16,9 @@ patches:
         spec:
           containers:
           - name: gluetun
-            image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:dev
+            image: 192.168.50.2:5050/media/atd/vpn:dev
           - name: transmission
-            image: ghcr.io/x81k25/automatic-transmission-daemon-atd:dev
+            image: 192.168.50.2:5050/media/atd/atd:dev
             volumeMounts:
             - name: complete-volume
               mountPath: /downloads/complete

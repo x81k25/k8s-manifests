@@ -21,7 +21,9 @@ data:
         --kubernetes-image "alpine:latest" \
         --kubernetes-privileged=false \
         --kubernetes-cpu-request="100m" \
+        --kubernetes-cpu-limit="2" \
         --kubernetes-memory-request="128Mi" \
+        --kubernetes-memory-limit="4Gi" \
         --kubernetes-service-account="gitlab-runner" \
         --kubernetes-pull-policy="if-not-present" \
         --description "k8s-runner"
@@ -31,6 +33,9 @@ data:
     else
       echo "Runner already registered"
     fi
+
+    # Set concurrency to 1 (process one job at a time)
+    sed -i 's/^concurrent = .*/concurrent = 1/' /etc/gitlab-runner/config.toml 2>/dev/null || true
 
     # Start the runner
     exec gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner

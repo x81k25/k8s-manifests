@@ -10,9 +10,7 @@ resources:
 commonLabels:
   variant: dev
 
-images:
-  - name: ghcr.io/x81k25/center-console
-    newTag: dev
+# Image is set in base/deployment.yaml: 192.168.50.2:5050/media/center-console:dev
 
 patches:
   - target:

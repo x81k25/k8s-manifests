@@ -21,7 +21,7 @@ patches:
           spec:
             containers:
             - name: center-console
-              image: ghcr.io/x81k25/center-console:main
+              image: 192.168.50.2:5050/media/center-console:main
   - target:
       version: v1
       kind: Service

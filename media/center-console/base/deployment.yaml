@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: center-console
-        image: ghcr.io/x81k25/center-console:dev
+        image: 192.168.50.2:5050/media/center-console:dev
         imagePullPolicy: Always
         ports:
         - containerPort: 8501
@@ -36,4 +36,4 @@ spec:
         - configMapRef:
             name: center-console-config
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

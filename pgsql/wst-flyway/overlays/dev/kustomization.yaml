@@ -31,7 +31,7 @@ patches:
     name: wst-flyway
 
 images:
-- name: ghcr.io/x81k25/wst-flyway
+- name: 192.168.50.2:5050/infra/wiring-schematics
   newTag: dev
 
 

@@ -20,10 +20,10 @@ spec:
         prometheus.io/path: "/metrics"
     spec:
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry
       initContainers:
       - name: wst-flyway-migrate
-        image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
+        image: 192.168.50.2:5050/infra/wiring-schematics:dev
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
@@ -47,7 +47,7 @@ spec:
             cpu: "500m"
       containers:
       - name: wst-flyway-main
-        image: ghcr.io/x81k25/wst-flyway:sha-1dc332f
+        image: 192.168.50.2:5050/infra/wiring-schematics:dev
         imagePullPolicy: Always
         command: ["sleep", "infinity"]
         resources:

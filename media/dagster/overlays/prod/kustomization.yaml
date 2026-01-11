@@ -11,6 +11,7 @@ commonLabels:
 
 images:
 - name: ghcr.io/x81k25/dagstributor
+  newName: 192.168.50.2:5050/media/dagstributor
   newTag: main
 
 patches:
@@ -21,7 +22,7 @@ patches:
     metadata:
       name: dagster-pipeline-env
     data:
-      DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS: "ghcr-pull-image-secret"
+      DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS: "gitlab-registry"
       DAGSTER_K8S_JOB_SERVICE_ACCOUNT: "dagster-prod"
 
 # Dagster Deployment Patch
@@ -162,12 +163,12 @@ patches:
           module: dagster_k8s
           class: K8sRunLauncher
           config:
-            job_image: ghcr.io/x81k25/dagstributor:main
+            job_image: 192.168.50.2:5050/media/dagstributor:main
             service_account_name: dagster-prod
             job_namespace: media-prod
             instance_config_map: dagster-instance-prod
             image_pull_secrets:
-            - name: ghcr-pull-image-secret
+            - name: gitlab-registry
             env_config_maps:
             - environment
             - dagster-config

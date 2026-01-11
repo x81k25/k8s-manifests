@@ -31,24 +31,13 @@ spec:
       elements:
       - name: wst-flyway-prod
         path: pgsql/wst-flyway/overlays/prod
-        image: wst-flyway
-        tag: main
       - name: wst-flyway-stg
         path: pgsql/wst-flyway/overlays/stg
-        image: wst-flyway
-        tag: stg
       - name: wst-flyway-dev
         path: pgsql/wst-flyway/overlays/dev
-        image: wst-flyway
-        tag: dev
       template:
         metadata:
           name: '{{name}}'
-          annotations:
-            argocd-image-updater.argoproj.io/image-list: "{{image}}=ghcr.io/x81k25/wst-flyway:{{tag}}"
-            argocd-image-updater.argoproj.io/{{image}}.update-strategy: "digest"
-            argocd-image-updater.argoproj.io/write-back-method: "git"
-            argocd-image-updater.argoproj.io/git-branch: "main"
         spec:
           project: default
           source:

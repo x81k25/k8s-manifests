@@ -15,10 +15,10 @@ patches:
       template:
         spec:
           containers:
-          - name: vpn-sidecar
-            image: ghcr.io/x81k25/automatic-transmission-daemon-vpn:main
-          - name: automatic-transmission-daemon
-            image: ghcr.io/x81k25/automatic-transmission-daemon-atd:main
+          - name: gluetun
+            image: 192.168.50.2:5050/media/atd/vpn:main
+          - name: transmission
+            image: 192.168.50.2:5050/media/atd/atd:main
             volumeMounts:
             - name: complete-volume
               mountPath: /media-cache/prod/complete

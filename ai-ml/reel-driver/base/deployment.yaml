@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: reel-driver-api
-        image: ghcr.io/x81k25/reel-driver-api:latest
+        image: 192.168.50.2:5050/ai-ml/reel-driver/api:main
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -32,4 +32,4 @@ spec:
         - name: API_PORT
           value: "8000"
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

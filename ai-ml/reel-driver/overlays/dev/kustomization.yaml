@@ -16,7 +16,7 @@ patches:
         spec:
           containers:
           - name: reel-driver-api
-            image: ghcr.io/x81k25/reel-driver-api:dev
+            image: 192.168.50.2:5050/ai-ml/reel-driver/api:dev
             envFrom:
             - configMapRef:
                 name: reel-driver-config-dev

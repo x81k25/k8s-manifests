@@ -10,8 +10,7 @@ commonLabels:
   environment: stg
 
 images:
-- name: ghcr.io/x81k25/dagstributor
-  newName: 192.168.50.2:5050/media/dagstributor
+- name: 192.168.50.2:5050/media/dagstributor
   newTag: stg
 
 patches:
@@ -40,7 +39,7 @@ patches:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-stg
             - name: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
-              value: "ghcr-pull-image-secret"
+              value: "gitlab-registry"
             - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
               value: "dagster-stg"
             - name: AWS_ACCESS_KEY_ID
@@ -67,7 +66,7 @@ patches:
             - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE
               value: media-stg
             - name: DAGSTER_K8S_JOB_IMAGE_PULL_SECRETS
-              value: "ghcr-pull-image-secret"
+              value: "gitlab-registry"
             - name: DAGSTER_K8S_JOB_SERVICE_ACCOUNT
               value: "dagster-stg"
             - name: AWS_ACCESS_KEY_ID

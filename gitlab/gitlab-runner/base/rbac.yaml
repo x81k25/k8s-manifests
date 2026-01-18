@@ -31,3 +31,34 @@ roleRef:
   kind: Role
   name: gitlab-runner
   apiGroup: rbac.authorization.k8s.io
+---
+# Role for gitlab-runner to manage deployments in ai-ml namespace (for CI/CD deploy-test)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: gitlab-runner-deploy
+  namespace: ai-ml
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "patch", "update"]
+- apiGroups: ["apps"]
+  resources: ["replicasets"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gitlab-runner-deploy
+  namespace: ai-ml
+subjects:
+- kind: ServiceAccount
+  name: gitlab-runner
+  namespace: gitlab
+roleRef:
+  kind: Role
+  name: gitlab-runner-deploy
+  apiGroup: rbac.authorization.k8s.io

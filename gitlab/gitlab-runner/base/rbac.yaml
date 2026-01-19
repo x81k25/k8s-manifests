@@ -80,7 +80,7 @@ rules:
   resources: ["pods", "pods/exec"]
   verbs: ["get", "list", "create"]
 - apiGroups: [""]
-  resources: ["secrets"]
+  resources: ["secrets", "configmaps"]
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -114,7 +114,7 @@ rules:
   resources: ["pods", "pods/exec"]
   verbs: ["get", "list", "create"]
 - apiGroups: [""]
-  resources: ["secrets"]
+  resources: ["secrets", "configmaps"]
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -148,7 +148,7 @@ rules:
   resources: ["pods", "pods/exec"]
   verbs: ["get", "list", "create"]
 - apiGroups: [""]
-  resources: ["secrets"]
+  resources: ["secrets", "configmaps"]
   verbs: ["get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

@@ -63,25 +63,27 @@ spec:
             secretKeyRef:
               name: wireguard-secrets
               key: WIREGUARD_PRIVATE_KEY
-        - name: WIREGUARD_ADDRESSES
-          value: "10.65.56.151/32"  # TODO: move to secret WIREGUARD_ADDRESS_IPV4
+        - name: WIREGUARD_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_ADDRESS
         - name: WIREGUARD_MTU
           valueFrom:
             secretKeyRef:
               name: wireguard-secrets
               key: WIREGUARD_MTU
-        # wireguard peer (from secret)
-        - name: WIREGUARD_PUBLIC_KEY
+        # wireguard servers JSON (entrypoint picks random server)
+        - name: WIREGUARD_SERVERS
           valueFrom:
             secretKeyRef:
               name: wireguard-secrets
-              key: WIREGUARD_PUBLIC_KEY
-        - name: WIREGUARD_ENDPOINT_IP
-          value: "206.217.206.67"  # TODO: move to secret
-        - name: WIREGUARD_ENDPOINT_PORT
-          value: "51820"  # TODO: move to secret
+              key: WIREGUARD_SERVERS
         - name: WIREGUARD_ALLOWED_IPS
-          value: "0.0.0.0/0"  # IPv4 only, no IPv6
+          valueFrom:
+            secretKeyRef:
+              name: wireguard-secrets
+              key: WIREGUARD_ALLOWED_IPS
         # dns config
         - name: DNS_ADDRESS
           valueFrom:

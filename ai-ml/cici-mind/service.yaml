@@ -1,8 +1,8 @@
-# cici-mind/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: cici-mind
+  namespace: ai-ml
   labels:
     app: cici-mind
 spec:
@@ -10,6 +10,6 @@ spec:
   ports:
   - port: 8765
     targetPort: 8765
-    nodePort: 30201
+    nodePort: 30211
   selector:
     app: cici-mind

@@ -1,31 +1,35 @@
-# ai-ml-dev-appset.yaml
+# ai-ml-cici-appset.yaml
 # apply:
-# kubectl apply -f ai-ml-dev-appset.yaml
+# kubectl apply -f ai-ml-cici-appset.yaml
 # delete:
-# kubectl delete applicationset ai-ml-dev-appset -n argocd
+# kubectl delete applicationset ai-ml-cici-appset -n argocd
 
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ai-ml-dev-appset
+  name: ai-ml-cici-appset
   namespace: argocd
 spec:
   generators:
   - list:
       elements:
-      - name: reel-driver
-        path: ai-ml/reel-driver/overlays
-      - name: mlflow
-        path: ai-ml/mlflow/overlays
+      - name: cici-mind
+        path: ai-ml/cici-mind
+      - name: cici-face
+        path: ai-ml/cici-face
+      - name: cici-ears
+        path: ai-ml/cici-ears
+      - name: cici-mouth
+        path: ai-ml/cici-mouth
   template:
     metadata:
-      name: '{{name}}-dev'
+      name: '{{name}}'
     spec:
       project: default
       source:
         repoURL: git@github.com:x81k25/k8s-manifests.git
         targetRevision: HEAD
-        path: "{{path}}/dev"
+        path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
         namespace: "ai-ml"

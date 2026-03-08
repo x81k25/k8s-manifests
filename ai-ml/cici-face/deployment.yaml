@@ -1,8 +1,8 @@
-# cici-face/base/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cici-face
+  namespace: ai-ml
   labels:
     app: cici-face
 spec:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cici-face
-        image: ghcr.io/x81k25/cici/face:latest
+        image: 192.168.50.2:5050/ai-ml/cici/face:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8501
@@ -62,4 +62,4 @@ spec:
               name: cici-config-dev
               key: CICI_LOG_LEVEL
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

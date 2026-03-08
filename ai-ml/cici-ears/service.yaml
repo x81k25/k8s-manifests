@@ -1,8 +1,8 @@
-# cici-ears/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: cici-ears
+  namespace: ai-ml
   labels:
     app: cici-ears
 spec:
@@ -10,6 +10,6 @@ spec:
   ports:
   - port: 8766
     targetPort: 8766
-    nodePort: 30202
+    nodePort: 30212
   selector:
     app: cici-ears

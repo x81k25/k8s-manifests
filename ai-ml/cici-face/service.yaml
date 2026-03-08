@@ -1,8 +1,8 @@
-# cici-face/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: cici-face
+  namespace: ai-ml
   labels:
     app: cici-face
 spec:
@@ -10,6 +10,6 @@ spec:
   ports:
   - port: 8501
     targetPort: 8501
-    nodePort: 30200
+    nodePort: 30210
   selector:
     app: cici-face

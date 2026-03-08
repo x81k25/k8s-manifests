@@ -1,49 +1,54 @@
-# cici-mouth/base/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cici-mouth
+  name: cici-ears
+  namespace: ai-ml
   labels:
-    app: cici-mouth
+    app: cici-ears
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cici-mouth
+      app: cici-ears
   template:
     metadata:
       labels:
-        app: cici-mouth
+        app: cici-ears
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8001"
+        prometheus.io/port: "8766"
         prometheus.io/path: "/metrics"
     spec:
       containers:
-      - name: cici-mouth
-        image: ghcr.io/x81k25/cici/mouth:latest
+      - name: cici-ears
+        image: 192.168.50.2:5050/ai-ml/cici/ears:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8001
+        - containerPort: 8766
         env:
-        - name: MOUTH_HOST
+        - name: EARS_HOST
           value: "0.0.0.0"
-        - name: MOUTH_PORT
-          value: "8001"
-        - name: PIPER_VOICE
+        - name: EARS_PORT
+          value: "8766"
+        - name: SAMPLE_RATE
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
-              key: CICI_MOUTH_PIPER_VOICE
-        - name: PIPER_SAMPLE_RATE
+              key: CICI_SAMPLE_RATE
+        - name: EARS_SILENCE_DURATION_MS
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
-              key: CICI_MOUTH_PIPER_SAMPLE_RATE
+              key: CICI_EARS_SILENCE_MS
+        - name: EARS_DEBUG
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_EARS_DEBUG
         - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
               key: CICI_LOG_LEVEL
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

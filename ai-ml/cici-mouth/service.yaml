@@ -1,8 +1,8 @@
-# cici-mouth/base/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: cici-mouth
+  namespace: ai-ml
   labels:
     app: cici-mouth
 spec:
@@ -10,6 +10,6 @@ spec:
   ports:
   - port: 8001
     targetPort: 8001
-    nodePort: 30203
+    nodePort: 30213
   selector:
     app: cici-mouth

@@ -1,8 +1,8 @@
-# cici-mind/base/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cici-mind
+  namespace: ai-ml
   labels:
     app: cici-mind
 spec:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: cici-mind
-        image: ghcr.io/x81k25/cici/mind:latest
+        image: 192.168.50.2:5050/ai-ml/cici/mind:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8765
@@ -51,4 +51,4 @@ spec:
               name: cici-config-dev
               key: CICI_LOG_LEVEL
       imagePullSecrets:
-      - name: ghcr-pull-image-secret
+      - name: gitlab-registry

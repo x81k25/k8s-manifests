@@ -34,8 +34,8 @@ data:
       echo "Runner already registered"
     fi
 
-    # Set concurrency to 1 (process one job at a time)
-    sed -i 's/^concurrent = .*/concurrent = 1/' /etc/gitlab-runner/config.toml 2>/dev/null || true
+    # Set concurrency to 8 (process up to 8 jobs in parallel)
+    sed -i 's/^concurrent = .*/concurrent = 8/' /etc/gitlab-runner/config.toml 2>/dev/null || true
 
     # Start the runner
     exec gitlab-runner run --user=gitlab-runner --working-directory=/home/gitlab-runner

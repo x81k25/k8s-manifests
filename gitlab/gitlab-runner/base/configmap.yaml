@@ -23,7 +23,7 @@ data:
         --kubernetes-cpu-request="100m" \
         --kubernetes-cpu-limit="2" \
         --kubernetes-memory-request="128Mi" \
-        --kubernetes-memory-limit="8Gi" \
+        --kubernetes-memory-limit="12Gi" \
         --kubernetes-service-account="gitlab-runner" \
         --kubernetes-pull-policy="if-not-present" \
         --description "k8s-runner"

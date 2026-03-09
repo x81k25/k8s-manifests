@@ -21,7 +21,7 @@ data:
         --kubernetes-image "alpine:latest" \
         --kubernetes-privileged=false \
         --kubernetes-cpu-request="100m" \
-        --kubernetes-cpu-limit="2" \
+        --kubernetes-cpu-limit="1" \
         --kubernetes-memory-request="128Mi" \
         --kubernetes-memory-limit="4Gi" \
         --kubernetes-service-account="gitlab-runner" \

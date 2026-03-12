@@ -2156,9 +2156,18 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(DCGM_FI_DEV_GPU_UTIL{job=\"kubernetes-service-endpoints\"}) by (namespace)",
+              "expr": "sum(DCGM_FI_DEV_GPU_UTIL{job=\"dcgm-exporter\", namespace!=\"\"}) by (namespace)",
               "legendFormat": "{{namespace}}",
               "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "expr": "sum(DCGM_FI_DEV_GPU_UTIL{job=\"dcgm-exporter\", namespace=\"\"})",
+              "legendFormat": "unallocated",
+              "refId": "B"
             }
           ],
           "title": "GPU cluster",
@@ -2348,9 +2357,18 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"kubernetes-service-endpoints\"}) by (namespace) / 1024",
+              "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"dcgm-exporter\", namespace!=\"\"}) by (namespace) / 1024",
               "legendFormat": "{{namespace}}",
               "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "expr": "sum(DCGM_FI_DEV_FB_USED{job=\"dcgm-exporter\", namespace=\"\"}) / 1024",
+              "legendFormat": "unallocated",
+              "refId": "B"
             }
           ],
           "title": "VRAM cluster",

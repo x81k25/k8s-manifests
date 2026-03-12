@@ -45,6 +45,16 @@ spec:
             configMapKeyRef:
               name: cici-config-dev
               key: CICI_OLLAMA_MODEL
+        - name: MOUTH_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MOUTH_HOST_INTERNAL
+        - name: MOUTH_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: cici-config-dev
+              key: CICI_MOUTH_PORT_INTERNAL
         - name: LOG_LEVEL
           valueFrom:
             configMapKeyRef:

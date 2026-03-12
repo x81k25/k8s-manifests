@@ -1592,7 +1592,7 @@
     },
     {
       "type": "row",
-      "title": "GPU 0 (GTX 960)",
+      "title": "gtx_960",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1672,7 +1672,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\"})",
           "legendFormat": "system",
           "refId": "A"
         },
@@ -1681,7 +1681,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\"})",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\"})",
           "legendFormat": "cluster",
           "refId": "B"
         }
@@ -1758,7 +1758,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\"}) / 1024",
           "legendFormat": "system",
           "refId": "A"
         },
@@ -1767,7 +1767,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\"}) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\"}) / 1024",
           "legendFormat": "cluster",
           "refId": "B"
         }
@@ -1777,7 +1777,7 @@
     },
     {
       "type": "row",
-      "title": "GPU 1 (RTX 3060)",
+      "title": "rtx_3060",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1857,7 +1857,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\"})",
           "legendFormat": "system",
           "refId": "A"
         },
@@ -1866,7 +1866,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\"})",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\"})",
           "legendFormat": "cluster",
           "refId": "B"
         }
@@ -1943,7 +1943,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\"}) / 1024",
           "legendFormat": "system",
           "refId": "A"
         },
@@ -1952,7 +1952,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\"}) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\"}) / 1024",
           "legendFormat": "cluster",
           "refId": "B"
         }
@@ -2060,8 +2060,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "max(DCGM_FI_DEV_GPU_UTIL) by (gpu)",
-              "legendFormat": "GPU {{gpu}}",
+              "expr": "max(DCGM_FI_DEV_GPU_UTIL) by (modelName)",
+              "legendFormat": "{{modelName}}",
               "refId": "A"
             }
           ],
@@ -2261,8 +2261,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "max(DCGM_FI_DEV_FB_USED) by (gpu) / 1024",
-              "legendFormat": "GPU {{gpu}}",
+              "expr": "max(DCGM_FI_DEV_FB_USED) by (modelName) / 1024",
+              "legendFormat": "{{modelName}}",
               "refId": "A"
             }
           ],

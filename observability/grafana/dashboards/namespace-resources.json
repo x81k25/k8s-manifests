@@ -1600,8 +1600,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\", namespace=\"$namespace\"}) by (container)",
-          "legendFormat": "{{container}}",
+          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\", namespace=\"$namespace\"})",
+          "legendFormat": "{{pod}}",
           "refId": "A"
         }
       ],
@@ -1677,8 +1677,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\", namespace=\"$namespace\"}) by (container) / 1024",
-          "legendFormat": "{{container}}",
+          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\", namespace=\"$namespace\"}) / 1024",
+          "legendFormat": "{{pod}}",
           "refId": "A"
         }
       ],
@@ -1767,8 +1767,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\", namespace=\"$namespace\"}) by (container)",
-          "legendFormat": "{{container}}",
+          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\", namespace=\"$namespace\"})",
+          "legendFormat": "{{pod}}",
           "refId": "A"
         }
       ],
@@ -1844,8 +1844,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\", namespace=\"$namespace\"}) by (container) / 1024",
-          "legendFormat": "{{container}}",
+          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\", namespace=\"$namespace\"}) / 1024",
+          "legendFormat": "{{pod}}",
           "refId": "A"
         }
       ],

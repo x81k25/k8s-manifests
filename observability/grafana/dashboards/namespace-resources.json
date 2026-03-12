@@ -1520,7 +1520,7 @@
     },
     {
       "type": "row",
-      "title": "GPU 0 (GTX 960)",
+      "title": "gtx_960",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1600,7 +1600,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"0\", namespace=\"$namespace\"}) by (container)",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\", namespace=\"$namespace\"}) by (container)",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1677,7 +1677,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"0\", namespace=\"$namespace\"}) by (container) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\", namespace=\"$namespace\"}) by (container) / 1024",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1687,7 +1687,7 @@
     },
     {
       "type": "row",
-      "title": "GPU 1 (RTX 3060)",
+      "title": "rtx_3060",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1767,7 +1767,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_GPU_UTIL{gpu=\"1\", namespace=\"$namespace\"}) by (container)",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\", namespace=\"$namespace\"}) by (container)",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1844,7 +1844,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max(DCGM_FI_DEV_FB_USED{gpu=\"1\", namespace=\"$namespace\"}) by (container) / 1024",
+          "expr": "max(DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\", namespace=\"$namespace\"}) by (container) / 1024",
           "legendFormat": "{{container}}",
           "refId": "A"
         }
@@ -1953,7 +1953,7 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "expr": "DCGM_FI_DEV_GPU_UTIL{namespace=\"$namespace\"}",
-              "legendFormat": "GPU {{gpu}} - {{container}}",
+              "legendFormat": "{{modelName}} - {{pod}}",
               "refId": "A"
             }
           ],
@@ -2049,7 +2049,7 @@
                 "uid": "PBFA97CFB590B2093"
               },
               "expr": "DCGM_FI_DEV_FB_USED{namespace=\"$namespace\"} / 1024",
-              "legendFormat": "GPU {{gpu}} - {{container}}",
+              "legendFormat": "{{modelName}} - {{pod}}",
               "refId": "A"
             }
           ],

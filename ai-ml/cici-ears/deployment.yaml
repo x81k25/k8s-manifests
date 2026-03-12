@@ -35,6 +35,11 @@ spec:
             memory: 2Gi
             nvidia.com/gpu: "1"
         env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          valueFrom:
+            configMapKeyRef:
+              name: gpu-devices
+              key: RTX3060_UUID
         - name: EARS_HOST
           value: "0.0.0.0"
         - name: EARS_PORT

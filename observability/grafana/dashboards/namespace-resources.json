@@ -1952,8 +1952,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "DCGM_FI_DEV_GPU_UTIL{namespace=\"$namespace\"}",
-              "legendFormat": "{{modelName}} - {{pod}}",
+              "expr": "label_replace(DCGM_FI_DEV_GPU_UTIL{namespace=\"$namespace\"}, \"gpu_name\", \"$1\", \"modelName\", \".*?(\\\\w+\\\\s*\\\\d+)$\")",
+              "legendFormat": "{{gpu_name}} - {{pod}}",
               "refId": "A"
             }
           ],
@@ -2048,8 +2048,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "DCGM_FI_DEV_FB_USED{namespace=\"$namespace\"} / 1024",
-              "legendFormat": "{{modelName}} - {{pod}}",
+              "expr": "label_replace(DCGM_FI_DEV_FB_USED{namespace=\"$namespace\"}, \"gpu_name\", \"$1\", \"modelName\", \".*?(\\\\w+\\\\s*\\\\d+)$\") / 1024",
+              "legendFormat": "{{gpu_name}} - {{pod}}",
               "refId": "A"
             }
           ],

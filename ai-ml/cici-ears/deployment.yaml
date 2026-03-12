@@ -25,6 +25,15 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8766
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "1"
+            memory: 2Gi
+            nvidia.com/gpu: "1"
         env:
         - name: EARS_HOST
           value: "0.0.0.0"

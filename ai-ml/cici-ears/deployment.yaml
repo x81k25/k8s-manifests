@@ -16,7 +16,7 @@ spec:
         app: cici-ears
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8766"
+        prometheus.io/port: "9766"
         prometheus.io/path: "/metrics"
     spec:
       runtimeClassName: nvidia
@@ -26,6 +26,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8766
+          name: websocket
+        - containerPort: 9766
+          name: metrics
         resources:
           requests:
             cpu: 250m

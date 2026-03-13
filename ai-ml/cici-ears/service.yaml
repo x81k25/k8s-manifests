@@ -11,5 +11,10 @@ spec:
   - port: 8766
     targetPort: 8766
     nodePort: 30212
+    name: websocket
+  - port: 9766
+    targetPort: 9766
+    nodePort: 30214
+    name: metrics
   selector:
     app: cici-ears

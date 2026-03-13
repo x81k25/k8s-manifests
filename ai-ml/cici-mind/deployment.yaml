@@ -19,6 +19,10 @@ spec:
         prometheus.io/port: "8765"
         prometheus.io/path: "/metrics"
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
       - name: cici-mind
         image: 192.168.50.2:5050/ai-ml/cici/mind:latest
@@ -26,6 +30,8 @@ spec:
         ports:
         - containerPort: 8765
         env:
+        - name: HOME
+          value: "/home/x81k25"
         - name: MIND_HOST
           value: "0.0.0.0"
         - name: MIND_PORT
@@ -65,10 +71,17 @@ spec:
         volumeMounts:
         - name: infra
           mountPath: /infra
+        - name: claude-config
+          mountPath: /home/x81k25/.claude
+          readOnly: true
       volumes:
       - name: infra
         hostPath:
           path: /infra
+          type: Directory
+      - name: claude-config
+        hostPath:
+          path: /home/x81k25/.claude
           type: Directory
       imagePullSecrets:
       - name: gitlab-registry

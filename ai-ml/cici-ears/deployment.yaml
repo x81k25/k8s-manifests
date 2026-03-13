@@ -44,6 +44,8 @@ spec:
         env:
         - name: EARS_HOST
           value: "0.0.0.0"
+        - name: PYTHONUNBUFFERED
+          value: "1"
         - name: NVIDIA_VISIBLE_DEVICES
           valueFrom:
             configMapKeyRef:

@@ -74,6 +74,8 @@ spec:
         - name: claude-config
           mountPath: /home/x81k25/.claude
           readOnly: true
+        - name: home-cache
+          mountPath: /home/x81k25/.cache
       volumes:
       - name: infra
         hostPath:
@@ -83,5 +85,7 @@ spec:
         hostPath:
           path: /home/x81k25/.claude
           type: Directory
+      - name: home-cache
+        emptyDir: {}
       imagePullSecrets:
       - name: gitlab-registry

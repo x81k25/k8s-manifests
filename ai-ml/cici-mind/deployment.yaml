@@ -60,5 +60,15 @@ spec:
             configMapKeyRef:
               name: cici-config-dev
               key: CICI_LOG_LEVEL
+        - name: DEFAULT_CWD
+          value: "/infra"
+        volumeMounts:
+        - name: infra
+          mountPath: /infra
+      volumes:
+      - name: infra
+        hostPath:
+          path: /infra
+          type: Directory
       imagePullSecrets:
       - name: gitlab-registry

@@ -74,6 +74,9 @@ spec:
         - name: claude-config
           mountPath: /home/x81k25/.claude
           readOnly: true
+        - name: claude-json
+          mountPath: /home/x81k25/.claude.json
+          readOnly: true
         - name: home-cache
           mountPath: /home/x81k25/.cache
       volumes:
@@ -85,6 +88,10 @@ spec:
         hostPath:
           path: /home/x81k25/.claude
           type: Directory
+      - name: claude-json
+        hostPath:
+          path: /home/x81k25/.claude.json
+          type: File
       - name: home-cache
         emptyDir: {}
       imagePullSecrets:

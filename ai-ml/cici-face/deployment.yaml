@@ -25,41 +25,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8501
-        env:
-        - name: MIND_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MIND_HOST_INTERNAL
-        - name: MIND_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MIND_PORT_INTERNAL
-        - name: EARS_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_EARS_HOST_INTERNAL
-        - name: EARS_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_EARS_PORT_INTERNAL
-        - name: MOUTH_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_HOST_INTERNAL
-        - name: MOUTH_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_PORT_INTERNAL
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOG_LEVEL
+        envFrom:
+        - configMapRef:
+            name: cici-config
       imagePullSecrets:
       - name: gitlab-registry

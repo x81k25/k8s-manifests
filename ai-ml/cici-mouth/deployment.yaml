@@ -25,25 +25,11 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8001
+        envFrom:
+        - configMapRef:
+            name: cici-config
         env:
         - name: MOUTH_HOST
           value: "0.0.0.0"
-        - name: MOUTH_PORT
-          value: "8001"
-        - name: PIPER_VOICE
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_PIPER_VOICE
-        - name: PIPER_SAMPLE_RATE
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_PIPER_SAMPLE_RATE
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOG_LEVEL
       imagePullSecrets:
       - name: gitlab-registry

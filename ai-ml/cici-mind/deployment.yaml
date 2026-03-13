@@ -29,45 +29,12 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8765
+        envFrom:
+        - configMapRef:
+            name: cici-config
         env:
-        - name: HOME
-          value: "/home/x81k25"
         - name: MIND_HOST
           value: "0.0.0.0"
-        - name: MIND_PORT
-          value: "8765"
-        - name: LOCAL_LLM_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOCAL_LLM_HOST
-        - name: LOCAL_LLM_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOCAL_LLM_PORT
-        - name: LOCAL_LLM_MODEL
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOCAL_LLM_MODEL
-        - name: MOUTH_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_HOST_INTERNAL
-        - name: MOUTH_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_MOUTH_PORT_INTERNAL
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: cici-config-dev
-              key: CICI_LOG_LEVEL
-        - name: DEFAULT_CWD
-          value: "/infra"
         volumeMounts:
         - name: infra
           mountPath: /infra

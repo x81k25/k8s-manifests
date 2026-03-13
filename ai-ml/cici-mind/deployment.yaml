@@ -30,21 +30,21 @@ spec:
           value: "0.0.0.0"
         - name: MIND_PORT
           value: "8765"
-        - name: OLLAMA_HOST
+        - name: LOCAL_LLM_HOST
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
-              key: CICI_OLLAMA_HOST
-        - name: OLLAMA_PORT
+              key: CICI_LOCAL_LLM_HOST
+        - name: LOCAL_LLM_PORT
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
-              key: CICI_OLLAMA_PORT
-        - name: OLLAMA_MODEL
+              key: CICI_LOCAL_LLM_PORT
+        - name: LOCAL_LLM_MODEL
           valueFrom:
             configMapKeyRef:
               name: cici-config-dev
-              key: CICI_OLLAMA_MODEL
+              key: CICI_LOCAL_LLM_MODEL
         - name: MOUTH_HOST
           valueFrom:
             configMapKeyRef:

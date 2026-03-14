@@ -31,5 +31,10 @@ spec:
         env:
         - name: MOUTH_HOST
           value: "0.0.0.0"
+        - name: NVIDIA_VISIBLE_DEVICES
+          valueFrom:
+            configMapKeyRef:
+              name: gpu-devices
+              key: RTX3060_UUID
       imagePullSecrets:
       - name: gitlab-registry

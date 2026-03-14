@@ -19,12 +19,22 @@ spec:
         prometheus.io/port: "8001"
         prometheus.io/path: "/metrics"
     spec:
+      runtimeClassName: nvidia
       containers:
       - name: cici-mouth
         image: 192.168.50.2:5050/ai-ml/cici/mouth:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8001
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "1"
+            memory: 1Gi
+            nvidia.com/gpu: "1"
         envFrom:
         - configMapRef:
             name: cici-config

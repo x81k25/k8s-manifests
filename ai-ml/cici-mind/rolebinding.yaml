@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cici-mind-ops
+  namespace: ai-ml
+subjects:
+- kind: ServiceAccount
+  name: cici-mind
+  namespace: ai-ml
+roleRef:
+  kind: Role
+  name: cici-mind-ops
+  apiGroup: rbac.authorization.k8s.io

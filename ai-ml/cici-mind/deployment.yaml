@@ -19,6 +19,7 @@ spec:
         prometheus.io/port: "8765"
         prometheus.io/path: "/metrics"
     spec:
+      serviceAccountName: cici-mind
       securityContext:
         runAsUser: 1000
         runAsGroup: 1001

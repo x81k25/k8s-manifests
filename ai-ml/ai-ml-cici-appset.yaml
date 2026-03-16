@@ -15,15 +15,24 @@ spec:
       elements:
       - name: cici-mind
         path: ai-ml/cici-mind
+        image: 192.168.50.2:5050/ai-ml/cici/mind:latest
       - name: cici-face
         path: ai-ml/cici-face
+        image: 192.168.50.2:5050/ai-ml/cici/face:latest
       - name: cici-ears
         path: ai-ml/cici-ears
+        image: 192.168.50.2:5050/ai-ml/cici/ears:latest
       - name: cici-mouth
         path: ai-ml/cici-mouth
+        image: 192.168.50.2:5050/ai-ml/cici/mouth:latest
   template:
     metadata:
       name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: "cici={{image}}"
+        argocd-image-updater.argoproj.io/write-back-method: git
+        argocd-image-updater.argoproj.io/git-branch: main
+        argocd-image-updater.argoproj.io/cici.update-strategy: digest
     spec:
       project: default
       source:

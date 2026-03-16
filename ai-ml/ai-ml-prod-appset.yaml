@@ -30,6 +30,11 @@ spec:
   template:
     metadata:
       name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: "reel-driver-prod=192.168.50.2:5050/ai-ml/reel-driver/api:main"
+        argocd-image-updater.argoproj.io/write-back-method: git
+        argocd-image-updater.argoproj.io/git-branch: main
+        argocd-image-updater.argoproj.io/reel-driver-prod.update-strategy: digest
     spec:
       project: default
       source:

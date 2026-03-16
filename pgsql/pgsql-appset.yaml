@@ -31,13 +31,21 @@ spec:
       elements:
       - name: wst-flyway-prod
         path: pgsql/wst-flyway/overlays/prod
+        tag: main
       - name: wst-flyway-stg
         path: pgsql/wst-flyway/overlays/stg
+        tag: stg
       - name: wst-flyway-dev
         path: pgsql/wst-flyway/overlays/dev
+        tag: dev
       template:
         metadata:
           name: '{{name}}'
+          annotations:
+            argocd-image-updater.argoproj.io/image-list: "wst-flyway=192.168.50.2:5050/infra/wiring-schematics:{{tag}}"
+            argocd-image-updater.argoproj.io/write-back-method: git
+            argocd-image-updater.argoproj.io/git-branch: main
+            argocd-image-updater.argoproj.io/wst-flyway.update-strategy: digest
         spec:
           project: default
           source:

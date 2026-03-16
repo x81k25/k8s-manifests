@@ -15,8 +15,6 @@ spec:
       labels:
         app: osrm-server
     spec:
-      imagePullSecrets:
-      - name: github-registry
       containers:
       - name: osrm-server
         image: ghcr.io/project-osrm/osrm-backend:latest

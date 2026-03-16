@@ -28,6 +28,20 @@ spec:
   template:
     metadata:
       name: '{{name}}'
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: >-
+          atd-vpn=192.168.50.2:5050/media/atd/vpn:main,
+          atd=192.168.50.2:5050/media/atd/atd:main,
+          center-console=192.168.50.2:5050/media/center-console:main,
+          rear-diff-prod=192.168.50.2:5050/media/rear-differential:main,
+          dagstributor=192.168.50.2:5050/media/dagstributor:main
+        argocd-image-updater.argoproj.io/write-back-method: git
+        argocd-image-updater.argoproj.io/git-branch: main
+        argocd-image-updater.argoproj.io/atd-vpn.update-strategy: digest
+        argocd-image-updater.argoproj.io/atd.update-strategy: digest
+        argocd-image-updater.argoproj.io/center-console.update-strategy: digest
+        argocd-image-updater.argoproj.io/rear-diff-prod.update-strategy: digest
+        argocd-image-updater.argoproj.io/dagstributor.update-strategy: digest
     spec:
       project: default
       source:

@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - 192.168.50.2:5050/ai-ml/reel-driver/api@sha256:38abf3526b25a6e292421b49c5804394016a6355706d85a6c0f498cb42f38d8b

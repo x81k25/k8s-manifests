@@ -1600,8 +1600,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{UUID=~\".*8a56.*\", namespace=\"$namespace\"})",
-          "legendFormat": "{{pod}}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{UUID=~\".*8a56.*\", namespace=\"$namespace\"})",
+          "legendFormat": "total",
           "refId": "A"
         }
       ],
@@ -1677,8 +1677,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{UUID=~\".*8a56.*\", namespace=\"$namespace\"}) / 1024",
-          "legendFormat": "{{pod}}",
+          "expr": "max(DCGM_FI_DEV_FB_USED{UUID=~\".*8a56.*\", namespace=\"$namespace\"}) / 1024",
+          "legendFormat": "total",
           "refId": "A"
         }
       ],
@@ -1767,8 +1767,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{UUID=~\".*cfbe.*\", namespace=\"$namespace\"})",
-          "legendFormat": "{{pod}}",
+          "expr": "max(DCGM_FI_DEV_GPU_UTIL{UUID=~\".*cfbe.*\", namespace=\"$namespace\"})",
+          "legendFormat": "total",
           "refId": "A"
         }
       ],
@@ -1844,8 +1844,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{UUID=~\".*cfbe.*\", namespace=\"$namespace\"}) / 1024",
-          "legendFormat": "{{pod}}",
+          "expr": "max(DCGM_FI_DEV_FB_USED{UUID=~\".*cfbe.*\", namespace=\"$namespace\"}) / 1024",
+          "legendFormat": "total",
           "refId": "A"
         }
       ],
@@ -1884,7 +1884,7 @@
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 10,
+                "fillOpacity": 30,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -1902,7 +1902,7 @@
                 "spanNulls": true,
                 "stacking": {
                   "group": "A",
-                  "mode": "none"
+                  "mode": "normal"
                 },
                 "thresholdsStyle": {
                   "mode": "off"

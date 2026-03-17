@@ -1520,7 +1520,7 @@
     },
     {
       "type": "row",
-      "title": "gtx_960",
+      "title": "rtx3060-8a56",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1600,7 +1600,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{modelName=~\".*960.*\", namespace=\"$namespace\"})",
+          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{UUID=~\".*8a56.*\", namespace=\"$namespace\"})",
           "legendFormat": "{{pod}}",
           "refId": "A"
         }
@@ -1677,7 +1677,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{modelName=~\".*960.*\", namespace=\"$namespace\"}) / 1024",
+          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{UUID=~\".*8a56.*\", namespace=\"$namespace\"}) / 1024",
           "legendFormat": "{{pod}}",
           "refId": "A"
         }
@@ -1687,7 +1687,7 @@
     },
     {
       "type": "row",
-      "title": "rtx_3060",
+      "title": "rtx3060-cfbe",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -1767,7 +1767,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{modelName=~\".*3060.*\", namespace=\"$namespace\"})",
+          "expr": "max by (pod) (DCGM_FI_DEV_GPU_UTIL{UUID=~\".*cfbe.*\", namespace=\"$namespace\"})",
           "legendFormat": "{{pod}}",
           "refId": "A"
         }
@@ -1844,7 +1844,7 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{modelName=~\".*3060.*\", namespace=\"$namespace\"}) / 1024",
+          "expr": "max by (pod) (DCGM_FI_DEV_FB_USED{UUID=~\".*cfbe.*\", namespace=\"$namespace\"}) / 1024",
           "legendFormat": "{{pod}}",
           "refId": "A"
         }
@@ -1952,8 +1952,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "label_replace(max by (pod, modelName) (DCGM_FI_DEV_GPU_UTIL{namespace=\"$namespace\"}), \"gpu_name\", \"$1\", \"modelName\", \".*?(\\\\w+\\\\s*\\\\d+)$\")",
-              "legendFormat": "{{gpu_name}} - {{pod}}",
+              "expr": "label_replace(max by (pod, UUID) (DCGM_FI_DEV_GPU_UTIL{namespace=\"$namespace\"}), \"gpu_short\", \"$1\", \"UUID\", \"GPU-(.{4}).*\")",
+              "legendFormat": "rtx3060-{{gpu_short}} - {{pod}}",
               "refId": "A"
             }
           ],
@@ -2048,8 +2048,8 @@
                 "type": "prometheus",
                 "uid": "PBFA97CFB590B2093"
               },
-              "expr": "label_replace(max by (pod, modelName) (DCGM_FI_DEV_FB_USED{namespace=\"$namespace\"}), \"gpu_name\", \"$1\", \"modelName\", \".*?(\\\\w+\\\\s*\\\\d+)$\") / 1024",
-              "legendFormat": "{{gpu_name}} - {{pod}}",
+              "expr": "label_replace(max by (pod, UUID) (DCGM_FI_DEV_FB_USED{namespace=\"$namespace\"}), \"gpu_short\", \"$1\", \"UUID\", \"GPU-(.{4}).*\") / 1024",
+              "legendFormat": "rtx3060-{{gpu_short}} - {{pod}}",
               "refId": "A"
             }
           ],

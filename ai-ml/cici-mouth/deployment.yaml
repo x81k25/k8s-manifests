@@ -41,5 +41,14 @@ spec:
         env:
         - name: MOUTH_HOST
           value: "0.0.0.0"
+        volumeMounts:
+        - name: fish-speech-model
+          mountPath: /models/fish-speech-1.5
+          readOnly: true
+      volumes:
+      - name: fish-speech-model
+        hostPath:
+          path: /opt/models/fish-speech-1.5
+          type: DirectoryOrCreate
       imagePullSecrets:
       - name: gitlab-registry

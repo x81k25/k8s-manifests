@@ -42,3 +42,15 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30091
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+    name: transmission-ingress
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: transmission.stg.lab
+    - op: replace
+      path: /spec/rules/0/http/paths/0/backend/service/port/number
+      value: 9092

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reel-driver-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: reel-driver.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: reel-driver
+                port:
+                  number: 8000

@@ -235,3 +235,12 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30301
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+    name: dagster-ingress
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: dagster.stg.lab

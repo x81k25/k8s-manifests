@@ -7,5 +7,6 @@ resources:
 - configmap.yaml
 - dashboard-provider-configmap.yaml
 - deployment.yaml
+- ingress.yaml
 - service.yaml
 - dashboards

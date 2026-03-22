@@ -39,3 +39,12 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30811
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+    name: rear-diff-ingress
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: rear-diff.stg.lab

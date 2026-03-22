@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cici-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: cici.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cici-face
+                port:
+                  number: 8501

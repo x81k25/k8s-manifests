@@ -41,3 +41,12 @@ patches:
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30801
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+    name: reel-driver-ingress
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: reel-driver.stg.lab

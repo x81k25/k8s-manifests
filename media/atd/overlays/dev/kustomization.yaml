@@ -50,7 +50,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: transmission.dev.lab
+      value: transmission.dev.x81
     - op: replace
       path: /spec/rules/0/http/paths/0/backend/service/port/number
       value: 9093

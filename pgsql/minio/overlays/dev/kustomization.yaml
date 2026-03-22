@@ -73,7 +73,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: minio.dev.lab
+      value: minio.dev.x81
     - op: replace
       path: /spec/rules/1/host
-      value: minio-api.dev.lab
+      value: minio-api.dev.x81

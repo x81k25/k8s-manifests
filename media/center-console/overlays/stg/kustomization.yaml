@@ -38,4 +38,4 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: console.stg.lab
+        value: console.stg.x81

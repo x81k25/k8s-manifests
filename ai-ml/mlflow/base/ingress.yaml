@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: mlflow.lab
+    - host: mlflow.x81
       http:
         paths:
           - path: /

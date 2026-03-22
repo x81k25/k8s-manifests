@@ -70,7 +70,7 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: minio.stg.lab
+      value: minio.stg.x81
     - op: replace
       path: /spec/rules/1/host
-      value: minio-api.stg.lab
+      value: minio-api.stg.x81

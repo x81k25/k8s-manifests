@@ -47,4 +47,4 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: rear-diff.dev.lab
+      value: rear-diff.dev.x81

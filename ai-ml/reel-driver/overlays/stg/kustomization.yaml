@@ -49,4 +49,4 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: reel-driver.stg.lab
+      value: reel-driver.stg.x81

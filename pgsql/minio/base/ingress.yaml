@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: minio.lab
+    - host: minio.x81
       http:
         paths:
           - path: /
@@ -15,7 +15,7 @@ spec:
                 name: minio
                 port:
                   number: 9001
-    - host: minio-api.lab
+    - host: minio-api.x81
       http:
         paths:
           - path: /

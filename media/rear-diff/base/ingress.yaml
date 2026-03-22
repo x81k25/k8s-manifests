@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: rear-diff.lab
+    - host: rear-diff.x81
       http:
         paths:
           - path: /

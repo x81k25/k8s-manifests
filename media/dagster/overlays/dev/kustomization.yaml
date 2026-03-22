@@ -242,4 +242,4 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: dagster.dev.lab
+      value: dagster.dev.x81

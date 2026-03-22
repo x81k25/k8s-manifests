@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: cici.lab
+    - host: cici.x81
       http:
         paths:
           - path: /

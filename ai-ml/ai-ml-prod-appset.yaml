@@ -19,8 +19,8 @@ spec:
         path: ai-ml/mlflow/overlays/prod
       - name: local-llm
         path: ai-ml/local-llm/overlays/prod
-      # - name: cici-face-prod
-      #   path: ai-ml/cici-face/overlays/prod
+      # - name: cici-dashboard-prod
+      #   path: ai-ml/cici-dashboard/overlays/prod
       # - name: cici-mind-prod
       #   path: ai-ml/cici-mind/overlays/prod
       # - name: cici-ears-prod

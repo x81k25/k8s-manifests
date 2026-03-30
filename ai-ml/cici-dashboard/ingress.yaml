@@ -12,6 +12,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: cici-face
+                name: cici-dashboard
                 port:
                   number: 8501

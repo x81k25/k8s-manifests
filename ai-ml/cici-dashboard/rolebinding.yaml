@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cici-dashboard-ops
+  namespace: ai-ml
+subjects:
+- kind: ServiceAccount
+  name: cici-dashboard
+  namespace: ai-ml
+roleRef:
+  kind: Role
+  name: cici-dashboard-ops
+  apiGroup: rbac.authorization.k8s.io

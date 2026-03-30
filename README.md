@@ -395,7 +395,7 @@ Images are hosted on the private GitLab registry at `192.168.50.2:5050`:
 - All applications use `imagePullPolicy: Always`
 
 ### Legacy cici-* Projects
-The cici-* projects (cici-mind, cici-mouth, cici-face, cici-ears) still use GHCR at `ghcr.io/x81k25/cici/` pending migration.
+The cici-* projects (cici-mind, cici-mouth, cici-dashboard, cici-ears) still use GHCR at `ghcr.io/x81k25/cici/` pending migration.
 
 ## Service Access
 

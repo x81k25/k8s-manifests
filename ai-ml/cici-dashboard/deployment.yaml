@@ -1,27 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cici-face
+  name: cici-dashboard
   namespace: ai-ml
   labels:
-    app: cici-face
+    app: cici-dashboard
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cici-face
+      app: cici-dashboard
   template:
     metadata:
       labels:
-        app: cici-face
+        app: cici-dashboard
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8501"
         prometheus.io/path: "/metrics"
     spec:
+      serviceAccountName: cici-dashboard
       containers:
-      - name: cici-face
-        image: 192.168.50.2:5050/ai-ml/cici/face:latest
+      - name: cici-dashboard
+        image: 192.168.50.2:5050/ai-ml/cici/dashboard:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8501

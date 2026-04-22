@@ -78,6 +78,8 @@ spec:
         - configMapRef:
             name: dagster-timeout-config
         env:
+        - name: HOME
+          value: "/opt/dagster/dagster_home"
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
         - name: DAGIT_PORT
@@ -141,6 +143,8 @@ spec:
         - configMapRef:
             name: dagster-timeout-config
         env:
+        - name: HOME
+          value: "/opt/dagster/dagster_home"
         - name: DAGSTER_HOME
           value: "/opt/dagster/dagster_home"
         - name: DAGSTER_K8S_PIPELINE_RUN_NAMESPACE

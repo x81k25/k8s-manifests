@@ -22,8 +22,7 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 │   ├── rear-diff/
 │   ├── center-console-dev-appset.yaml
 │   ├── media-dev-appset.yaml
-│   ├── media-prod-appset.yaml
-│   └── media-stg-appset.yaml
+│   └── media-prod-appset.yaml
 ├── observability/
 │   ├── fluent-bit/
 │   ├── grafana/
@@ -42,10 +41,10 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 ### ApplicationSets
 
 - **ai-ml/ai-ml-appset.yaml**: ApplicationSet for AI/ML applications
-  - `mlflow`: Machine learning experiment tracking (dev/stg/prod)
-  - `reel-driver`: Custom ML service (dev/stg/prod)
+  - `mlflow`: Machine learning experiment tracking (dev/prod)
+  - `reel-driver`: Custom ML service (dev/prod)
   
-- **media/media-{dev,stg,prod}-appset.yaml**: ApplicationSets for media applications
+- **media/media-{dev,prod}-appset.yaml**: ApplicationSets for media applications
   - `atd`: Automatic Transmission Daemon with VPN sidecar
   - `center-console`: Streamlit-based UI for media services
   - `dagster`: Data orchestration platform
@@ -71,25 +70,25 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 #### AI/ML Applications (ai-ml/)
 - **mlflow**: Machine learning experiment tracking with PostgreSQL backend and MinIO artifact storage
   - `base`: Common configuration including MLflow server with S3-compatible artifact storage
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations with terraform-managed ConfigMaps/Secrets
+  - `overlays/{dev,prod}`: Environment-specific configurations with terraform-managed ConfigMaps/Secrets
   - **MinIO Integration**: Uses external MinIO endpoint for artifact storage to support both internal and external access
   
 - **reel-driver**: Custom ML service
   - `base`: Common configuration
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  - `overlays/{dev,prod}`: Environment-specific configurations
 
 #### Media Applications (media/)
 - **atd**: Automatic Transmission Daemon with VPN sidecar
   - `base`: Common configuration
-  - `overlays/{dev,stg,prod,music}`: Environment-specific configurations
+  - `overlays/{dev,prod,music}`: Environment-specific configurations
   
 - **center-console**: Streamlit-based UI for media services
   - `base`: Common configuration with rear-diff and center-console ConfigMaps
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations with NodePort assignments
+  - `overlays/{dev,prod}`: Environment-specific configurations with NodePort assignments
   
 - **dagster**: Data orchestration platform
   - `base`: Common configuration with webserver and daemon
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  - `overlays/{dev,prod}`: Environment-specific configurations
   
 - **plex**: Media server deployment
   - `base`: Common configuration
@@ -97,7 +96,7 @@ This repository contains Kubernetes manifests for applications deployed via Argo
   
 - **rear-diff**: Custom media service
   - `base`: Common configuration
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  - `overlays/{dev,prod}`: Environment-specific configurations
   
 - **kafka**: Message streaming platform (stub)
 
@@ -111,11 +110,11 @@ This repository contains Kubernetes manifests for applications deployed via Argo
 #### Database Applications (pgsql/)
 - **pgsql**: PostgreSQL database deployment
   - `base`: Common configuration
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  - `overlays/{dev,prod}`: Environment-specific configurations
   
 - **wst-flyway**: Database migration service using Flyway
   - `base`: Common configuration with init container pattern
-  - `overlays/{dev,stg,prod}`: Environment-specific configurations
+  - `overlays/{dev,prod}`: Environment-specific configurations
   
 - **pgadmin4**: PostgreSQL administration interface
 
@@ -131,7 +130,7 @@ Applications are managed using ApplicationSets which automatically sync and depl
 Used for managing environment-specific configurations:
 
 - Base configuration in application's `/base` directory
-- Environment overlays in application's `/overlays/{dev,stg,prod}` directories
+- Environment overlays in application's `/overlays/{dev,prod}` directories
 - Each environment has specialized paths, ports, and image tags
 
 ## Application Management
@@ -207,14 +206,13 @@ kubectl logs -n argocd -l app.kubernetes.io/name=argocd-applicationset-controlle
 
 The repository supports multiple environments:
 - `dev`: Development testing
-- `stg`: Staging environment
 - `prod`: Production environment
 - Specialized environments (e.g., `music`)
 
 Each environment uses:
 - Distinct namespaces organized by function:
   - `ai-ml`: AI and machine learning applications
-  - `media-{dev,stg,prod}`: Media-related applications
+  - `media-{dev,prod}`: Media-related applications
   - `observability`: Monitoring and logging stack
   - `pgsql`: Database services
 - Environment-specific image tags
@@ -390,7 +388,7 @@ All major applications are configured with Prometheus scraping annotations:
 ## Container Registry
 
 Images are hosted on the private GitLab registry at `192.168.50.2:5050`:
-- Image tags follow environment conventions: `:dev`, `:stg`, `:prod` or `:main`
+- Image tags follow environment conventions: `:dev` or `:main`
 - Pull secrets configured via `imagePullSecrets: gitlab-registry`
 - All applications use `imagePullPolicy: Always`
 
@@ -404,18 +402,15 @@ The cici-* projects (cici-mind, cici-mouth, cici-dashboard, cici-ears) still use
 
 - **ATD (Transmission)**:
   - Prod: `http://<node-ip>:30090`
-  - Stg:  `http://<node-ip>:30091`
   - Dev:  `http://<node-ip>:30092`
   - Music: `http://<node-ip>:30093`
 
 - **Center Console**:
   - Dev:  `http://<node-ip>:30852`
-  - Stg:  `http://<node-ip>:30851`
   - Prod: `http://<node-ip>:30850`
 
 - **Dagster**:
   - Dev:  `http://<node-ip>:30302`
-  - Stg:  `http://<node-ip>:30301`
   - Prod: `http://<node-ip>:30300`
 
 - **Grafana**: `http://<node-ip>:30303`
@@ -424,7 +419,6 @@ The cici-* projects (cici-mind, cici-mouth, cici-dashboard, cici-ears) still use
 
 - **MLflow**:
   - Dev:  `http://<node-ip>:30502`
-  - Stg:  `http://<node-ip>:30501`
   - Prod: `http://<node-ip>:30500`
 
 - **PgAdmin**: `http://<node-ip>:30052`
@@ -435,20 +429,16 @@ The cici-* projects (cici-mind, cici-mouth, cici-dashboard, cici-ears) still use
 
 - **PostgreSQL**:
   - Dev:  `<node-ip>:31434`
-  - Stg:  `<node-ip>:31433`
   - Prod: `<node-ip>:31432`
 
 - **Rear-Diff**:
   - Dev:  `http://<node-ip>:30812`
-  - Stg:  `http://<node-ip>:30811`
   - Prod: `http://<node-ip>:30810`
 
 - **Reel-Driver**:
   - Dev:  `http://<node-ip>:30802`
-  - Stg:  `http://<node-ip>:30801`
   - Prod: `http://<node-ip>:30800`
 
 - **MinIO (S3-compatible storage)**:
   - Dev:  `<node-ip>:31005` (API), `<node-ip>:31002` (Console)
-  - Stg:  `<node-ip>:31004` (API), `<node-ip>:31001` (Console)
   - Prod: `<node-ip>:31003` (API), `<node-ip>:31000` (Console)

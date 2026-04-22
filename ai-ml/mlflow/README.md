@@ -17,12 +17,6 @@ MLflow deployment with PostgreSQL backend for metadata storage and MinIO S3-comp
 - **MinIO**: http://minio-dev.pgsql.svc.cluster.local:9000
 - **Artifact Root**: s3://mlflow/
 
-### Staging Environment
-- **URL**: http://localhost:30501
-- **Database**: stg-postgres.pgsql.svc.cluster.local:5433
-- **MinIO**: http://minio-stg.pgsql.svc.cluster.local:9000
-- **Artifact Root**: s3://mlflow/
-
 ### Production Environment
 - **URL**: http://localhost:30500
 - **Database**: prod-postgres.pgsql.svc.cluster.local:5432
@@ -33,12 +27,10 @@ MLflow deployment with PostgreSQL backend for metadata storage and MinIO S3-comp
 
 ### ConfigMaps
 - `mlflow-config-dev`: Development configuration
-- `mlflow-config-stg`: Staging configuration
 - `mlflow-config-prod`: Production configuration
 
 ### Secrets
 - `mlflow-secrets-dev`: Development credentials
-- `mlflow-secrets-stg`: Staging credentials
 - `mlflow-secrets-prod`: Production credentials
 
 ## Key Features

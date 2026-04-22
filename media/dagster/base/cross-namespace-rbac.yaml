@@ -24,9 +24,6 @@ subjects:
   name: dagster-dev
   namespace: media-dev
 - kind: ServiceAccount
-  name: dagster-stg
-  namespace: media-stg
-- kind: ServiceAccount
   name: dagster-prod
   namespace: media-prod
 roleRef:

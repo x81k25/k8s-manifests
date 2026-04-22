@@ -15,16 +15,12 @@ spec:
       elements:
       - name: pgsql-prod
         path: pgsql/pgsql/overlays/prod
-      - name: pgsql-stg
-        path: pgsql/pgsql/overlays/stg
       - name: pgsql-dev
         path: pgsql/pgsql/overlays/dev
       #- name: pgadmin4
       #  path: pgsql/pgadmin4
       - name: minio-prod
         path: pgsql/minio/overlays/prod
-      - name: minio-stg
-        path: pgsql/minio/overlays/stg
       - name: minio-dev
         path: pgsql/minio/overlays/dev
   - list:
@@ -32,9 +28,6 @@ spec:
       - name: wst-flyway-prod
         path: pgsql/wst-flyway/overlays/prod
         tag: main
-      - name: wst-flyway-stg
-        path: pgsql/wst-flyway/overlays/stg
-        tag: stg
       - name: wst-flyway-dev
         path: pgsql/wst-flyway/overlays/dev
         tag: dev

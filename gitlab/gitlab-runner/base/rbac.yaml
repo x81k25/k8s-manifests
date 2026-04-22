@@ -97,40 +97,6 @@ roleRef:
   name: gitlab-runner-deploy
   apiGroup: rbac.authorization.k8s.io
 ---
-# Role for gitlab-runner to manage deployments in media-stg namespace (for CI/CD deploy-test)
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: gitlab-runner-deploy
-  namespace: media-stg
-rules:
-- apiGroups: ["apps"]
-  resources: ["deployments"]
-  verbs: ["get", "list", "patch", "update"]
-- apiGroups: ["apps"]
-  resources: ["replicasets"]
-  verbs: ["get", "list"]
-- apiGroups: [""]
-  resources: ["pods", "pods/exec"]
-  verbs: ["get", "list", "create"]
-- apiGroups: [""]
-  resources: ["secrets", "configmaps"]
-  verbs: ["get"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: gitlab-runner-deploy
-  namespace: media-stg
-subjects:
-- kind: ServiceAccount
-  name: gitlab-runner
-  namespace: gitlab
-roleRef:
-  kind: Role
-  name: gitlab-runner-deploy
-  apiGroup: rbac.authorization.k8s.io
----
 # Role for gitlab-runner to manage deployments in media-prod namespace (for CI/CD deploy-test)
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

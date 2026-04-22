@@ -1,3 +1,0 @@
-kustomize:
-  images:
-  - 192.168.50.2:5050/media/center-console@sha256:1a839064481202f0d7137fff019bdebb8961da2720a7468abe2f688e93c466ba

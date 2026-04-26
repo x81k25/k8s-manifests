@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/media/center-console@sha256:3b0284c5c61cc4d50427c55852d737e5f406f8fc93061de7dad17db2df8c1e9a
+  - 192.168.50.2:5050/media/center-console@sha256:19db45dbe61b5d7b9368d60c1c5caa433b9cba846bdc7336f08b263dd71ca27c

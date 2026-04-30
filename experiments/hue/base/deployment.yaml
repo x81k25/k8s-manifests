@@ -12,6 +12,8 @@ spec:
       labels:
         app: hue
     spec:
+      imagePullSecrets:
+      - name: gitlab-registry
       containers:
       - name: api
         image: 192.168.50.2:5050/infra/experiments/hue:main

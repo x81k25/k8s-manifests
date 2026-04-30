@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/infra/experiments/hue@sha256:633bd9fb3a4333cf3198044e19002094db39f6cefc95d20682111f14e29a8301
+  - 192.168.50.2:5050/infra/experiments/hue@sha256:8487fe27fc007e8dfd02155096d31baec0a58a6888480390f9ba3a79c2a23e6e

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hue
+  template:
+    metadata:
+      labels:
+        app: hue
+    spec:
+      containers:
+      - name: api
+        image: 192.168.50.2:5050/infra/experiments/hue:main
+        imagePullPolicy: Always
+        command: ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000", "--root-path", "/api"]
+        ports:
+        - name: api
+          containerPort: 8000
+        env:
+        - name: HUE_CONFIG_DIR
+          value: /app/config
+        envFrom:
+        - secretRef:
+            name: hue-secrets
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+      - name: ui
+        image: 192.168.50.2:5050/infra/experiments/hue:main
+        imagePullPolicy: Always
+        command: ["streamlit", "run", "app.py",
+                  "--server.port=8501",
+                  "--server.address=0.0.0.0",
+                  "--server.headless=true",
+                  "--server.enableCORS=false",
+                  "--server.enableXsrfProtection=false",
+                  "--browser.gatherUsageStats=false"]
+        ports:
+        - name: ui
+          containerPort: 8501
+        env:
+        - name: HUE_API_BASE
+          value: http://localhost:8000
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+      volumes:
+      - name: config
+        hostPath:
+          path: /d/k8s/volumes/experiments/hue/config
+          type: DirectoryOrCreate

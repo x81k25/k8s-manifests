@@ -38,6 +38,8 @@ spec:
               name: plex-transcode
             - mountPath: /data
               name: plex-media
+      # plex-media volume is declared per-overlay (hostPath in dev, PVC in prod)
+      # because strategic merge cannot cleanly switch a volume's source type.
       volumes:
         - name: plex-config
           hostPath:
@@ -45,6 +47,3 @@ spec:
         - name: plex-transcode
           hostPath:
             path: /d/k8s/volumes/plex/transcode
-        - name: plex-media
-          hostPath:
-            path: /k/media

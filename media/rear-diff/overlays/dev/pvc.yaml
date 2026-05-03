@@ -1,0 +1,16 @@
+# rear-diff/overlays/dev/pvc.yaml
+# Binds to the static local PV `media-cache-dev` declared in
+# terraform/modules/media/main.tf. The PV's claimRef pre-binds it to this
+# specific PVC; storageClassName="" disables dynamic provisioning.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-cache
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Ti
+  volumeName: media-cache-dev

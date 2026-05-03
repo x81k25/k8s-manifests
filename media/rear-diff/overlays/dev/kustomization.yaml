@@ -3,6 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
+- pvc.yaml
 namespace: media-dev
 nameSuffix: -dev
 commonLabels:
@@ -28,9 +29,8 @@ patches:
               mountPath: /d/media-cache/dev
           volumes:
           - name: media-cache
-            hostPath:
-              path: /d/media-cache/dev
-              type: Directory
+            persistentVolumeClaim:
+              claimName: media-cache
 - target:
     version: v1
     kind: Service

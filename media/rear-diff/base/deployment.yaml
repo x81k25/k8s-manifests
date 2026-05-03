@@ -21,6 +21,7 @@ spec:
         runAsUser: 1005
         runAsGroup: 1001
         fsGroup: 1001
+        fsGroupChangePolicy: OnRootMismatch
       containers:
       - name: rear-diff-api
         image: 192.168.50.2:5050/media/rear-differential:dev

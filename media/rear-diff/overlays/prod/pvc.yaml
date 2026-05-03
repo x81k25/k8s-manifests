@@ -1,0 +1,28 @@
+# rear-diff/overlays/prod/pvc.yaml
+# Bind to static local PVs declared in terraform/modules/media/main.tf.
+# Names render as media-cache-prod / media-library-prod via nameSuffix.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-cache
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Ti
+  volumeName: media-cache-prod
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-library
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 14Ti
+  volumeName: media-library-prod

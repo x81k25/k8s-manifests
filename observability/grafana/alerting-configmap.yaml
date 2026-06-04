@@ -14,7 +14,11 @@ data:
         type: telegram
         settings:
           bottoken: $TELEGRAM_BOT_TOKEN
-          chatid: "$TELEGRAM_CHAT_ID"
+          # chat id is an identifier, not a credential (useless without the bot
+          # token, which stays in the grafana-telegram secret). hardcoded because
+          # grafana's env interpolation re-infers numeric strings as numbers,
+          # which fails telegram settings validation
+          chatid: "1661366885"
   policies.yaml: |
     apiVersion: 1
     policies:

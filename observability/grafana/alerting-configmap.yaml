@@ -64,8 +64,8 @@ data:
             conditions:
             - evaluator:
                 type: gt
-                params: [40]
-        for: 0s
+                params: [80]
+        for: 5m
         noDataState: Alerting
         execErrState: Error
         annotations:

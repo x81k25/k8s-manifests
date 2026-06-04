@@ -17,7 +17,9 @@ data:
         maxLines: 1000
     - name: Prometheus
       type: prometheus
-      uid: prometheus
+      # pin to the uid grafana auto-generated at first provision — 137 dashboard
+      # panel refs and the alerting rules use it; do not change
+      uid: PBFA97CFB590B2093
       access: proxy
       url: http://prometheus.observability.svc.cluster.local:9090
       version: 1

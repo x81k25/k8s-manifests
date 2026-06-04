@@ -43,7 +43,7 @@ data:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: prometheus
+          datasourceUid: PBFA97CFB590B2093
           model:
             expr: 100 * (1 - node_filesystem_avail_bytes{mountpoint="/",fstype!="tmpfs"} / node_filesystem_size_bytes{mountpoint="/",fstype!="tmpfs"})
             instant: true

@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-alerting
+  namespace: observability
+data:
+  contactpoints.yaml: |
+    apiVersion: 1
+    contactPoints:
+    - orgId: 1
+      name: telegram
+      receivers:
+      - uid: telegram-x81
+        type: telegram
+        settings:
+          bottoken: $TELEGRAM_BOT_TOKEN
+          chatid: "$TELEGRAM_CHAT_ID"
+  policies.yaml: |
+    apiVersion: 1
+    policies:
+    - orgId: 1
+      receiver: telegram
+      group_by: ['alertname']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 4h
+  rules.yaml: |
+    apiVersion: 1
+    groups:
+    - orgId: 1
+      name: disk
+      folder: infra
+      interval: 1m
+      rules:
+      # kubelet taints the node at ~90% root-disk usage, which evicts pods
+      # (including AdGuard DNS — 2026-06-04 incident). alert at 80% so a
+      # human hears about it first.
+      - uid: root-disk-80
+        title: root disk above 80%
+        condition: C
+        data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus
+          model:
+            expr: 100 * (1 - node_filesystem_avail_bytes{mountpoint="/",fstype!="tmpfs"} / node_filesystem_size_bytes{mountpoint="/",fstype!="tmpfs"})
+            instant: true
+            refId: A
+        - refId: C
+          relativeTimeRange:
+            from: 0
+            to: 0
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: A
+            refId: C
+            conditions:
+            - evaluator:
+                type: gt
+                params: [80]
+        for: 5m
+        noDataState: Alerting
+        execErrState: Error
+        annotations:
+          summary: root disk on x81k25-server is above 80% ({{ $values.A }}% used). kubelet applies a disk-pressure taint at ~90% which evicts pods including AdGuard DNS.
+        labels:
+          severity: warning
+      # node-exporter scrape failure also fires — a dead CIFS mount or evicted
+      # exporter would otherwise blind this alert silently (hence noDataState: Alerting)

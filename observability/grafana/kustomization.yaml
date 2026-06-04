@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: observability
 
 resources:
+- alerting-configmap.yaml
 - configmap.yaml
 - dashboard-provider-configmap.yaml
 - deployment.yaml

@@ -36,6 +36,10 @@ spec:
         - '--path.sysfs=/host/sys'
         - '--path.rootfs=/host/root'
         - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+        # exclude network filesystems: a dead CIFS/NFS mount (e.g. /mnt/w with the
+        # Windows host powered off) hangs the filesystem collector past the scrape
+        # timeout, blinding ALL host metrics (2026-06-04 incident)
+        - '--collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|cifs|configfs|debugfs|devpts|devtmpfs|fusectl|fuse\.lxcfs|hugetlbfs|iso9660|mqueue|nfs4?|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|smb|squashfs|sysfs|tracefs)$$'
         - '--web.listen-address=0.0.0.0:9100'
         ports:
         - containerPort: 9100

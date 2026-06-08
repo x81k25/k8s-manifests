@@ -26,6 +26,14 @@ patches:
                 name: flyway-config-dev
             - secretRef:
                 name: flyway-secrets-dev
+            env:
+            # DEV-ONLY: base/prod flyway init sets no locations, so the in-cluster
+            # `flyway migrate` defaults to /flyway/sql (absent) and applies nothing.
+            # Point dev at the Dockerfile COPY target so dev CI/CD truly owns apply.
+            # Deliberately NOT in base: prod must stay inert (unmigrated) until the
+            # OODB soak is promoted.
+            - name: FLYWAY_LOCATIONS
+              value: "filesystem:/flyway/migrations"
   target:
     kind: Deployment
     name: wst-flyway

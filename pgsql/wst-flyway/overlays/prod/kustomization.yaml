@@ -26,6 +26,16 @@ patches:
                 name: flyway-config-prod
             - secretRef:
                 name: flyway-secrets-prod
+            env:
+            # OODB cutover — prod was kept inert (no FLYWAY_LOCATIONS) until promotion.
+            # Pass 1 stops at V37 so the dagster wst_oodb_cutover_job can backfill the
+            # object graph from the still-live legacy tables BEFORE V38/V39 rename+drop.
+            # After the backfill, FLYWAY_TARGET is removed (pass 2 -> V44) and prod is
+            # plain LOCATIONS-only so future migrations are normal wiring-schematics PRs.
+            - name: FLYWAY_LOCATIONS
+              value: "filesystem:/flyway/migrations"
+            - name: FLYWAY_TARGET
+              value: "37"
   target:
     kind: Deployment
     name: wst-flyway

@@ -8,6 +8,8 @@ metadata:
     app: gitlab-runner
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: gitlab-runner

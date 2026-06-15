@@ -28,6 +28,16 @@ data:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 4h
+      routes:
+      # daily digests (e.g. atp torrents-in-error) re-notify once a day instead
+      # of every 4h while the condition holds
+      - receiver: telegram
+        object_matchers:
+        - ['digest', '=', 'daily']
+        group_by: ['alertname']
+        group_wait: 30s
+        group_interval: 5m
+        repeat_interval: 24h
   rules.yaml: |
     apiVersion: 1
     groups:
@@ -74,3 +84,46 @@ data:
           severity: warning
       # node-exporter scrape failure also fires — a dead CIFS mount or evicted
       # exporter would otherwise blind this alert silently (hence noDataState: Alerting)
+    - orgId: 1
+      name: atp
+      folder: media
+      interval: 5m
+      rules:
+      # daily digest of how many torrents are stuck in error_status on prod.
+      # fires whenever there is at least one; the digest route (policies.yaml)
+      # re-sends it once a day rather than every 4h. metric served by rear-diff
+      # /metrics (atp_torrent_error_total), scraped from the media-prod pod.
+      - uid: atp-torrent-errors
+        title: atp torrents in error_status
+        condition: C
+        data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: PBFA97CFB590B2093
+          model:
+            expr: max(atp_torrent_error_total{kubernetes_namespace="media-prod"})
+            instant: true
+            refId: A
+        - refId: C
+          relativeTimeRange:
+            from: 0
+            to: 0
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: A
+            refId: C
+            conditions:
+            - evaluator:
+                type: gt
+                params: [0]
+        for: 0m
+        noDataState: OK
+        execErrState: OK
+        annotations:
+          summary: '{{ $values.A }} torrents are in error_status on prod (atp.torrent). break down with: SELECT error_condition, count(*) FROM atp.torrent WHERE error_status GROUP BY 1 ORDER BY 2 DESC.'
+        labels:
+          severity: info
+          digest: daily

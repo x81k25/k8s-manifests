@@ -7,6 +7,11 @@ metadata:
     app: grafana
 spec:
   replicas: 1
+  # grafana is backed by an RWO PVC, so a rolling surge pod can never mount the
+  # volume alongside the old one (and the observability mem quota has no headroom
+  # for a 2nd pod anyway). Recreate: terminate the old pod, then start the new.
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: grafana

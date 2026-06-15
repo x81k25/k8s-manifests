@@ -7,6 +7,10 @@ metadata:
     app: prometheus
 spec:
   replicas: 1
+  # RWO TSDB PVC + single replica: a rolling surge pod can't mount the volume.
+  # Recreate terminates the old pod first (also frees its mem quota for the new).
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: prometheus
@@ -29,17 +33,22 @@ spec:
           - '--web.console.libraries=/etc/prometheus/console_libraries'
           - '--web.console.templates=/etc/prometheus/consoles'
           - '--storage.tsdb.retention.time=7d'
+          - '--storage.tsdb.retention.size=6GB'
           - '--web.enable-lifecycle'
         ports:
         - containerPort: 9090
           name: web
         resources:
+          # actual usage ~2.7Gi at 7d retention; 10Gi was a vast over-reservation
+          # that consumed the namespace mem quota and left no headroom for other
+          # pods to roll. 6Gi limit keeps ~2.2x headroom; size-based retention
+          # caps the TSDB so memory stays bounded.
           requests:
             cpu: 500m
-            memory: 512Mi
+            memory: 2Gi
           limits:
             cpu: 2000m
-            memory: 10Gi
+            memory: 6Gi
         volumeMounts:
         - name: prometheus-config
           mountPath: /etc/prometheus

@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/infra/wiring-schematics@sha256:09960e48415e55da1c00937ddb17096e47a11639e5581d8ad38a58207d358459
+  - 192.168.50.2:5050/infra/wiring-schematics@sha256:26c7aa95c35b68af854b4fa49a6386e055c6bb4d3d32cbe96847fb5f3d0cecfc

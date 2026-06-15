@@ -30,6 +30,9 @@ patches:
             - name: media-library
               mountPath: /k/media/video
               subPath: video
+            - name: media-library
+              mountPath: /k/media/music
+              subPath: music
           volumes:
           - name: media-cache
             persistentVolumeClaim:

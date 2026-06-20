@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/media/dagstributor@sha256:ebf76617a3403dd070f44dca16e23e241ea0710edbee12dc47ed364fabb87161
+  - 192.168.50.2:5050/media/dagstributor@sha256:9a32f0423773d908e11d64a584b132c5ec8ac94960a88911d04539f63f4f6ef6

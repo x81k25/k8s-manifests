@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/media/rear-differential@sha256:616f8106a08e32097c75448d46c37265d7e9b9cc92e2392c592e50f449bfa1cc
+  - 192.168.50.2:5050/media/rear-differential@sha256:1f127c538ff9c39a305c428cc147c82dd31dcb8f3ac0e26f49cae44553b828e6

@@ -16,6 +16,8 @@ spec:
       elements:
       - name: hue
         path: experiments/hue/overlays/prod
+      - name: danile
+        path: experiments/danile/overlays/prod
       # Commented out applications (resource constraints)
       # - name: ollama  # Moved to ai-ml namespace
       #   path: experiments/ollama/base
@@ -32,10 +34,12 @@ spec:
       name: '{{name}}'
       annotations:
         argocd-image-updater.argoproj.io/image-list: >-
-          hue=192.168.50.2:5050/infra/experiments/hue:main
+          hue=192.168.50.2:5050/infra/experiments/hue:main,
+          danile=192.168.50.2:5050/infra/experiments/danile:main
         argocd-image-updater.argoproj.io/write-back-method: git
         argocd-image-updater.argoproj.io/git-branch: main
         argocd-image-updater.argoproj.io/hue.update-strategy: digest
+        argocd-image-updater.argoproj.io/danile.update-strategy: digest
     spec:
       project: default
       source:

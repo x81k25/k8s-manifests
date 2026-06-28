@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: danile
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: danile
+  template:
+    metadata:
+      labels:
+        app: danile
+    spec:
+      imagePullSecrets:
+      - name: gitlab-registry
+      containers:
+      # FastAPI backend — does all scraping/parsing/merging
+      - name: api
+        image: 192.168.50.2:5050/infra/experiments/danile:main
+        imagePullPolicy: Always
+        command: ["uvicorn", "app.main:app", "--app-dir", "api", "--host", "0.0.0.0", "--port", "8000"]
+        ports:
+        - name: api
+          containerPort: 8000
+        env:
+        - name: LOG_LEVEL
+          value: "INFO"
+        # append-only JSONL cat-and-mouse dataset (per-source scrape events)
+        - name: DANILE_DIAG_LOG_DIR
+          value: /data/diag
+        livenessProbe:
+          httpGet:
+            path: /danile/health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /danile/health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: "1"
+            memory: 1Gi
+        volumeMounts:
+        - name: diag
+          mountPath: /data/diag
+      # Streamlit UI — thin pass-through; talks to the API over localhost
+      - name: ui
+        image: 192.168.50.2:5050/infra/experiments/danile:main
+        imagePullPolicy: Always
+        command: ["streamlit", "run", "ui/app.py",
+                  "--server.port=8501",
+                  "--server.address=0.0.0.0",
+                  "--server.headless=true",
+                  "--server.enableCORS=false",
+                  "--server.enableXsrfProtection=false",
+                  "--browser.gatherUsageStats=false",
+                  "--server.fileWatcherType=none"]
+        ports:
+        - name: ui
+          containerPort: 8501
+        env:
+        - name: DANILE_API_HOST
+          value: localhost
+        - name: DANILE_API_PORT
+          value: "8000"
+        - name: DANILE_API_PREFIX
+          value: danile
+        - name: DANILE_API_TIMEOUT
+          value: "45"
+        livenessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /_stcore/health
+            port: 8501
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: "1"
+            memory: 1Gi
+      volumes:
+      - name: diag
+        hostPath:
+          path: /d/k8s/volumes/experiments/danile/diag
+          type: DirectoryOrCreate

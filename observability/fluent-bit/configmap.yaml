@@ -7,7 +7,7 @@ data:
   fluent-bit.conf: |
     [SERVICE]
         Flush         1
-        Log_Level     debug
+        Log_Level     info
         Daemon        off
         Parsers_File  parsers.conf
         HTTP_Server   On
@@ -39,6 +39,11 @@ data:
         Read_from_Head    On
         DB                /var/lib/fluent-bit/cron.db
         DB.Sync           Normal
+        # inotify IN_MODIFY events from host-side writes don't reach fluent-bit
+        # for these bind-mounted files (unlike the kube logs it watches via the
+        # separate docker-containers mount), so appends were never read. poll via
+        # stat on Refresh_Interval instead, which reliably catches size growth.
+        Inotify_Watcher   Off
 
     [FILTER]
         Name                kubernetes

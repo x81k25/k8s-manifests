@@ -67,6 +67,9 @@ spec:
         - name: dashboards-at
           mountPath: /var/lib/grafana/dashboards/at.json
           subPath: at.json
+        - name: dashboards-cron
+          mountPath: /var/lib/grafana/dashboards/cron.json
+          subPath: cron.json
         - name: storage
           mountPath: /var/lib/grafana
         env:
@@ -137,6 +140,9 @@ spec:
       - name: dashboards-at
         configMap:
           name: grafana-dashboard-at
+      - name: dashboards-cron
+        configMap:
+          name: grafana-dashboard-cron
       - name: storage
         hostPath:
           path: /d/k8s/volumes/observability/grafana/data

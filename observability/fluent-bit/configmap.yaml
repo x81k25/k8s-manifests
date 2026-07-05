@@ -37,8 +37,6 @@ data:
         # appends, which tail-from-end would miss) and track the offset in a
         # persistent DB so restarts don't re-ingest already-shipped lines.
         Read_from_Head    On
-        DB                /var/lib/fluent-bit/cron.db
-        DB.Sync           Normal
         # inotify IN_MODIFY events from host-side writes don't reach fluent-bit
         # for these bind-mounted files (unlike the kube logs it watches via the
         # separate docker-containers mount), so appends were never read. poll via

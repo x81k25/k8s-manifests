@@ -33,6 +33,12 @@ data:
         Refresh_Interval  5
         Mem_Buf_Limit     10MB
         Skip_Long_Lines   On
+        # cron logs are low-frequency: read the whole file (not just post-startup
+        # appends, which tail-from-end would miss) and track the offset in a
+        # persistent DB so restarts don't re-ingest already-shipped lines.
+        Read_from_Head    On
+        DB                /var/lib/fluent-bit/cron.db
+        DB.Sync           Normal
 
     [FILTER]
         Name                kubernetes

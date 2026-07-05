@@ -32,6 +32,8 @@ spec:
           readOnly: true
         - name: config
           mountPath: /fluent-bit/etc
+        - name: tail-db
+          mountPath: /var/lib/fluent-bit
       terminationGracePeriodSeconds: 10
       hostNetwork: false
       dnsPolicy: ClusterFirst
@@ -45,3 +47,7 @@ spec:
       - name: config
         configMap:
           name: fluent-bit-config
+      - name: tail-db
+        hostPath:
+          path: /var/lib/fluent-bit
+          type: DirectoryOrCreate

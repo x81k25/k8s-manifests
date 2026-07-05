@@ -7,7 +7,7 @@ data:
   fluent-bit.conf: |
     [SERVICE]
         Flush         1
-        Log_Level     debug
+        Log_Level     info
         Daemon        off
         Parsers_File  parsers.conf
         HTTP_Server   On
@@ -22,21 +22,6 @@ data:
         Refresh_Interval  5
         Mem_Buf_Limit     50MB
         Skip_Long_Lines   On
-
-    # host crontab job logs written by cron-wrap.sh (/var/log is already
-    # mounted from the host). one file per job; the job name also rides on
-    # each line as `cronjob=<name>` for per-job filtering + alert labeling.
-    [INPUT]
-        Name              tail
-        Path              /var/log/cron-jobs/*.log
-        Tag               cron.*
-        Refresh_Interval  5
-        Mem_Buf_Limit     10MB
-        Skip_Long_Lines   On
-        # cron logs are low-frequency: read the whole file (not just post-startup
-        # appends, which tail-from-end would miss) and track the offset in a
-        # persistent DB so restarts don't re-ingest already-shipped lines.
-        Read_from_Head    On
 
     [FILTER]
         Name                kubernetes
@@ -57,20 +42,11 @@ data:
         
     [OUTPUT]
         Name                loki
-        Match               kube.*
+        Match               *
         Host                loki.observability.svc.cluster.local
         Port                3100
         Labels              job=fluentbit
         Auto_Kubernetes_Labels on
-
-    # host cron logs → Loki under a fixed job=cron stream (no kubernetes
-    # metadata to auto-label; these are host files, not pod logs)
-    [OUTPUT]
-        Name                loki
-        Match               cron.*
-        Host                loki.observability.svc.cluster.local
-        Port                3100
-        Labels              job=cron
 
   parsers.conf: |
     [PARSER]

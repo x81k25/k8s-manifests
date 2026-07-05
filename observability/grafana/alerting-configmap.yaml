@@ -127,3 +127,52 @@ data:
         labels:
           severity: info
           digest: daily
+    - orgId: 1
+      name: cron
+      folder: infra
+      interval: 1m
+      rules:
+      # host crontab jobs (user + root) are wrapped by cron-wrap.sh, which
+      # writes a `cron_event=end ... status=success|failure` line per run to
+      # /var/log/cron-jobs (shipped to Loki as job=cron). fire ONLY on failure;
+      # the by(cronjob) grouping names the failing job in the Telegram message.
+      # window 5m > eval 1m so a single failure clears after ~5m and the next
+      # failure re-notifies rather than staying latched.
+      - uid: cron-job-failure
+        title: cron job failed
+        condition: C
+        data:
+        - refId: A
+          relativeTimeRange:
+            from: 300
+            to: 0
+          datasourceUid: P8E80F9AEF21F6940
+          model:
+            datasource:
+              type: loki
+              uid: P8E80F9AEF21F6940
+            expr: 'sum by (cronjob) (count_over_time({job="cron"} |= "cron_event=end" | logfmt | status="failure" [5m]))'
+            queryType: instant
+            refId: A
+            intervalMs: 1000
+            maxDataPoints: 43200
+        - refId: C
+          relativeTimeRange:
+            from: 0
+            to: 0
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: A
+            refId: C
+            conditions:
+            - evaluator:
+                type: gt
+                params: [0]
+        for: 0m
+        noDataState: OK
+        execErrState: OK
+        annotations:
+          summary: 'cron job "{{ $labels.cronjob }}" failed on x81k25-server (non-zero exit in the last 5m). check the Grafana "cron" dashboard or: tail /var/log/cron-jobs/{{ $labels.cronjob }}.log'
+        labels:
+          severity: warning

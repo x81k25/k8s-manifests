@@ -9,6 +9,10 @@ data:
     datasources:
     - name: Loki
       type: loki
+      # pin to the uid grafana auto-generated at first provision — existing
+      # log panels (at, node-health, namespace-health) and the cron dashboard
+      # + cron-job-failure alert rule reference it; do not change
+      uid: P8E80F9AEF21F6940
       access: proxy
       url: http://loki.observability.svc.cluster.local:3100
       version: 1

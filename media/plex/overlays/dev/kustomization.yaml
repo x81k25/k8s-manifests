@@ -55,9 +55,8 @@ patches:
     kind: Service
     name: plex
   patch: |-
-    - op: replace
-      path: /spec/ports/0/port
-      value: 30400
+    # in-cluster port stays 32400 (terraform wires REAR_DIFF_PLEX_URL to
+    # http://plex-dev:32400); only the external nodePort moves to 30400
     - op: replace
       path: /spec/ports/0/nodePort
       value: 30400

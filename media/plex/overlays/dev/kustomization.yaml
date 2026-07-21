@@ -33,6 +33,10 @@ patches:
             volumeMounts:
             - name: plex-media
               mountPath: /data
+            # dev movie library — where rear-diff/AT deliver dev movies; the
+            # Plex Movies section must point at /data/movies
+            - name: plex-movies
+              mountPath: /data/movies
           volumes:
           - name: plex-config
             hostPath:
@@ -43,6 +47,9 @@ patches:
           - name: plex-media
             hostPath:
               path: /d/k8s/volumes/plex-dev/data
+          - name: plex-movies
+            hostPath:
+              path: /d/media-cache/dev/transfer/movies
 - target:
     version: v1
     kind: Service

@@ -36,7 +36,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: git@github.com:x81k25/k8s-manifests.git
+        repoURL: ssh://git@192.168.50.2:2222/infra/k8s-manifests.git
         targetRevision: HEAD
         path: "{{path}}"
       destination:

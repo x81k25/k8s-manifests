@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - 192.168.50.2:5050/infra/experiments/danile@sha256:76be033df37b4df20e023cd6f982175704b2e3f9a616bfca93adee86b94efbef
+  - 192.168.50.2:5050/infra/experiments/danile@sha256:1c1b4a8c899ac90354a22ec46ba6ef023e546141ce43dfa61bebbb3e332a6164
